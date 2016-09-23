@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IoTGateway.common
+namespace IoTGateway.Common
 {
-    public class ClientExecptionEventArgs : EventArgs
+    public class ReceivedMessageArgs : System.EventArgs
     {
+        public string Message { get; set; }
     }
 }

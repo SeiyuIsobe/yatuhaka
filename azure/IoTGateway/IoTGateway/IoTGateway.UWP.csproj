@@ -96,11 +96,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="azure\ClientIoT.cs" />
-    <Compile Include="common\ClientExecptionEventArgs.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -129,13 +129,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\M2Mqtt\M2Mqtt.WinRT.csproj">
-      <Project>{0238f0e3-a02b-428d-8a3f-410d8f15bb50}</Project>
-      <Name>M2Mqtt.WinRT</Name>
+    <ProjectReference Include="..\IoTGateway.Common\IoTGateway.Common.UWP.csproj">
+      <Project>{3e78f943-1fa9-40d3-bdca-7744db1797a0}</Project>
+      <Name>IoTGateway.Common.UWP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SiRSensors.WinRT\SiRSensors.WinRT.csproj">
-      <Project>{a6b77ef0-e0ab-45fc-8d3d-704a71466d80}</Project>
-      <Name>SiRSensors.WinRT</Name>
+    <ProjectReference Include="..\SiRSensors\SiRSensors.UWP.csproj">
+      <Project>{0bc00c57-0564-416c-9cfb-fbb8899babe4}</Project>
+      <Name>SiRSensors.UWP</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

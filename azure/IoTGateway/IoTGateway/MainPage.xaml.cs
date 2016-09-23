@@ -14,6 +14,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using IoTGateway.Common.DataModels;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using IoTGateway.Common;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
 
@@ -24,46 +28,23 @@ namespace IoTGateway
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private AccelOverI2C _accelSensor = null;
-        private ClientIoT _client = null;
+        private ViewModels.MainWindowViewModel _mainwindowVM = null;
 
         public MainPage()
         {
             this.InitializeComponent();
 
-            #region 加速度センサー
-            _accelSensor = new AccelOverI2C();
+            _mainwindowVM = new ViewModels.MainWindowViewModel();
+            _mainwindowVM.Dispatcher = Dispatcher;
 
-            _accelSensor.AccelRunning += (sender, e) =>
-            {
-
-            };
-
-            _accelSensor.StatusChanged += (sender, e) =>
-            {
-                System.Diagnostics.Debug.Write("-> " + ((AccelEventArgs)e).ExceptionMessage);
-            };
-
-            _accelSensor.AccelChanged += (sender, e) =>
-            {
-                var ee = e as AccelEventArgs;
-                System.Diagnostics.Debug.WriteLine("{0}, {1}, {2}", ee.X, ee.Y, ee.Z);
-            };
-
-            _accelSensor.Interval = 1000;
-            _accelSensor.Init();
-            #endregion
-
-            #region Azure
-            _client = new ClientIoT();
-            _client.Connect();
-            #endregion
+            this.DataContext = _mainwindowVM;
 
         }
 
-        private void _sendButton_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            _client.Publish("kei");
+            _mainwindowVM.Init();
         }
+        
     }
 }

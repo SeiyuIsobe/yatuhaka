@@ -1351,6 +1351,7 @@ namespace uPLibrary.Networking.M2Mqtt
                     // read first byte (fixed header)
                     readBytes = this.channel.Receive(fixedHeaderFirstByte);
 
+                    System.Diagnostics.Debug.WriteLine("{0}", readBytes);
                     if (readBytes > 0)
                     {
 #if BROKER
