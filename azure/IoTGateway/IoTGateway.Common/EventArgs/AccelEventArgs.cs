@@ -7,7 +7,7 @@ using IoTGateway.Common;
 
 namespace IoTGateway.Common
 {
-    public class AccelEventArgs : System.EventArgs
+    public class AccelEventArgs : SensorEventArgs
     {
         private double _x;
         private double _y;
@@ -59,23 +59,6 @@ namespace IoTGateway.Common
         public double PreviousY { get; set; }
         public double PreviousZ { get; set; }
 
-        private Status _status;
-        public Status Status
-        {
-            get { return _status; }
-            set
-            {
-                this.PreviousStatus = _status;
-                _status = value;
-
-                // statusが変化したときはここでメッセージを初期化して
-                // メッセージの取違ミスが発生しないようにする
-                ExceptionMessage = string.Empty;
-            }
-        }
-
-        public Status PreviousStatus { get; set; } = Status.Unknown;
-
-        public string ExceptionMessage { get; set; }
+        
     }
 }

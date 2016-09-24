@@ -16,6 +16,8 @@ namespace IoTGateway.ViewModels
     {
         #region 使うセンサー
         private AccelOverI2C _accelSensor = null;
+        private AccelOnBoard _accelOnBoard = null;
+        private GpsOnBoard _gpsOnBoard = null;
         #endregion
 
         //
@@ -27,32 +29,71 @@ namespace IoTGateway.ViewModels
 
         public MainWindowViewModel()
         {
+            // センサーコンテナーの生成
+            _sensorContainer = new SensorContainer();
         }
 
         public void Init()
         {
             #region 加速度センサー
+
+            #region ラズパイ直結の加速度センサー、I2Cで通信する
             _accelSensor = new AccelOverI2C();
-            _accelSensor.ValueChanged += async (sender, e) =>
+            _accelSensor.Interval = 1000;
+            _accelSensor.ValueChanged += async (s2, e2) =>
             {
-                var ee = e as AccelEventArgs;
-                if (null != ee)
+                var e3 = e2 as AccelEventArgs;
+                if (null != e3)
                 {
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        this.XAxis = ee.X;
-                        this.YAxis = ee.Y;
-                        this.ZAxis = ee.Z;
+                        this.XAxis = e3.X;
+                        this.YAxis = e3.Y;
+                        this.ZAxis = e3.Z;
                     });
                 }
             };
-            _accelSensor.Interval = 1000;
-            _accelSensor.Init();
+            // センサーをコンテナーに入れる
+            _sensorContainer.Add(_accelSensor);
             #endregion
 
+            #region スマフォなど加速度センサー内蔵タイプ
+            _accelOnBoard = new AccelOnBoard();
+            _accelOnBoard.ValueChanged += async (s2, e2) =>
+            {
+                var e3 = e2 as AccelEventArgs;
+                if (null != e3)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.XAxis = e3.X;
+                        this.YAxis = e3.Y;
+                        this.ZAxis = e3.Z;
+                    });
+                }
+            };
             // センサーをコンテナーに入れる
-            _sensorContainer = new SensorContainer();
-            _sensorContainer.Add(_accelSensor);
+            _sensorContainer.Add(_accelOnBoard);
+            #endregion
+
+            #region GPS
+            _gpsOnBoard = new GpsOnBoard();
+            _gpsOnBoard.ValueChanged += async (s2, e2) =>
+            {
+                var e3 = e2 as GeolocationEventArgs;
+                if(null != e3)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.Latitude = e3.Latitude;
+                        this.Longitude = e3.Longitude;
+                    });
+                }
+            };
+            // センサーをコンテナーに入れる
+            _sensorContainer.Add(_gpsOnBoard);
+            #endregion
+            #endregion
 
             #region Azure
             _client = new ClientIoT(_sensorContainer);
@@ -155,6 +196,7 @@ namespace IoTGateway.ViewModels
             set
             {
                 _latitude = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -171,6 +213,7 @@ namespace IoTGateway.ViewModels
             set
             {
                 _longitude = value;
+                NotifyPropertyChanged();
             }
         }
 

@@ -107,7 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccelOnBoard.cs" />
     <Compile Include="AccelOverI2C.cs" />
+    <Compile Include="GpsOnBoard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\SiRSensors.rd.xml" />
   </ItemGroup>

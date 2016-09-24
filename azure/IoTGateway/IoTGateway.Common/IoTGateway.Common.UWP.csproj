@@ -108,10 +108,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModels\AccelaData.cs" />
+    <Compile Include="DataModels\PositionData.cs" />
     <Compile Include="DataModels\SensorContainer.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="EventArgs\AccelEventArgs.cs" />
+    <Compile Include="EventArgs\GeolocationEventArgs.cs" />
     <Compile Include="EventArgs\ReceivedMessageArgs.cs" />
+    <Compile Include="EventArgs\SensorEventArgs.cs" />
     <Compile Include="Interfaces\ISensor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\IoTGateway.Common.rd.xml" />

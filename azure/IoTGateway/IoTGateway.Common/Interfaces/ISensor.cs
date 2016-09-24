@@ -8,6 +8,7 @@ namespace IoTGateway.Common.Interfaces
 {
     public interface ISensor
     {
+        void Init();
         string Data { get; }
         event EventHandler StatusChanged;
         event EventHandler ValueChanged;

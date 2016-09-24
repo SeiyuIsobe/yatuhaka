@@ -9,27 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.I2c;
 using IoTGateway.Common;
-using IoTGateway.Common;
 
 namespace SiRSensors
 {
-    [Obsolete("使用禁止", true)]
-    struct Acceleration
-    {
-        public double X;
-        public double Y;
-        public double Z;
-
-        public bool IsEqual(Acceleration acc)
-        {
-            if (Math.Abs(this.X - acc.X) > 0.001) return false;
-            if (Math.Abs(this.Y - acc.Y) > 0.001) return false;
-            if (Math.Abs(this.Z - acc.Z) > 0.001) return false;
-
-            return true;
-        }
-    };
-
     public class AccelOverI2C : ISensor
     {
         private const byte ACCEL_I2C_ADDR = 0x53;           /* 7-bit I2C address of the ADXL345 with SDO pulled low */
@@ -56,10 +38,10 @@ namespace SiRSensors
         public void Init()
         {
             /* Initialize the I2C bus, accelerometer, and timer */
-            InitI2CAccel();
+            InitDevice();
         }
 
-        private async void InitI2CAccel()
+        private async void InitDevice()
         {
 
             var settings = new I2cConnectionSettings(ACCEL_I2C_ADDR);
@@ -116,10 +98,10 @@ namespace SiRSensors
                 /* Now that everything is initialized, create a timer so we read data every 100mS */
                 periodicTimer = new Timer(this.TimerCallback, null, 0, this.Interval);
 
-                if(null != AccelRunning)
+                if(null != StatusChanged)
                 {
                     _accelEvent.Status = Status.Running;
-                    AccelRunning(this, _accelEvent);
+                    StatusChanged(this, _accelEvent);
                 }
             }
             catch
@@ -161,15 +143,15 @@ namespace SiRSensors
                 {
                     if(true == eventcall)
                     {
-                        AccelEventArgs e = new AccelEventArgs
-                        {
-                            X = accel.X,
-                            Y = accel.Y,
-                            Z = accel.Z,
-                        };
-
                         if (null != ValueChanged)
                         {
+                            AccelEventArgs e = new AccelEventArgs
+                            {
+                                X = accel.X,
+                                Y = accel.Y,
+                                Z = accel.Z
+                            };
+
                             ValueChanged(this, e);
                         }
                     }
@@ -218,7 +200,6 @@ namespace SiRSensors
 
         public event EventHandler ValueChanged;
         public event EventHandler StatusChanged;
-        public event EventHandler AccelRunning;
 
         public int Interval { get; set; } = 1000;
 
@@ -230,84 +211,4 @@ namespace SiRSensors
             }
         }
     }
-
-    //public class AccelEventArgs : EventArgs
-    //{
-    //    private double _x;
-    //    private double _y;
-    //    private double _z;
-
-    //    public double X
-    //    {
-    //        get
-    //        {
-    //            return _x;
-    //        }
-
-    //        set
-    //        {
-    //            this.PreviousX = _x;
-    //            _x = value;
-    //        }
-    //    }
-
-    //    public double Y
-    //    {
-    //        get
-    //        {
-    //            return _y;
-    //        }
-
-    //        set
-    //        {
-    //            this.PreviousY = _y;
-    //            _y = value;
-    //        }
-    //    }
-
-    //    public double Z
-    //    {
-    //        get
-    //        {
-    //            return _z;
-    //        }
-
-    //        set
-    //        {
-    //            this.PreviousZ = _z;
-    //            _z = value;
-    //        }
-    //    }
-
-    //    public double PreviousX { get; set; }
-    //    public double PreviousY { get; set; }
-    //    public double PreviousZ { get; set; }
-
-    //    private Status _status;
-    //    public Status Status
-    //    {
-    //        get { return _status; }
-    //        set
-    //        {
-    //            this.PreviousStatus = _status;
-    //            _status = value;
-
-    //            // statusが変化したときはここでメッセージを初期化して
-    //            // メッセージの取違ミスが発生しないようにする
-    //            ExceptionMessage = string.Empty;
-    //        }
-    //    }
-
-    //    public Status PreviousStatus { get; set; } = Status.Unknown;
-
-    //    public string ExceptionMessage { get; set; }
-    //}
-
-    //public enum Status
-    //{
-    //    Unknown,
-    //    Wait,
-    //    Running,
-    //    Error
-    //}
 }

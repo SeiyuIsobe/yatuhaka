@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Client;
 using IoTGateway.Common.DataModels;
 using IoTGateway.Common;
+using IoTGateway.Common.Interfaces;
 
 namespace IoTGateway.azure
 {
@@ -40,6 +41,44 @@ namespace IoTGateway.azure
 
         public void InitSensor()
         {
+            // センサーの初期化
+            foreach (var sensor in _sensorContainer.GetSensor())
+            {
+                // 準備
+                sensor.StatusChanged += (sender, e) =>
+                {
+                    SensorEventArgs se = e as SensorEventArgs;
+                    if(null != se)
+                    {
+                        switch(se.Status)
+                        {
+                            case Status.Running:
+
+                                ((ISensor)sender).ValueChanged += (s2, e2) =>
+                                {
+                                    // クラウドに送信
+                                    Publish(((ISensor)s2).Data);
+                                };
+
+                                break;
+
+                            case Status.Error:
+
+                                AccelEventArgs ae = e as AccelEventArgs;
+                                if(null != ae)
+                                {
+                                    System.Diagnostics.Debug.WriteLine("-> " + ae.ExceptionMessage);
+                                }
+
+                                break;
+                        };
+                    }
+                };
+
+                // 初期化を実行
+                sensor.Init();
+            }
+
             foreach (var sensor in _sensorContainer.GetSensor())
             {
                 sensor.ValueChanged += (sender, e) =>
