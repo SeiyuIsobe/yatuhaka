@@ -1,5 +1,7 @@
 ﻿{
   "dependencies": {
+    "AWSSDK": "2.3.55",
+    "M2Mqtt": "4.3.0",
     "Microsoft.Azure.Devices.Client": "1.0.19",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
     "Newtonsoft.Json": "9.0.1"

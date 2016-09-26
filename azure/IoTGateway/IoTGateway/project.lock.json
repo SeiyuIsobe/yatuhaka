@@ -3,6 +3,22 @@
   "version": 1,
   "targets": {
     "UAP,Version=v10.0": {
+      "AWSSDK/2.3.55": {
+        "compile": {
+          "lib/windows8/AWSSDK.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/AWSSDK.dll": {}
+        }
+      },
+      "M2Mqtt/4.3.0": {
+        "compile": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        },
+        "runtime": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.3": {
         "dependencies": {
           "Microsoft.Net.Http": "2.2.22",
@@ -1867,6 +1883,22 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
+      "AWSSDK/2.3.55": {
+        "compile": {
+          "lib/windows8/AWSSDK.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/AWSSDK.dll": {}
+        }
+      },
+      "M2Mqtt/4.3.0": {
+        "compile": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        },
+        "runtime": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.3": {
         "dependencies": {
           "Microsoft.Net.Http": "2.2.22",
@@ -3592,6 +3624,22 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
+      "AWSSDK/2.3.55": {
+        "compile": {
+          "lib/windows8/AWSSDK.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/AWSSDK.dll": {}
+        }
+      },
+      "M2Mqtt/4.3.0": {
+        "compile": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        },
+        "runtime": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.3": {
         "dependencies": {
           "Microsoft.Net.Http": "2.2.22",
@@ -5275,6 +5323,22 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
+      "AWSSDK/2.3.55": {
+        "compile": {
+          "lib/windows8/AWSSDK.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/AWSSDK.dll": {}
+        }
+      },
+      "M2Mqtt/4.3.0": {
+        "compile": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        },
+        "runtime": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.3": {
         "dependencies": {
           "Microsoft.Net.Http": "2.2.22",
@@ -7008,6 +7072,22 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
+      "AWSSDK/2.3.55": {
+        "compile": {
+          "lib/windows8/AWSSDK.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/AWSSDK.dll": {}
+        }
+      },
+      "M2Mqtt/4.3.0": {
+        "compile": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        },
+        "runtime": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.3": {
         "dependencies": {
           "Microsoft.Net.Http": "2.2.22",
@@ -8691,6 +8771,22 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
+      "AWSSDK/2.3.55": {
+        "compile": {
+          "lib/windows8/AWSSDK.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/AWSSDK.dll": {}
+        }
+      },
+      "M2Mqtt/4.3.0": {
+        "compile": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        },
+        "runtime": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.3": {
         "dependencies": {
           "Microsoft.Net.Http": "2.2.22",
@@ -10424,6 +10520,22 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
+      "AWSSDK/2.3.55": {
+        "compile": {
+          "lib/windows8/AWSSDK.dll": {}
+        },
+        "runtime": {
+          "lib/windows8/AWSSDK.dll": {}
+        }
+      },
+      "M2Mqtt/4.3.0": {
+        "compile": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        },
+        "runtime": {
+          "lib/win81/M2Mqtt.WinRT.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.3": {
         "dependencies": {
           "Microsoft.Net.Http": "2.2.22",
@@ -12108,6 +12220,61 @@
     }
   },
   "libraries": {
+    "AWSSDK/2.3.55": {
+      "sha512": "ojzLd3vewfGO2CF2vBlldNTkmvUIXhM97aQDz2PWXUCKbQriiK4ciVC2gTBITw+uodZeEX2gmrF00C2Kn0l4Sg==",
+      "type": "package",
+      "path": "AWSSDK/2.3.55",
+      "files": [
+        "AWSSDK.2.3.55.nupkg.sha512",
+        "AWSSDK.nuspec",
+        "lib/net35/AWSSDK.dll",
+        "lib/net35/AWSSDK.pdb",
+        "lib/net45/AWSSDK.dll",
+        "lib/net45/AWSSDK.pdb",
+        "lib/portable-wpa+netcore45/AWSSDK.dll",
+        "lib/windows8/AWSSDK.dll",
+        "lib/windowsphone8/AWSSDK.dll",
+        "tools/account-management.ps1",
+        "tools/net35/install.ps1",
+        "tools/net45/install.ps1"
+      ]
+    },
+    "M2Mqtt/4.3.0": {
+      "sha512": "2A1uM20uxuovQKPA0dkZUqD9gUpIMaX7KxdLiVM7IEXdPRL709hGuudHnvlDxm2/6b2LcOjshrYGVG9vdpipag==",
+      "type": "package",
+      "path": "M2Mqtt/4.3.0",
+      "files": [
+        "M2Mqtt.4.3.0.nupkg.sha512",
+        "M2Mqtt.nuspec",
+        "lib/net39-cf/DeployFileList.txt",
+        "lib/net39-cf/M2Mqtt.NetCf39.dll",
+        "lib/net39-cf/M2Mqtt.NetCf39.pdb",
+        "lib/net45/M2Mqtt.Net.dll",
+        "lib/net45/M2Mqtt.Net.pdb",
+        "lib/netmf42/M2Mqtt.NetMf.dll",
+        "lib/netmf42/M2Mqtt.NetMf.pdb",
+        "lib/netmf42/be/M2Mqtt.NetMf.pdb",
+        "lib/netmf42/be/M2Mqtt.NetMf.pdbx",
+        "lib/netmf42/be/M2Mqtt.NetMf.pe",
+        "lib/netmf42/le/M2Mqtt.NetMf.pdb",
+        "lib/netmf42/le/M2Mqtt.NetMf.pdbx",
+        "lib/netmf42/le/M2Mqtt.NetMf.pe",
+        "lib/netmf43/M2Mqtt.NetMf.dll",
+        "lib/netmf43/M2Mqtt.NetMf.pdb",
+        "lib/netmf43/be/M2Mqtt.NetMf.pdb",
+        "lib/netmf43/be/M2Mqtt.NetMf.pdbx",
+        "lib/netmf43/be/M2Mqtt.NetMf.pe",
+        "lib/netmf43/le/M2Mqtt.NetMf.pdb",
+        "lib/netmf43/le/M2Mqtt.NetMf.pdbx",
+        "lib/netmf43/le/M2Mqtt.NetMf.pe",
+        "lib/win81/M2Mqtt.WinRT.dll",
+        "lib/win81/M2Mqtt.WinRT.pdb",
+        "lib/win81/M2Mqtt.WinRT.pri",
+        "lib/wpa81/M2Mqtt.WinRT.dll",
+        "lib/wpa81/M2Mqtt.WinRT.pdb",
+        "lib/wpa81/M2Mqtt.WinRT.pri"
+      ]
+    },
     "Microsoft.AspNet.WebApi.Client/5.2.3": {
       "sha512": "3kiI8peSXbXHDDrRuo+QaX0iCEVRe0nvn2dBDRw656uPX32UalbBlSIDUDlJxu05eau4tnuhsikiUuugvvoUoQ==",
       "type": "package",
@@ -15785,6 +15952,8 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "AWSSDK >= 2.3.55",
+      "M2Mqtt >= 4.3.0",
       "Microsoft.Azure.Devices.Client >= 1.0.19",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0",
       "Newtonsoft.Json >= 9.0.1"
