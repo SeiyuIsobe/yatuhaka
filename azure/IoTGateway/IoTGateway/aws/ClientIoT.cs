@@ -28,21 +28,88 @@ namespace IoTGateway.aws
 
         public void InitSensor()
         {
-
         }
 
-        public void Connect()
+        public async void Connect()
         {
-            try
+            // https://www.nuget.org/packages/Chilkat.uwp/
+            Chilkat.Socket socket = new Chilkat.Socket();
+
+            bool success;
+            success = socket.UnlockComponent("Anything for 30-day trial");
+            if (success != true)
             {
-                var client = new MqttClient(IotEndpoint);//, BrokerPort, true, MqttSslProtocols.TLSv1_2);
-                client.Connect("AccelaIoT");
+                System.Diagnostics.Debug.WriteLine(socket.LastErrorText);
+                return;
             }
-            catch(Exception e)
+
+            //  Create an instance of a certificate store object, load a PFX file,
+            //  locate the certificate we need, and use it for signing.
+            //  (a PFX file may contain more than one certificate.)
+            Chilkat.CertStore certStore = new Chilkat.CertStore();
+            //  The 1st argument is the filename, the 2nd arg is the
+            //  PFX file's password:
+            success = certStore.LoadPfxFile("395106240d.pfx", "395106240");
+            if (success != true)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                System.Diagnostics.Debug.WriteLine(certStore.LastErrorText);
+                return;
             }
-            
+
+            //CN=AWS IoT Certificate
+
+            Chilkat.Cert cert = null;
+            cert = certStore.FindCertBySubjectCN("AWS IoT Certificate");
+            if (cert == null)
+            {
+                System.Diagnostics.Debug.WriteLine(certStore.LastErrorText);
+                return;
+            }
+
+            success = socket.SetSslClientCert(cert);
+
+            bool ssl = true;
+            int maxWaitMillisec = 20000;
+
+            //  The SSL server hostname may be an IP address, a domain name,
+            //  or "localhost".  You'll need to change this:
+            string sslServerHost;
+            sslServerHost = IotEndpoint;
+            int sslServerPort = BrokerPort;
+
+            //  Connect to the SSL server:
+            success = await socket.ConnectAsync(sslServerHost, sslServerPort, ssl, maxWaitMillisec);
+            if (success != true)
+            {
+                System.Diagnostics.Debug.WriteLine(socket.LastErrorText);
+                return;
+            }
+
+            //  Set maximum timeouts for reading an writing (in millisec)
+            socket.MaxReadIdleMs = 20000;
+            socket.MaxSendIdleMs = 20000;
+
+            //  Send a "Hello Server! -EOM-" message:
+            success = await socket.SendStringAsync("Hello Server! -EOM-");
+            if (success != true)
+            {
+                System.Diagnostics.Debug.WriteLine(socket.LastErrorText);
+                return;
+            }
         }
+
+        //public void Connect()
+        //{
+        //    try
+        //    {
+        //        var client = new MqttClient(IotEndpoint, BrokerPort, true, MqttSslProtocols.TLSv1_2);
+        //        client.Connect("AccelaIoT");
+        //    }
+        //    catch(Exception e)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine(e.Message);
+        //    }
+
+        //}
     }
 }

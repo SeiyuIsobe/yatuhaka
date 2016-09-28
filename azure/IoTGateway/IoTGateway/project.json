@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
     "AWSSDK": "2.3.55",
+    "Chilkat.uwp": "9.5.0.59",
     "M2Mqtt": "4.3.0",
     "Microsoft.Azure.Devices.Client": "1.0.19",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
