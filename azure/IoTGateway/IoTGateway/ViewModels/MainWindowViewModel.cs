@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IoTGateway.Common.DataModels;
 //using IoTGateway.azure;
-using IoTGateway.aws;
+using IoTCloud.aws;
 using SiRSensors;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -15,6 +15,10 @@ namespace IoTGateway.ViewModels
 {
     public class MainWindowViewModel: INotifyPropertyChanged
     {
+        #region MQTTブローカー
+        //private SiRBroker.SiRBroker _broker = null;
+        #endregion
+
         #region 使うセンサー
         private AccelOverI2C _accelSensor = null;
         private AccelOnBoard _accelOnBoard = null;
@@ -27,15 +31,25 @@ namespace IoTGateway.ViewModels
         private SensorContainer _sensorContainer = null;
 
         private ClientIoT _client = null;
+        //private CloudIoT _cloud = null; 不要
 
         public MainWindowViewModel()
         {
             // センサーコンテナーの生成
             _sensorContainer = new SensorContainer();
+
+            _client = new ClientIoT();
         }
 
         public void Init()
         {
+            #region MQTTブローカー
+            //_broker = new SiRBroker.SiRBroker();
+            //_broker.Dispatcher = this.Dispatcher;
+            //_broker.Start();
+
+            #endregion
+
             #region 加速度センサー
 
             #region ラズパイ直結の加速度センサー、I2Cで通信する
@@ -82,7 +96,7 @@ namespace IoTGateway.ViewModels
             _gpsOnBoard.ValueChanged += async (s2, e2) =>
             {
                 var e3 = e2 as GeolocationEventArgs;
-                if(null != e3)
+                if (null != e3)
                 {
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
@@ -111,6 +125,13 @@ namespace IoTGateway.ViewModels
                 });
             };
             _client.Connect();
+            #endregion
+
+            #region 自分自身のブローカー
+            //不要
+            //_cloud = new CloudIoT();
+            //_cloud.Dispatcher = this.Dispatcher;
+            //_cloud.Connect();
             #endregion
         }
 
@@ -238,11 +259,18 @@ namespace IoTGateway.ViewModels
             }
         }
 
-        
+
         #endregion
 
         #region イベント
-        
+
+        #endregion
+
+        #region メソッド
+        public string GetCloudName()
+        {
+            return _client.GetCloudName();
+        }
         #endregion
     }
 }

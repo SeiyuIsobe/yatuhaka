@@ -4,3 +4,8 @@
 /azure/IoTGateway/IoTGateway/obj
 /azure/IoTGateway/IoTGateway/bin
 /azure/IoTGateway/bin
+/azure/IoTGateway/IoTCloud/project.lock.json
+/azure/IoTGateway/IoTCloud/bin
+/azure/IoTGateway/IoTCloud/obj
+/azure/IoTGateway/SiRBroker/obj
+/azure/IoTGateway/SiRBroker/bin

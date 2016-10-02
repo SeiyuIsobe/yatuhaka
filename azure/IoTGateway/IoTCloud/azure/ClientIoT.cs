@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Azure.Devices.Client;
+using uPLibrary.Networking.M2Mqtt;
 using IoTGateway.Common.DataModels;
 using IoTGateway.Common;
 using IoTGateway.Common.Interfaces;
+using Microsoft.Azure.Devices.Client;
 
-namespace IoTGateway.azure
+namespace IoTCloud.azure
 {
     public class ClientIoT
     {
@@ -24,6 +25,11 @@ namespace IoTGateway.azure
         {
         }
 
+        public string GetCloudName()
+        {
+            return "Azure";
+        }
+
         private SensorContainer _sensorContainer = null;
 
         public ClientIoT(SensorContainer sensorContainer)
@@ -33,7 +39,7 @@ namespace IoTGateway.azure
 
         public void SendSensorData()
         {
-            foreach(var sensor in _sensorContainer.GetSensor())
+            foreach (var sensor in _sensorContainer.GetSensor())
             {
                 Publish(sensor.Data);
             }
@@ -48,9 +54,9 @@ namespace IoTGateway.azure
                 sensor.StatusChanged += (sender, e) =>
                 {
                     SensorEventArgs se = e as SensorEventArgs;
-                    if(null != se)
+                    if (null != se)
                     {
-                        switch(se.Status)
+                        switch (se.Status)
                         {
                             case Status.Running:
 
@@ -65,7 +71,7 @@ namespace IoTGateway.azure
                             case Status.Error:
 
                                 AccelEventArgs ae = e as AccelEventArgs;
-                                if(null != ae)
+                                if (null != ae)
                                 {
                                     System.Diagnostics.Debug.WriteLine("-> " + ae.ExceptionMessage);
                                 }
@@ -127,7 +133,7 @@ namespace IoTGateway.azure
                 return;
             }
 
-            if(null != Connected)
+            if (null != Connected)
             {
                 Connected(this, null);
             }
@@ -160,7 +166,7 @@ namespace IoTGateway.azure
                     //System.Diagnostics.Debug.WriteLine("\t{0}> Received message: {1}", DateTime.Now.ToLocalTime(), messageData);
 
                     // 連絡
-                    if(null != ReceivedMessage)
+                    if (null != ReceivedMessage)
                     {
                         ReceivedMessage(this, new ReceivedMessageArgs { Message = messageData });
                     }
