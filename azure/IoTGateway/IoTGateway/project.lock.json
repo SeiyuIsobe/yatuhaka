@@ -11,28 +11,6 @@
           "lib/win81/GnatMQ.WinRT.dll": {}
         }
       },
-      "Chilkat.uwp/9.5.0.59": {
-        "compile": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtimeTargets": {
-          "runtimes/win10-arm/native/Chilkat.dll": {
-            "assetType": "native",
-            "rid": "win10-arm"
-          },
-          "runtimes/win10-x64/native/Chilkat.dll": {
-            "assetType": "native",
-            "rid": "win10-x64"
-          },
-          "runtimes/win10-x86/native/Chilkat.dll": {
-            "assetType": "native",
-            "rid": "win10-x86"
-          }
-        }
-      },
       "M2Mqtt/4.3.0": {
         "compile": {
           "lib/win81/M2Mqtt.WinRT.dll": {}
@@ -1913,17 +1891,6 @@
           "lib/win81/GnatMQ.WinRT.dll": {}
         }
       },
-      "Chilkat.uwp/9.5.0.59": {
-        "compile": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "native": {
-          "runtimes/win10-arm/native/Chilkat.dll": {}
-        }
-      },
       "M2Mqtt/4.3.0": {
         "compile": {
           "lib/win81/M2Mqtt.WinRT.dll": {}
@@ -3665,17 +3632,6 @@
           "lib/win81/GnatMQ.WinRT.dll": {}
         }
       },
-      "Chilkat.uwp/9.5.0.59": {
-        "compile": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "native": {
-          "runtimes/win10-arm/native/Chilkat.dll": {}
-        }
-      },
       "M2Mqtt/4.3.0": {
         "compile": {
           "lib/win81/M2Mqtt.WinRT.dll": {}
@@ -5373,17 +5329,6 @@
         },
         "runtime": {
           "lib/win81/GnatMQ.WinRT.dll": {}
-        }
-      },
-      "Chilkat.uwp/9.5.0.59": {
-        "compile": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "native": {
-          "runtimes/win10-x64/native/Chilkat.dll": {}
         }
       },
       "M2Mqtt/4.3.0": {
@@ -7135,17 +7080,6 @@
           "lib/win81/GnatMQ.WinRT.dll": {}
         }
       },
-      "Chilkat.uwp/9.5.0.59": {
-        "compile": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "native": {
-          "runtimes/win10-x64/native/Chilkat.dll": {}
-        }
-      },
       "M2Mqtt/4.3.0": {
         "compile": {
           "lib/win81/M2Mqtt.WinRT.dll": {}
@@ -8843,17 +8777,6 @@
         },
         "runtime": {
           "lib/win81/GnatMQ.WinRT.dll": {}
-        }
-      },
-      "Chilkat.uwp/9.5.0.59": {
-        "compile": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "native": {
-          "runtimes/win10-x86/native/Chilkat.dll": {}
         }
       },
       "M2Mqtt/4.3.0": {
@@ -10605,17 +10528,6 @@
           "lib/win81/GnatMQ.WinRT.dll": {}
         }
       },
-      "Chilkat.uwp/9.5.0.59": {
-        "compile": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Chilkat.winmd": {}
-        },
-        "native": {
-          "runtimes/win10-x86/native/Chilkat.dll": {}
-        }
-      },
       "M2Mqtt/4.3.0": {
         "compile": {
           "lib/win81/M2Mqtt.WinRT.dll": {}
@@ -12326,20 +12238,6 @@
         "lib/wpa81/GnatMQ.WinRT.dll",
         "lib/wpa81/GnatMQ.WinRT.pdb",
         "lib/wpa81/GnatMQ.WinRT.pri"
-      ]
-    },
-    "Chilkat.uwp/9.5.0.59": {
-      "sha512": "foywh+oSYMSZ1ntdVhf7+cVDR1RZnGijKkDY0bOUOJlwjcfm8LmLF7tl97LQacWmSJNbHcdQQMH0i+gYwXMIkQ==",
-      "type": "package",
-      "path": "Chilkat.uwp/9.5.0.59",
-      "files": [
-        "Chilkat.uwp.9.5.0.59.nupkg.sha512",
-        "Chilkat.uwp.nuspec",
-        "build/native/Chilkat.uwp.targets",
-        "lib/uap10.0/Chilkat.winmd",
-        "runtimes/win10-arm/native/Chilkat.dll",
-        "runtimes/win10-x64/native/Chilkat.dll",
-        "runtimes/win10-x86/native/Chilkat.dll"
       ]
     },
     "M2Mqtt/4.3.0": {
@@ -16055,13 +15953,6 @@
   },
   "projectFileDependencyGroups": {
     "": [
-<<<<<<< HEAD
-=======
-      "AWSSDK >= 2.3.55",
-      "Chilkat.uwp >= 9.5.0.59",
-      "M2Mqtt >= 4.3.0",
-      "Microsoft.Azure.Devices.Client >= 1.0.19",
->>>>>>> cc39dd563ce54aab3d6c7ff50a8d34e63a7c3f1b
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0",
       "Newtonsoft.Json >= 9.0.1"
     ],

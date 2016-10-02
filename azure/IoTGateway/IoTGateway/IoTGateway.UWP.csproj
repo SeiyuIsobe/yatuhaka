@@ -92,7 +92,6 @@
     <Content Include="395106240d.pfx" />
     <Content Include="395106240d-certificate.pem.crt" />
     <None Include="project.json" />
-    <Content Include="VS_KEY_2C8BD058681CA709.pfx" />
     <Content Include="root-CA.crt" />
   </ItemGroup>
   <ItemGroup>
@@ -161,7 +160,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>VS_KEY_2C8BD058681CA709.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
