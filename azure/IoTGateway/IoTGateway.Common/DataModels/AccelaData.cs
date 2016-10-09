@@ -34,5 +34,11 @@ namespace IoTGateway.Common.DataModels
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });
         }
+
+        public static AccelaData GetObject(string jsonstring)
+        {
+            AccelaData me = JsonConvert.DeserializeObject<AccelaData>(jsonstring);
+            return me;
+        }
     }
 }

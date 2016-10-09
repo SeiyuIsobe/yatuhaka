@@ -114,10 +114,11 @@ namespace IoTGateway
                     break;
 
                 case "Azure":
-                    #region Azure
                     _mainwindowVM.Init();
-                    #endregion
+                    break;
 
+                case "M2X":
+                    _mainwindowVM.Init();
                     break;
             };
         }

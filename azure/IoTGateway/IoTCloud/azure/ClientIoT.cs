@@ -8,94 +8,43 @@ using IoTGateway.Common.DataModels;
 using IoTGateway.Common;
 using IoTGateway.Common.Interfaces;
 using Microsoft.Azure.Devices.Client;
+using System.Diagnostics;
 
 namespace IoTCloud.azure
 {
-    public class ClientIoT
+    public class ClientIoT : BaseCloudIoT, ICloudIoT
     {
         //IoTHubに接続するためのコネクション文字列
-        private const string _deviceCn = "HostName=AccelaIoT.azure-devices.net;DeviceId=device6915d9cd54ff4dc5a076fbc24d068ab3;SharedAccessKey=Bd+Sbri6Na+NzZKkTm0iVG6vGKsGly9sbUw3ds5UMKo=";
+        //private const string _deviceCn = "HostName=AccelaIoT.azure-devices.net;DeviceId=device6915d9cd54ff4dc5a076fbc24d068ab3;SharedAccessKey=Bd+Sbri6Na+NzZKkTm0iVG6vGKsGly9sbUw3ds5UMKo=";
+
+
+        //        ID=devicea67d66dfaf86452f8d0480034316de75
+        //PrimaryKey = 26Z1hRXJ7pswjKZc9jAU/AKY/D8H9b7JsFOOgvg/BLM=
+        //SecondaryKey=bh2xwPYRtnAnxyS9OpUEWKNoFb8qPgGjD/SV2gLs8Pg=
+        private const string _deviceCn = "HostName=AccelaIoT.azure-devices.net;DeviceId=devicea67d66dfaf86452f8d0480034316de75;SharedAccessKey=26Z1hRXJ7pswjKZc9jAU/AKY/D8H9b7JsFOOgvg/BLM=";
 
         private DeviceClient _client = null;
+
+        override public string GetCloudName()
+        {
+            return "Azure";
+        }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public ClientIoT()
-        {
-        }
+        { }
 
-        public string GetCloudName()
-        {
-            return "Azure";
-        }
-
-        private SensorContainer _sensorContainer = null;
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public ClientIoT(SensorContainer sensorContainer)
+            :base(sensorContainer)
         {
-            _sensorContainer = sensorContainer;
         }
 
-        public void SendSensorData()
-        {
-            foreach (var sensor in _sensorContainer.GetSensor())
-            {
-                Publish(sensor.Data);
-            }
-        }
-
-        public void InitSensor()
-        {
-            // センサーの初期化
-            foreach (var sensor in _sensorContainer.GetSensor())
-            {
-                // 準備
-                sensor.StatusChanged += (sender, e) =>
-                {
-                    SensorEventArgs se = e as SensorEventArgs;
-                    if (null != se)
-                    {
-                        switch (se.Status)
-                        {
-                            case Status.Running:
-
-                                ((ISensor)sender).ValueChanged += (s2, e2) =>
-                                {
-                                    // クラウドに送信
-                                    Publish(((ISensor)s2).Data);
-                                };
-
-                                break;
-
-                            case Status.Error:
-
-                                AccelEventArgs ae = e as AccelEventArgs;
-                                if (null != ae)
-                                {
-                                    System.Diagnostics.Debug.WriteLine("-> " + ae.ExceptionMessage);
-                                }
-
-                                break;
-                        };
-                    }
-                };
-
-                // 初期化を実行
-                sensor.Init();
-            }
-
-            foreach (var sensor in _sensorContainer.GetSensor())
-            {
-                sensor.ValueChanged += (sender, e) =>
-                {
-                    // クラウドに送信
-                    Publish(sensor.Data);
-                };
-            }
-        }
-
-        private async void Publish(string message)
+        override public async void Publish(string message)
         {
             //作成したメッセージをバイトデータに変換して、Messageオブジェクトに代入
             Message eventMessage = new Message(Encoding.UTF8.GetBytes(message));
@@ -104,19 +53,15 @@ namespace IoTCloud.azure
             await _client.SendEventAsync(eventMessage);
         }
 
-        public void Connect()
+        override public void Connect()
         {
             try
             {
-                //デバイスクライアントのインスタンス（プロトコルをMQTTに指定）
+                //デバイスクライアントのインスタンスを生成
                 DeviceClient client = DeviceClient.CreateFromConnectionString(_deviceCn, TransportType.Amqp);
-
-                //IoTHubからメッセージを受信
-                ReceiveCommands(client);
 
                 // 保持
                 _client = client;
-
             }
             catch (AggregateException ex)
             {
@@ -133,10 +78,11 @@ namespace IoTCloud.azure
                 return;
             }
 
-            if (null != Connected)
-            {
-                Connected(this, null);
-            }
+            NotifyConnected(this, null);
+
+            //IoTHubからメッセージを受信
+            //ReceiveCommands(_client);
+
         }
 
 
@@ -166,19 +112,12 @@ namespace IoTCloud.azure
                     //System.Diagnostics.Debug.WriteLine("\t{0}> Received message: {1}", DateTime.Now.ToLocalTime(), messageData);
 
                     // 連絡
-                    if (null != ReceivedMessage)
-                    {
-                        ReceivedMessage(this, new ReceivedMessageArgs { Message = messageData });
-                    }
+                    NotifyReceiveMessage(this, new ReceivedMessageArgs { Message = messageData });
 
                     //受信完了を待つ
                     await client.CompleteAsync(recievedMessage);
                 }
             }
         }
-
-        public event EventHandler Connected;
-        public event EventHandler Disconnected;
-        public event EventHandler ReceivedMessage;
     }
 }

@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IoTGateway.Common.DataModels;
-//using IoTGateway.azure;
-using IoTCloud.aws;
+//using IoTCloud.azure;
+//using IoTCloud.aws;
+using IoTCloud.m2x;
 using SiRSensors;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -110,7 +111,7 @@ namespace IoTGateway.ViewModels
             #endregion
             #endregion
 
-            #region Azure
+            #region クラウド準備
             _client = new ClientIoT(_sensorContainer);
             _client.Connected += (sender, e) =>
             {

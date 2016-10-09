@@ -109,6 +109,11 @@
   <ItemGroup>
     <Compile Include="aws\ClientIoT.cs" />
     <Compile Include="azure\ClientIoT.cs" />
+    <Compile Include="azure\IoTClient.cs" />
+    <Compile Include="BaseCloudIoT.cs" />
+    <Compile Include="ICloudIoT.cs" />
+    <Compile Include="m2x\ClientIoT.cs" />
+    <Compile Include="m2x\PlugInFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\IoTCloud.rd.xml" />
   </ItemGroup>

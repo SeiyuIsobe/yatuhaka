@@ -33,16 +33,7 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer" />
     <Capability Name="privateNetworkClientServer" />
+    <uap:Capability Name="enterpriseAuthentication" />
     <DeviceCapability Name="location" />
   </Capabilities>
-  <Extensions>
-    <Extension Category="windows.certificates">
-      <Certificates>
-        <Certificate StoreName="CA" Content="root-CA.crt" />
-        <Certificate StoreName="Client Cert" Content="395106240d-certificate.pem.crt" />
-        <TrustFlags ExclusiveTrust="true" />
-        <SelectionCriteria AutoSelect="true" />
-      </Certificates>
-    </Extension>
-  </Extensions>
 </Package>
