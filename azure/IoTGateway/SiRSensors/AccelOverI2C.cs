@@ -135,30 +135,36 @@ namespace SiRSensors
             {
                 AccelaData accel = ReadI2CAccel();
 
-                if (true == accel.IsEqual(_accel))
+                if(null != accel)
                 {
-                    // 何もしない
-                }
-                else
-                {
-                    if(true == eventcall)
+                    // 前回値と同じ場合は無視
+                    // 異なれば_accelを更新
+                    if (true == accel.IsEqualAndUpdate(out _accel, accel))
                     {
-                        if (null != ValueChanged)
+                        // 何もしない
+                    }
+                    else
+                    {
+                        if (true == eventcall)
                         {
-                            AccelEventArgs e = new AccelEventArgs
+                            if (null != ValueChanged)
                             {
-                                X = accel.X,
-                                Y = accel.Y,
-                                Z = accel.Z
-                            };
+                                AccelEventArgs e = new AccelEventArgs
+                                {
+                                    X = accel.X,
+                                    Y = accel.Y,
+                                    Z = accel.Z
+                                };
 
-                            ValueChanged(this, e);
+                                ValueChanged(this, e);
+                            }
                         }
                     }
                 }
-
-                // IsEqualの結果によらず更新
-                _accel = accel;
+                else
+                {
+                    // no action
+                }              
             }
             catch (Exception ex)
             {

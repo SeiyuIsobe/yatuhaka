@@ -53,7 +53,7 @@ namespace IoTCloud.aws
 
         }
 
-        override public void Publish(string message)
+        override public void Publish(object sensor, string message)
         {
             _client.Publish(_topic, Encoding.UTF8.GetBytes(message));
         }

@@ -33,7 +33,7 @@ namespace IoTCloud
         {
             foreach (var sensor in _sensorContainer.GetSensor())
             {
-                Publish(sensor.Data);
+                Publish(sensor, sensor.Data);
             }
         }
 
@@ -74,7 +74,7 @@ namespace IoTCloud
                 sensor.ValueChanged += (sender, e) =>
                 {
                     // クラウドに送信
-                    Publish(sensor.Data);
+                    Publish(sender, ((ISensor)sender).Data);
                 };
 
                 // 初期化を実行
@@ -82,7 +82,7 @@ namespace IoTCloud
             }
         }
 
-        virtual public void Publish(string mess){}
+        virtual public void Publish(object sensor, string mess){}
 
         virtual public void Connect()
         {

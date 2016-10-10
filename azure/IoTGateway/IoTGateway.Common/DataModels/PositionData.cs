@@ -50,5 +50,17 @@ namespace IoTGateway.Common.DataModels
             _latitude = latitude;
             _longitude = longitude;
         }
+
+        public static PositionData GetObject(string jsonstring)
+        {
+            //System.Diagnostics.Debug.WriteLine($"::> {jsonstring}");
+            PositionData me = JsonConvert.DeserializeObject<PositionData>(jsonstring);
+
+            // 関係ないJSONでもデシリアライズしてしまうので
+            // 関係ないものはnullで返すようにする
+            if (me.Longitude == 0.0 && me.Latitude == 0.0) return null;
+
+            return me;
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace IoTCloud.azure
         {
         }
 
-        override public async void Publish(string message)
+        override public async void Publish(object sensor, string message)
         {
             //作成したメッセージをバイトデータに変換して、Messageオブジェクトに代入
             Message eventMessage = new Message(Encoding.UTF8.GetBytes(message));

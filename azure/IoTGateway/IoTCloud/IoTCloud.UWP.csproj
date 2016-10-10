@@ -122,6 +122,10 @@
       <Project>{3e78f943-1fa9-40d3-bdca-7744db1797a0}</Project>
       <Name>IoTGateway.Common.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SiRSensors\SiRSensors.UWP.csproj">
+      <Project>{0bc00c57-0564-416c-9cfb-fbb8899babe4}</Project>
+      <Name>SiRSensors.UWP</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

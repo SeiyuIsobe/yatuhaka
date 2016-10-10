@@ -12,6 +12,6 @@ namespace IoTCloud
         void SendSensorData();
         void InitSensor();
         void Connect();
-        void Publish(string message);
+        void Publish(object sensor, string message);
     }
 }

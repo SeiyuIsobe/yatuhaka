@@ -30,6 +30,31 @@ namespace IoTGateway.Common.DataModels
             return true;
         }
 
+        public bool IsEqualAndUpdate(out AccelaData org, AccelaData acc)
+        {
+            // 初期化
+            org = new AccelaData(0.0, 0.0, 0.0);
+
+            bool result = true;
+
+            // 最初はnull
+            if (null == org)
+            {
+                // Update
+                org = acc;
+                return false;
+            }
+
+            if (Math.Abs(org.X - acc.X) > 0.001) result = false;
+            if (Math.Abs(org.Y - acc.Y) > 0.001) result = false;
+            if (Math.Abs(org.Z - acc.Z) > 0.001) result = false;
+
+            // Update
+            org = acc;
+
+            return result;
+        }
+
         public string GetData()
         {
             return JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore });

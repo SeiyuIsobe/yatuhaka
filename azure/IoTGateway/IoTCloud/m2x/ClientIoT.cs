@@ -20,6 +20,8 @@ namespace IoTCloud.m2x
     {
         private HttpClient _httpClient;
         private Uri _resourceAddress = new Uri("https://api-m2x.att.com/v2/devices/812c5fc4cdbd6bb2f0c2cbf88463052d/streams/Accela_X/value");
+        private Uri _locationAddress = new Uri("https://api-m2x.att.com/v2/devices/812c5fc4cdbd6bb2f0c2cbf88463052d/location");
+        private string _locationName = "Seiyu Phone";
         private CancellationTokenSource _cts;
 
         override public string GetCloudName()
@@ -55,22 +57,41 @@ namespace IoTCloud.m2x
 
         }
 
-        public async override void Publish(string mess)
+        public async override void Publish(object sensor, string mess)
         {
             try
             {
-                // ここではX軸に注目
-                AccelaData ad = AccelaData.GetObject(mess);
-                if(null != ad)
+                if(sensor is SiRSensors.AccelOnBoard || sensor is SiRSensors.AccelOverI2C)
                 {
-                    // 時刻表示をISOにする
-                    var sss = @"{""timestamp"":""" + DateTime.Now.ToString("o") + @""", ""value"": " + ad.X.ToString() + "}";
+                    // ここではX軸に注目
+                    AccelaData ad = AccelaData.GetObject(mess);
+                    if (null != ad)
+                    {
+                        // 時刻表示をISOにする
+                        var sss = @"{""timestamp"":""" + DateTime.Now.ToString("o") + @""", ""value"": " + ad.X.ToString() + "}";
 
-                    System.Diagnostics.Debug.WriteLine($"-> {sss}");
+                        //System.Diagnostics.Debug.WriteLine($"-> {sss}");
 
-                    // 送信
-                    var response = await _httpClient.PutAsync(_resourceAddress,
-                       new HttpStringContent(sss, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json")).AsTask(_cts.Token);
+                        // 送信
+                        var response = await _httpClient.PutAsync(_resourceAddress,
+                           new HttpStringContent(sss, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json")).AsTask(_cts.Token);
+                    }
+                }
+
+                if(sensor is SiRSensors.GpsOnBoard)
+                {
+                    // ここではGPSに注目
+                    PositionData pd = PositionData.GetObject(mess);
+                    if (null != pd)
+                    {
+                        var sss = $"{{\"latitude\":{pd.Latitude}, \"longitude\":{pd.Longitude}, \"name\":\"{_locationName}\"}}";
+
+                        System.Diagnostics.Debug.WriteLine($"-> {sss}");
+
+                        // 送信
+                        var response = await _httpClient.PutAsync(_locationAddress,
+                           new HttpStringContent(sss, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json")).AsTask(_cts.Token);
+                    }
                 }
             }
             catch (TaskCanceledException)
