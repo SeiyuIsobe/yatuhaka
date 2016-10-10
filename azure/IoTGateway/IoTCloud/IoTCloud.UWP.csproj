@@ -111,6 +111,7 @@
     <Compile Include="azure\ClientIoT.cs" />
     <Compile Include="azure\IoTClient.cs" />
     <Compile Include="BaseCloudIoT.cs" />
+    <Compile Include="bluemix\ClientIoT.cs" />
     <Compile Include="ICloudIoT.cs" />
     <Compile Include="m2x\ClientIoT.cs" />
     <Compile Include="m2x\PlugInFilter.cs" />
@@ -118,6 +119,10 @@
     <EmbeddedResource Include="Properties\IoTCloud.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IBMWatsonIoTP\IBMWatsonIoTP.csproj">
+      <Project>{077723c2-619b-4530-851a-2793c82cd93b}</Project>
+      <Name>IBMWatsonIoTP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IoTGateway.Common\IoTGateway.Common.UWP.csproj">
       <Project>{3e78f943-1fa9-40d3-bdca-7744db1797a0}</Project>
       <Name>IoTGateway.Common.UWP</Name>

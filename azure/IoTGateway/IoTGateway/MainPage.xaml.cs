@@ -120,6 +120,10 @@ namespace IoTGateway
                 case "M2X":
                     _mainwindowVM.Init();
                     break;
+
+                case "Bluemix":
+                    _mainwindowVM.Init();
+                    break;
             };
         }
     }
