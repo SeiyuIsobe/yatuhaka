@@ -14,9 +14,11 @@ namespace IoTCloud.aws
     {
         private MqttClient _client = null;
 
-        private const string IotEndpoint = "127.0.0.1";
-        private string _clientID = "123456789";
-        private string _topic = "Sakisaki";
+        private string _iotEndpoint = string.Empty;
+        private string _clientID = string.Empty;
+        private string _topic = string.Empty;
+
+        private AwsSetting _awssetting = null;
 
         override public string GetCloudName()
         {
@@ -26,9 +28,13 @@ namespace IoTCloud.aws
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ClientIoT(SensorContainer sensorContainer)
+        public ClientIoT(SensorContainer sensorContainer, ISettingCloud setting)
             : base(sensorContainer)
         {
+            _awssetting = (AwsSetting)setting;
+            _iotEndpoint = _awssetting.IoTEndpoint;
+            _clientID = _awssetting.CliendID;
+            _topic = _awssetting.TargetTopic;
         }
 
         override public void Connect()
@@ -39,7 +45,7 @@ namespace IoTCloud.aws
                 //System.Diagnostics.Debug.WriteLine("-> 30秒後にブローカーに接続");
                 //await Task.Delay(1000 * 30);
 
-                _client = new MqttClient(IotEndpoint);
+                _client = new MqttClient(_iotEndpoint);
                 _client.Connect(_clientID);
                 if (true == _client.IsConnected)
                 {

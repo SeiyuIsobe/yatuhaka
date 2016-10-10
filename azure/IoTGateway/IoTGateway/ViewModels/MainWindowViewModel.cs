@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IoTGateway.Common.DataModels;
+using IoTCloud;
 using IoTCloud.bluemix;
-//using IoTCloud.azure;
-//using IoTCloud.aws;
-//using IoTCloud.m2x;
+using IoTCloud.azure;
+using IoTCloud.aws;
+using IoTCloud.m2x;
 using SiRSensors;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -17,10 +18,6 @@ namespace IoTGateway.ViewModels
 {
     public class MainWindowViewModel: INotifyPropertyChanged
     {
-        #region MQTTブローカー
-        //private SiRBroker.SiRBroker _broker = null;
-        #endregion
-
         #region 使うセンサー
         private AccelOverI2C _accelSensor = null;
         private AccelOnBoard _accelOnBoard = null;
@@ -32,27 +29,18 @@ namespace IoTGateway.ViewModels
         //
         private SensorContainer _sensorContainer = null;
 
-        private ClientIoT _client = null;
+        private ICloudIoT _client = null;
         //private CloudIoT _cloud = null; 不要
 
         public MainWindowViewModel()
         {
             // センサーコンテナーの生成
             _sensorContainer = new SensorContainer();
-
-            _client = new ClientIoT();
         }
 
         public void Init()
         {
-            #region MQTTブローカー
-            //_broker = new SiRBroker.SiRBroker();
-            //_broker.Dispatcher = this.Dispatcher;
-            //_broker.Start();
-
-            #endregion
-
-            #region 加速度センサー
+            #region センサー
 
             #region ラズパイ直結の加速度センサー、I2Cで通信する
             _accelSensor = new AccelOverI2C();
@@ -113,7 +101,7 @@ namespace IoTGateway.ViewModels
             #endregion
 
             #region クラウド準備
-            _client = new ClientIoT(_sensorContainer);
+            _client = CreateCloudIoT();
             _client.Connected += (sender, e) =>
             {
                 _client.InitSensor();
@@ -129,12 +117,6 @@ namespace IoTGateway.ViewModels
             _client.Connect();
             #endregion
 
-            #region 自分自身のブローカー
-            //不要
-            //_cloud = new CloudIoT();
-            //_cloud.Dispatcher = this.Dispatcher;
-            //_cloud.Connect();
-            #endregion
         }
 
         #region プロパティ
@@ -261,7 +243,10 @@ namespace IoTGateway.ViewModels
             }
         }
 
-
+        public CloudVendor CurrentCloud
+        {
+            get { return CloudVendor.M2X; }
+        }
         #endregion
 
         #region イベント
@@ -269,10 +254,69 @@ namespace IoTGateway.ViewModels
         #endregion
 
         #region メソッド
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// まだこの作りは仮もの
+        /// </remarks>
+        private ICloudIoT CreateCloudIoT()
+        {
+            switch(CurrentCloud)
+            {
+                #region Azure
+                case CloudVendor.Azure:
+                    return new IoTCloud.azure.ClientIoT(_sensorContainer,
+                        new AzureSetting
+                        {
+                            ConnectingString = "HostName=AccelaIoT.azure-devices.net;DeviceId=devicea67d66dfaf86452f8d0480034316de75;SharedAccessKey=26Z1hRXJ7pswjKZc9jAU/AKY/D8H9b7JsFOOgvg/BLM="
+                        });
+                #endregion
+                #region Bluemix
+                case CloudVendor.Bluemix:
+                    return new IoTCloud.bluemix.ClientIoT(_sensorContainer, 
+                        new BluemixSettng
+                        {
+                            OrganaizeID = "ymn9fh",
+                            AuthToken = "AppSukekiyo",
+                            DeviceType = "SukekiyoApp",
+                            DeviceID = "64006a567f07",
+                            TargetTopic = "test"
+                        });
+                #endregion
+                #region M2X
+                case CloudVendor.M2X:
+                    return new IoTCloud.m2x.ClientIoT(_sensorContainer,
+                        new M2XSetting
+                        {
+                            DeviceID = "812c5fc4cdbd6bb2f0c2cbf88463052d",
+                            APIKey = "cc8281e30c022a5f4c0c49823d2a55fa",
+                            StreamName = "Accela_X",
+                            LocationName = "Seiyu Phone"
+                        });
+                #endregion
+                #region AWS
+                case CloudVendor.AWS:
+                    return new IoTCloud.aws.ClientIoT(_sensorContainer,
+                        new AwsSetting
+                        {
+                            IoTEndpoint = "127.0.0.1",
+                            CliendID = "123456789",
+                            TargetTopic = "Sakisaki"
+                        });
+                    #endregion
+            }
+
+            return null;
+        }
+
+        [Obsolete("使用禁止", true)]
         public string GetCloudName()
         {
             return _client.GetCloudName();
         }
+
         #endregion
     }
 }

@@ -21,9 +21,11 @@ namespace IoTCloud.azure
         //        ID=devicea67d66dfaf86452f8d0480034316de75
         //PrimaryKey = 26Z1hRXJ7pswjKZc9jAU/AKY/D8H9b7JsFOOgvg/BLM=
         //SecondaryKey=bh2xwPYRtnAnxyS9OpUEWKNoFb8qPgGjD/SV2gLs8Pg=
-        private const string _deviceCn = "HostName=AccelaIoT.azure-devices.net;DeviceId=devicea67d66dfaf86452f8d0480034316de75;SharedAccessKey=26Z1hRXJ7pswjKZc9jAU/AKY/D8H9b7JsFOOgvg/BLM=";
+        //private const string _deviceCn = "HostName=AccelaIoT.azure-devices.net;DeviceId=devicea67d66dfaf86452f8d0480034316de75;SharedAccessKey=26Z1hRXJ7pswjKZc9jAU/AKY/D8H9b7JsFOOgvg/BLM=";
+        private string _deviceCn = null;
 
         private DeviceClient _client = null;
+        private AzureSetting _azuresetting = null;
 
         override public string GetCloudName()
         {
@@ -39,9 +41,11 @@ namespace IoTCloud.azure
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ClientIoT(SensorContainer sensorContainer)
+        public ClientIoT(SensorContainer sensorContainer, ISettingCloud setting)
             :base(sensorContainer)
         {
+            _azuresetting = (AzureSetting)setting;
+            _deviceCn = _azuresetting.ConnectingString;
         }
 
         override public async void Publish(object sensor, string message)

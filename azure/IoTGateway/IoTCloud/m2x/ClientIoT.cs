@@ -19,10 +19,17 @@ namespace IoTCloud.m2x
     public class ClientIoT : BaseCloudIoT, ICloudIoT
     {
         private HttpClient _httpClient;
-        private Uri _resourceAddress = new Uri("https://api-m2x.att.com/v2/devices/812c5fc4cdbd6bb2f0c2cbf88463052d/streams/Accela_X/value");
-        private Uri _locationAddress = new Uri("https://api-m2x.att.com/v2/devices/812c5fc4cdbd6bb2f0c2cbf88463052d/location");
-        private string _locationName = "Seiyu Phone";
+        private Uri _resourceAddress = null;// new Uri("https://api-m2x.att.com/v2/devices/812c5fc4cdbd6bb2f0c2cbf88463052d/streams/Accela_X/value");
+        private Uri _locationAddress = null;//new Uri("https://api-m2x.att.com/v2/devices/812c5fc4cdbd6bb2f0c2cbf88463052d/location");
         private CancellationTokenSource _cts;
+
+        private string _m2Xaddress = string.Empty;
+        private string _deviceId = string.Empty;
+        private string _apiKey = string.Empty;
+        private string _streamName = string.Empty;
+        private string _locationName = string.Empty;
+
+        private M2XSetting _m2xsetting = null;
 
         override public string GetCloudName()
         {
@@ -38,9 +45,18 @@ namespace IoTCloud.m2x
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ClientIoT(SensorContainer sensorContainer)
+        public ClientIoT(SensorContainer sensorContainer, ISettingCloud setting)
             : base(sensorContainer)
         {
+            _m2xsetting = (M2XSetting)setting;
+            _m2Xaddress = _m2xsetting.M2Xaddress;
+            _deviceId = _m2xsetting.DeviceID;
+            _apiKey = _m2xsetting.APIKey;
+            _streamName = _m2xsetting.StreamName;
+            _locationName = _m2xsetting.LocationName;
+
+            _resourceAddress = new Uri($"{_m2Xaddress}/{_deviceId}/streams/{_streamName}/value");
+            _locationAddress = new Uri($"{_m2Xaddress}/{_deviceId}/location");
         }
 
         override public void Connect()
@@ -50,7 +66,7 @@ namespace IoTCloud.m2x
 
             #region M2Xはヘッダが必要
             // キーの値はデバイスのPRIMARY API KEY
-            _httpClient.DefaultRequestHeaders.Add("X-M2X-KEY", "cc8281e30c022a5f4c0c49823d2a55fa");
+            _httpClient.DefaultRequestHeaders.Add("X-M2X-KEY", _apiKey);
             #endregion
 
             NotifyConnected(this, null);

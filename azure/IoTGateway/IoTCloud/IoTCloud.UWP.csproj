@@ -116,6 +116,7 @@
     <Compile Include="m2x\ClientIoT.cs" />
     <Compile Include="m2x\PlugInFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingCloud.cs" />
     <EmbeddedResource Include="Properties\IoTCloud.rd.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -45,9 +45,9 @@ namespace IoTGateway
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            switch(_mainwindowVM.GetCloudName())
+            switch(_mainwindowVM.CurrentCloud)
             {
-                case "AWS":
+                case CloudVendor.AWS:
                     #region AWS
                     //
                     // AWSはnode-redを使うので自身のMQTTブローカをバックグラウンドで走らせる
@@ -113,15 +113,15 @@ namespace IoTGateway
                     #endregion
                     break;
 
-                case "Azure":
+                case CloudVendor.Azure:
                     _mainwindowVM.Init();
                     break;
 
-                case "M2X":
+                case CloudVendor.M2X:
                     _mainwindowVM.Init();
                     break;
 
-                case "Bluemix":
+                case CloudVendor.Bluemix:
                     _mainwindowVM.Init();
                     break;
             };

@@ -10,29 +10,14 @@ namespace IoTCloud.bluemix
 {
     public class ClientIoT : BaseCloudIoT, ICloudIoT
     {
-        /// <summary>
-        /// Watson IoT PlatformのID
-        /// このIDは自分で作れない、サービスを作成すると自動的に作られる
-        /// </summary>
-        private string _orgId = "ymn9fh";
+        private string _orgId = string.Empty;
+        private string _authToken = string.Empty;
+        private string _deviceType = string.Empty;
+        private string _deviceId = string.Empty;
+        private string _targettopic = string.Empty;
 
-        /// <summary>
-        /// デバイスに紐つけられているパスワード
-        /// デバイスタイプを作成するときに設定したもの
-        /// </summary>
-        private string _authToken = "AppSukekiyo";
-
-        /// <summary>
-        /// デバイスタイプ
-        /// </summary>
-        private string _deviceType = "SukekiyoApp";
-
-        /// <summary>
-        /// デバイスID
-        /// </summary>
-        private string _deviceId = "64006a567f07";
-        
         private DeviceClient _client = null;
+        private BluemixSettng _bluemixsetting = null;
 
         override public string GetCloudName()
         {
@@ -48,9 +33,15 @@ namespace IoTCloud.bluemix
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ClientIoT(SensorContainer sensorContainer)
+        public ClientIoT(SensorContainer sensorContainer, ISettingCloud setting)
             : base(sensorContainer)
         {
+            _bluemixsetting = (BluemixSettng)setting;
+            _orgId = _bluemixsetting.OrganaizeID;
+            _authToken = _bluemixsetting.AuthToken;
+            _deviceId = _bluemixsetting.DeviceID;
+            _deviceType = _bluemixsetting.DeviceType;
+            _targettopic = _bluemixsetting.TargetTopic;
         }
 
         override public void Publish(object sensor, string message)
@@ -59,7 +50,7 @@ namespace IoTCloud.bluemix
             {
                 if (sensor is SiRSensors.AccelOnBoard || sensor is SiRSensors.AccelOverI2C)
                 {
-                    _client.publishEvent("test", "json", message, 0);
+                    _client.publishEvent(_targettopic, "json", message, 0);
                 }
             }
             catch { }

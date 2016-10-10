@@ -13,4 +13,13 @@ namespace IoTGateway.Common
         Running,
         Error
     }
+
+    public enum CloudVendor
+    {
+        Unknown,
+        AWS,
+        Azure,
+        Bluemix,
+        M2X
+    }
 }

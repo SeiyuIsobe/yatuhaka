@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace IoTCloud
 {
-    interface ICloudIoT
+    public interface ICloudIoT
     {
         string GetCloudName();
         void SendSensorData();
         void InitSensor();
         void Connect();
         void Publish(object sensor, string message);
+
+        event EventHandler Connected;
+        event EventHandler Disconnected;
+        event EventHandler ReceivedMessage;
     }
 }
