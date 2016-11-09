@@ -1,5 +1,6 @@
-﻿using IoTGateway.Common.DataModels;
-using IoTGateway.Common.Interfaces;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Interfaces;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Sensor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.I2c;
-using IoTGateway.Common;
 using Windows.Devices.Sensors;
 using Windows.Devices.Geolocation;
 
@@ -48,14 +48,8 @@ namespace SiRSensors
                     _watcher.PositionChanged += this._watcher_PositionChanged;
                     _watcher.StatusChanged += this._watcher_StatusChanged;
 
-                    try
-                    {
-                        Geoposition pos = await _watcher.GetGeopositionAsync();
-                    }
-                    catch
-                    {
-                        _watcher = null;
-                    }
+                    Geoposition pos = await _watcher.GetGeopositionAsync();
+
                 }
 
             }

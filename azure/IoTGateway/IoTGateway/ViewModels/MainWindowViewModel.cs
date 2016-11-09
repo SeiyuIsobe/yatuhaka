@@ -245,7 +245,7 @@ namespace IoTGateway.ViewModels
 
         public CloudVendor CurrentCloud
         {
-            get { return CloudVendor.M2X; }
+            get { return CloudVendor.AWS; }
         }
         #endregion
 
