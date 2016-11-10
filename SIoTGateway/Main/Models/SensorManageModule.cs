@@ -51,7 +51,12 @@ namespace Main.Models
             // デバイスを登録しているAzure StrageのTableサービスに接続するオブジェクトを生成する
             deviceStorage = new VirtualDeviceTableStorage(configProvider, tableStorageClientFactory);
 
-            IDeviceFactory deviceFactory = new CoolerDeviceFactory();
+            //
+            // ここでCoolerDeviceFactoryに決め打ってしまっているのは良くない
+            //
+            //IDeviceFactory deviceFactory = new CoolerDeviceFactory();
+            // デバイス名に埋め込まれた種類によってデバイスを作成するAnyDeviceFactoryを使うことにする
+            IDeviceFactory deviceFactory = new AnyDeviceFactory();
 
             //// Start Simulator
             var tester = new BulkDeviceTester(transportFactory, logger, configProvider, telemetryFactory, deviceFactory, deviceStorage);

@@ -137,6 +137,7 @@
     <Compile Include="Helpers\DocumentDBClient.cs" />
     <Compile Include="Helpers\DynamicValuesHelper.cs" />
     <Compile Include="Helpers\FunctionalHelper.cs" />
+    <Compile Include="Helpers\GetDeviceKindHelper.cs" />
     <Compile Include="Helpers\IAzureTableStorageClient.cs" />
     <Compile Include="Helpers\IAzureTableStorageClientFactory.cs" />
     <Compile Include="Helpers\IBlobStorageClient.cs" />

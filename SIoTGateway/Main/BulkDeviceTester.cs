@@ -110,10 +110,17 @@ namespace Main
                     }
 
                     //begin processing any new devices that were retrieved
+                    //
+                    // デバイス
+                    // クラウドにあってこちらに無いデバイス
                     if (newDevices.Any())
                     {
                         var devicesToProcess = new List<IDevice>();
 
+                        // ここでAzureから取得できるデバイスの情報には、デバイス名、接続文字列、キーの3つなので
+                        // デバイスの種類が何なのか分からない
+                        // ↓
+                        // デバイスの種類が分かるようにデバイス名にデバイスの種類を埋め込む
                         foreach (var deviceConfig in newDevices)
                         {
                             //_logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
