@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
+using SIoTBroker;
 using SIoTGateway.Cooler.Devices.Factory;
 using SIoTGateway.Cooler.Telemetry.Factory;
 using SIotGatewayCore.Devices.Factory;
@@ -39,12 +40,14 @@ namespace Main.Models
         }
 
         private List<SensorManageModule> _sensorModuleList = new List<SensorManageModule>();
+        private SIoTBroker.SIoTBroker _broker = new SIoTBroker.SIoTBroker();
 
         /// <summary>
         /// IoTゲートウェイサービスを開始する
         /// </summary>
         public async void Start()
         {
+
             await Task.Run(async () =>
             {
                 var startDeviceTasks = new List<Task>();
