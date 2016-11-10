@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
         public static void Connect()
         {
             MqttClient client = null;
-            string iotEndpoint = "192.168.11.12";
+            string iotEndpoint = "127.0.0.1";
             string clientID = "123456789";
             string topic = string.Empty;
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using uPLibrary.Networking.M2Mqtt;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -83,7 +84,7 @@ namespace Main
 
                     if (prg == 555) // タスクがスタートしたという合図
                     {
-                        MqttHelper.Connect();
+                        
                     }
                 };
 
