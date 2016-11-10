@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Interfaces;
 using SiRSensors;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,11 @@ namespace SensorModuleSimulator
                         this.YAxis = e3.Y;
                         this.ZAxis = e3.Z;
                     });
+
+                    if(null != _client)
+                    {
+                        Publish("hogehoge", ((ISensor)s2).Data);
+                    }
                 }
             };
             _sensor.Init();
@@ -134,33 +140,35 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        private string _iotEndpoint = "192.168.11.12";
+        private string _iotEndpoint = "192.168.11.9";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
 
         public void Connect()
         {
-            //try
-            //{
-            //    _client = new MqttClient(_iotEndpoint);
-            //    _client.Connect(_clientID);
-            //    if (true == _client.IsConnected)
-            //    {
-            //        //NotifyConnected(this, null);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(e.Message);
-            //}
+            try
+            {
+                _client = new MqttClient(_iotEndpoint);
+                _client.Connect(_clientID);
+                if (true == _client.IsConnected)
+                {
+                    //NotifyConnected(this, null);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+            }
 
-            MqttHelper.Connect();
+            //MqttHelper.Connect();
 
         }
 
-        public void Publish(object sensor, string message)
+        public void Publish(string topic, string message)
         {
-            _client.Publish(_topic, Encoding.UTF8.GetBytes(message));
+            _client.Publish(topic, Encoding.UTF8.GetBytes(message));
+
+            System.Diagnostics.Debug.WriteLine($"-> {message}");
         }
     }
 }
