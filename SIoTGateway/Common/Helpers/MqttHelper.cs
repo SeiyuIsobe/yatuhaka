@@ -9,12 +9,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
 {
     public static class MqttHelper
     {
-        public static void Connect()
+        public static MqttClient Connect(string iotEndpoint, string clientID, string topic)
         {
             MqttClient client = null;
-            string iotEndpoint = "127.0.0.1";
-            string clientID = "123456789";
-            string topic = string.Empty;
 
             try
             {
@@ -22,13 +19,15 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
                 client.Connect(clientID);
                 if (true == client.IsConnected)
                 {
-                    //NotifyConnected(this, null);
+                    return client;
                 }
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
             }
+
+            return null;
         }
              
     }

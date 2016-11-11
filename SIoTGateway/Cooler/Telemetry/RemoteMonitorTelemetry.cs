@@ -8,6 +8,10 @@ using SIotGatewayCore.Telemetry;
 using SiRSensors;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Sensor;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using uPLibrary.Networking.M2Mqtt;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace SIoTGateway.Cooler.Telemetry
 {
@@ -39,6 +43,12 @@ namespace SIoTGateway.Cooler.Telemetry
         private double AccelaZ { get; set; } = 0.0;
         #endregion
 
+        #region MQTT
+        private MqttClient _mqtt = null;
+        #endregion
+
+        private Func<object, Task> _sendMessageAsync = null;
+
         public RemoteMonitorTelemetry(ILogger logger, string deviceId)
         {
             _logger = logger;
@@ -53,6 +63,30 @@ namespace SIoTGateway.Cooler.Telemetry
             _humidityGenerator = new SampleDataGenerator(20, 50);
             _externalTemperatureGenerator = new SampleDataGenerator(-20, 120);
 
+            // MQTT
+            _mqtt = MqttHelper.Connect("127.0.0.1", deviceId, /*deviceId*/"hogehoge");
+            _mqtt.Subscribe(new string[] { "hogehoge" }, new byte[] { 0 });
+            _mqtt.MqttMsgPublishReceived += async (sender, e) =>
+            {
+                var msg = Encoding.UTF8.GetString(e.Message);
+                var topic = e.Topic;
+
+                AccelaData data = JsonConvert.DeserializeObject<AccelaData>(msg);
+
+                System.Diagnostics.Debug.WriteLine($"-> {topic}, {msg}");
+
+                var monitorData = new RemoteMonitorTelemetryData();
+                monitorData.DeviceId = _deviceId;
+                monitorData.Temperature = data.X;
+                monitorData.Humidity = data.Y;
+
+                if(null != _sendMessageAsync)
+                {
+                    await _sendMessageAsync(monitorData);
+                }
+            };
+
+
             // 加速度センサー
             _accelOnBoard = new AccelOnBoard();
             _accelOnBoard.ValueChanged += (sender, e) =>
@@ -64,7 +98,18 @@ namespace SIoTGateway.Cooler.Telemetry
             _accelOnBoard.InitAsync();
         }
 
-        public async Task SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync)
+        public Task SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync)
+        {
+            // これ必要
+            _sendMessageAsync = sendMessageAsync;
+
+            while (true)
+            {
+            }
+        }
+
+        // 使わない
+        public async Task botu_SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync)
         {
             var monitorData = new RemoteMonitorTelemetryData();
             //string messageBody; 何に使われている？
@@ -73,28 +118,15 @@ namespace SIoTGateway.Cooler.Telemetry
                 if (TelemetryActive)
                 {
                     monitorData.DeviceId = _deviceId;
-
-                    // 加速度にすげ替え ->
-                    //monitorData.Temperature = _temperatureGenerator.GetNextValue();
-                    //monitorData.Humidity = _humidityGenerator.GetNextValue();
-                    // <-
-                    // ->
-                    monitorData.Temperature = this.AccelaX;
-                    monitorData.Humidity = this.AccelaY;
-                    // <-
+                    monitorData.Temperature = _temperatureGenerator.GetNextValue();
+                    monitorData.Humidity = _humidityGenerator.GetNextValue();
 
                     //messageBody = "Temperature: " + Math.Round(monitorData.Temperature, 2)
                     //    + " Humidity: " + Math.Round(monitorData.Humidity, 2);
 
                     if (ActivateExternalTemperature)
                     {
-                        // 加速度にすげ替え ->
                         monitorData.ExternalTemperature = _externalTemperatureGenerator.GetNextValue();
-                        // <-
-                        // ->
-                        //monitorData.ExternalTemperature = this.AccelaZ;
-                        // <-
-
                         //messageBody += " External Temperature: " + Math.Round((double)monitorData.ExternalTemperature, 2);
                     }
                     else

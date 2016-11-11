@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using uPLibrary.Networking.M2Mqtt;
 using Windows.Foundation;
@@ -32,40 +33,94 @@ namespace SensorModuleSimulator
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         private AccelOnBoard _sensor = null;
+        private AccelOverI2C _accelSensor = null;
 
         public MainPage()
         {
             this.InitializeComponent();
 
             this.DataContext = this;
+
+            this.Connected += (sender, e) =>
+            {
+                this.MessageFromCloud = "接続しました";
+
+                _sensor = new AccelOnBoard();
+
+                _sensor.ValueChanged += async (s2, e2) =>
+                {
+                    var e3 = e2 as AccelEventArgs;
+                    if (null != e3)
+                    {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            this.XAxis = e3.X;
+                            this.YAxis = e3.Y;
+                            this.ZAxis = e3.Z;
+                        });
+
+                        if (null != _client)
+                        {
+                            Publish("hogehoge", ((ISensor)s2).Data);
+                        }
+                    }
+                };
+                _sensor.Init();
+
+                #region ラズパイ直結の加速度センサー、I2Cで通信する
+                _accelSensor = new AccelOverI2C();
+                _accelSensor.Interval = 1000;
+                _accelSensor.ValueChanged += async (s2, e2) =>
+                {
+                    var e3 = e2 as AccelEventArgs;
+                    if (null != e3)
+                    {
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                        {
+                            this.XAxis = e3.X;
+                            this.YAxis = e3.Y;
+                            this.ZAxis = e3.Z;
+                        });
+
+                        if (null != _client)
+                        {
+                            Publish("hogehoge", ((ISensor)s2).Data);
+                        }
+                    }
+                };
+                _accelSensor.Init();
+                #endregion
+
+            };
+
+            this.ErrorConnect += (sender, e) =>
+            {
+                System.Diagnostics.Debug.WriteLine("-> ブローカーに接続できませんでした");
+                System.Diagnostics.Debug.WriteLine("-> 10秒後に再トライします");
+
+                this.MessageFromCloud = "10秒後に再トライします : " + DateTime.Now.ToString();
+
+                _periodicTimer = new Timer((s) =>
+                {
+                    _periodicTimer.Dispose();
+                    _periodicTimer = null;
+
+                    System.Diagnostics.Debug.WriteLine("-> 接続を再トライします");
+
+                    Connect();
+
+                }, null, 10000, Timeout.Infinite);
+            };
         }
+
+        private Timer _periodicTimer;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Task.Run(() => Task.Delay(5000)).Wait();
+            //Task.Run(() => Task.Delay(5000)).Wait();
 
             Connect();
-
-            _sensor = new AccelOnBoard();
-            _sensor.ValueChanged += async (s2, e2) =>
-            {
-                var e3 = e2 as AccelEventArgs;
-                if (null != e3)
-                {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        this.XAxis = e3.X;
-                        this.YAxis = e3.Y;
-                        this.ZAxis = e3.Z;
-                    });
-
-                    if(null != _client)
-                    {
-                        Publish("hogehoge", ((ISensor)s2).Data);
-                    }
-                }
-            };
-            _sensor.Init();
+            
         }
 
         #region INotifyPropertyChanged
@@ -140,7 +195,7 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        private string _iotEndpoint = "192.168.11.9";
+        private string _iotEndpoint = "172.31.62.176";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
 
@@ -152,12 +207,14 @@ namespace SensorModuleSimulator
                 _client.Connect(_clientID);
                 if (true == _client.IsConnected)
                 {
-                    //NotifyConnected(this, null);
+                    if (null != Connected) Connected(null, null);
                 }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.Message);
+                _client = null;
+
+                if (null != ErrorConnect) ErrorConnect(null, null);
             }
 
             //MqttHelper.Connect();
@@ -169,6 +226,24 @@ namespace SensorModuleSimulator
             _client.Publish(topic, Encoding.UTF8.GetBytes(message));
 
             System.Diagnostics.Debug.WriteLine($"-> {message}");
+        }
+
+        public event EventHandler Connected;
+        public event EventHandler ErrorConnect;
+
+        private string _message = string.Empty;
+        public string MessageFromCloud
+        {
+            get
+            {
+                return _message;
+            }
+
+            set
+            {
+                _message = value;
+                NotifyPropertyChanged();
+            }
         }
     }
 }

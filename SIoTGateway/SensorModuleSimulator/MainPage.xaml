@@ -34,14 +34,14 @@
                     <TextBlock x:Name="txtZAxis" Text="{Binding ZAxis}"/>
                     <!--<TextBlock x:Name="_txtZAxis"/>-->
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <!--<StackPanel Orientation="Horizontal">
                     <TextBlock Text="Latitude:"/>
                     <TextBlock x:Name="txtLatitude" Text="{Binding Latitude}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Longitude:"/>
                     <TextBlock x:Name="txtLongitude" Text="{Binding Longitude}"/>
-                </StackPanel>
+                </StackPanel>-->
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Receive:"/>
                     <TextBlock Text="{Binding MessageFromCloud}" Width="400"/>

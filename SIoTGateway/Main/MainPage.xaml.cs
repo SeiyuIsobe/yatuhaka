@@ -31,18 +31,11 @@ namespace Main
         public MainPage()
         {
             this.InitializeComponent();
-
-            _mainwindowVM = new ViewModels.MainWindowViewModel();
-            _mainwindowVM.Dispatcher = Dispatcher;
-
-            this.DataContext = _mainwindowVM;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             StartBroker();
-
-            //_mainwindowVM.Run();
         }
 
         private void _sensor_attach_Click(object sender, RoutedEventArgs e)
@@ -78,13 +71,24 @@ namespace Main
                 await registration;
 
                 // タスク進捗のイベント
-                ((IBackgroundTaskRegistration)registration.Result).Progress += (ss, ee) =>
+                ((IBackgroundTaskRegistration)registration.Result).Progress += async (ss, ee) =>
                 {
                     int prg = (int)(ee.Progress);
 
                     if (prg == 555) // タスクがスタートしたという合図
                     {
-                        
+                        if (null == _mainwindowVM)
+                        {
+                            _mainwindowVM = new ViewModels.MainWindowViewModel();
+                            _mainwindowVM.Dispatcher = Dispatcher;
+
+                            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                            {
+                                this.DataContext = _mainwindowVM;
+                                _mainwindowVM.Run();
+                            });
+                            
+                        }
                     }
                 };
 
