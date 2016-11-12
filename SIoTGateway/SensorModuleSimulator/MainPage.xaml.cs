@@ -41,9 +41,12 @@ namespace SensorModuleSimulator
 
             this.DataContext = this;
 
-            this.Connected += (sender, e) =>
+            this.Connected += async (sender, e) =>
             {
-                this.MessageFromCloud = "接続しました";
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    this.MessageFromCloud = "接続しました";
+                });
 
                 _sensor = new AccelOnBoard();
 
@@ -93,12 +96,15 @@ namespace SensorModuleSimulator
 
             };
 
-            this.ErrorConnect += (sender, e) =>
+            this.ErrorConnect += async (sender, e) =>
             {
                 System.Diagnostics.Debug.WriteLine("-> ブローカーに接続できませんでした");
                 System.Diagnostics.Debug.WriteLine("-> 10秒後に再トライします");
 
-                this.MessageFromCloud = "10秒後に再トライします : " + DateTime.Now.ToString();
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    this.MessageFromCloud = "10秒後に再トライします : " + DateTime.Now.ToString();
+                });
 
                 _periodicTimer = new Timer((s) =>
                 {

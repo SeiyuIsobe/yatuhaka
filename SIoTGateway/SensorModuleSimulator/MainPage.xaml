@@ -14,7 +14,7 @@
                 <Style TargetType="TextBlock">
                     <Setter Property="HorizontalAlignment" Value="Left"/>
                     <Setter Property="VerticalAlignment" Value="Top"/>
-                    <Setter Property="Width" Value="200"/>
+                    <Setter Property="Width" Value="600"/>
                     <Setter Property="FontSize" Value="30"/>
                 </Style>
             </StackPanel.Resources>
@@ -43,8 +43,8 @@
                     <TextBlock x:Name="txtLongitude" Text="{Binding Longitude}"/>
                 </StackPanel>-->
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Receive:"/>
-                    <TextBlock Text="{Binding MessageFromCloud}" Width="400"/>
+                    <TextBlock Text="Receive:" Width="137"/>
+                    <TextBlock Text="{Binding MessageFromCloud}" Width="600"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
