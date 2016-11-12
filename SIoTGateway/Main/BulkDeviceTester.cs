@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using SIotGatewayCore.Devices;
@@ -31,6 +33,8 @@ namespace Main
 
         private const int DEFAULT_DEVICE_POLL_INTERVAL_SECONDS = 120;
 
+        private SensorModuleWatcher _sensormoduleWatcher = null;
+
         public BulkDeviceTester(ITransportFactory transportFactory, ILogger logger, IConfigurationProvider configProvider,
             ITelemetryFactory telemetryFactory, IDeviceFactory deviceFactory, IVirtualDeviceStorage virtualDeviceStorage)
         {
@@ -47,6 +51,23 @@ namespace Main
                                         DEFAULT_DEVICE_POLL_INTERVAL_SECONDS.ToString(CultureInfo.InvariantCulture));
 
             _devicePollIntervalSeconds = Convert.ToInt32(pollingIntervalString, CultureInfo.InvariantCulture);
+
+            // センサー基盤から送られてくるデバイス名の一覧を受信する
+            _sensormoduleWatcher = new SensorModuleWatcher();
+            _sensormoduleWatcher.ReceivedDeviceNames += (sender, e) =>
+            {
+                var sensorlist = SensorList.ToObject(sender.ToString());
+
+                // 受信したものは既に登録されているかどうかも構わずクラウドに登録する
+                foreach (string id in sensorlist.Sensors)
+                {
+                    DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
+                    //var generator = new  SecurityKeyGenerator
+                    //SecurityKeys generatedSecurityKeys = (new SecurityKeyGenerator()).
+                    //_securityKeyGenerator.CreateRandomKeys();
+                    //await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
+                }
+            };
         }
 
         /// <summary>

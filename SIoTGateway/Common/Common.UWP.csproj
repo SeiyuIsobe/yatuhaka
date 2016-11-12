@@ -173,6 +173,7 @@
     <Compile Include="SampleDataGenerator\RandomGenerator.cs" />
     <Compile Include="SampleDataGenerator\SampleDataGenerator.cs" />
     <Compile Include="Schema\SchemaHelper.cs" />
+    <Compile Include="SensorModuleWatcher.cs" />
     <EmbeddedResource Include="Properties\Common.rd.xml" />
   </ItemGroup>
   <ItemGroup>
