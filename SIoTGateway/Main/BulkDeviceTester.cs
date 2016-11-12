@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Web.Http;
 
 namespace Main
 {
@@ -68,6 +69,14 @@ namespace Main
                     //_securityKeyGenerator.CreateRandomKeys();
                     //await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
                     var device_json = JsonConvert.SerializeObject(device);
+
+                    HttpClient httpClient = new HttpClient();
+                    CancellationTokenSource _cts = new CancellationTokenSource();
+
+                    var response = httpClient.PostAsync(
+                        new Uri("https://localhost:44305/api/v1/devices"),
+                        new HttpStringContent(device_json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json")
+                        ).AsTask(_cts.Token);
                 }
             };
         }
