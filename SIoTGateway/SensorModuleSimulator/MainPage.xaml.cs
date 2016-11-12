@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Interfaces;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using SiRSensors;
 using System;
 using System.Collections.Generic;
@@ -48,52 +49,7 @@ namespace SensorModuleSimulator
                     this.MessageFromCloud = "接続しました";
                 });
 
-                _sensor = new AccelOnBoard();
-
-                _sensor.ValueChanged += async (s2, e2) =>
-                {
-                    var e3 = e2 as AccelEventArgs;
-                    if (null != e3)
-                    {
-                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                        {
-                            this.XAxis = e3.X;
-                            this.YAxis = e3.Y;
-                            this.ZAxis = e3.Z;
-                        });
-
-                        if (null != _client)
-                        {
-                            Publish("hogehoge", ((ISensor)s2).Data);
-                        }
-                    }
-                };
-                _sensor.Init();
-
-                #region ラズパイ直結の加速度センサー、I2Cで通信する
-                _accelSensor = new AccelOverI2C();
-                _accelSensor.Interval = 1000;
-                _accelSensor.ValueChanged += async (s2, e2) =>
-                {
-                    var e3 = e2 as AccelEventArgs;
-                    if (null != e3)
-                    {
-                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                        {
-                            this.XAxis = e3.X;
-                            this.YAxis = e3.Y;
-                            this.ZAxis = e3.Z;
-                        });
-
-                        if (null != _client)
-                        {
-                            Publish("hogehoge", ((ISensor)s2).Data);
-                        }
-                    }
-                };
-                _accelSensor.Init();
-                #endregion
-
+                Init();
             };
 
             this.ErrorConnect += async (sender, e) =>
@@ -126,7 +82,69 @@ namespace SensorModuleSimulator
             //Task.Run(() => Task.Delay(5000)).Wait();
 
             Connect();
-            
+          
+        }
+
+        private void Init()
+        {
+            // デバイス名をGWに送る
+            SendDeviceNames();
+
+            #region 加速度センサー
+            _sensor = new AccelOnBoard();
+
+            _sensor.ValueChanged += async (s2, e2) =>
+            {
+                var e3 = e2 as AccelEventArgs;
+                if (null != e3)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.XAxis = e3.X;
+                        this.YAxis = e3.Y;
+                        this.ZAxis = e3.Z;
+                    });
+
+                    if (null != _client)
+                    {
+                        Publish("hogehoge", ((ISensor)s2).Data);
+                    }
+                }
+            };
+            _sensor.Init();
+            #endregion
+
+            #region ラズパイ直結の加速度センサー、I2Cで通信する
+            _accelSensor = new AccelOverI2C();
+            _accelSensor.Interval = 1000;
+            _accelSensor.ValueChanged += async (s2, e2) =>
+            {
+                var e3 = e2 as AccelEventArgs;
+                if (null != e3)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.XAxis = e3.X;
+                        this.YAxis = e3.Y;
+                        this.ZAxis = e3.Z;
+                    });
+
+                    if (null != _client)
+                    {
+                        Publish("hogehoge", ((ISensor)s2).Data);
+                    }
+                }
+            };
+            _accelSensor.Init();
+            #endregion
+        }
+
+        private void SendDeviceNames()
+        {
+            SensorList list = new SensorList();
+            list.Sensors.Add("_SMx12345_SNm54321_DKCooler_");
+
+            Publish("SendDeviceNames", list.ToString());
         }
 
         #region INotifyPropertyChanged
@@ -201,7 +219,7 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        private string _iotEndpoint = "172.31.62.176";
+        private string _iotEndpoint = "192.168.11.10";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
 
