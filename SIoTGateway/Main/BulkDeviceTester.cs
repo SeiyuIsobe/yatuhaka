@@ -3,6 +3,7 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configuration
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
+using Newtonsoft.Json;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Devices.Factory;
 using SIotGatewayCore.Logging;
@@ -66,6 +67,7 @@ namespace Main
                     //SecurityKeys generatedSecurityKeys = (new SecurityKeyGenerator()).
                     //_securityKeyGenerator.CreateRandomKeys();
                     //await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
+                    var device_json = JsonConvert.SerializeObject(device);
                 }
             };
         }
