@@ -142,6 +142,7 @@
     <Compile Include="Helpers\IAzureTableStorageClientFactory.cs" />
     <Compile Include="Helpers\IBlobStorageClient.cs" />
     <Compile Include="Helpers\IBlobStorageClientFactory.cs" />
+    <Compile Include="Helpers\ICustomTypeDescriptor.cs" />
     <Compile Include="Helpers\IDocumentDBClient.cs" />
     <Compile Include="Helpers\MqttHelper.cs" />
     <Compile Include="Helpers\ParsingHelper.cs" />

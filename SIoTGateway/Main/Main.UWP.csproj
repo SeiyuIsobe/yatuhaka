@@ -96,7 +96,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BulkDeviceTester.cs" />
+    <Compile Include="DataInitialization\DataInitializer.cs" />
+    <Compile Include="DataInitialization\IDataInitializer.cs" />
     <Compile Include="DeviceManager.cs" />
+    <Compile Include="GatewayModule.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
     <ProjectReference Include="..\Cooler\Cooler.UWP.csproj">
       <Project>{2c561dc8-6d78-4e01-927f-81aa4c8f3134}</Project>
       <Name>Cooler.UWP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.UWP.csproj">
+      <Project>{8e372b79-7ced-4ef3-9bf2-2e67f9b69c43}</Project>
+      <Name>Infrastructure.UWP</Name>
     </ProjectReference>
     <ProjectReference Include="..\SIoTBrorker\SIoTBroker.UWP.csproj">
       <Project>{f797f431-96a6-4a5a-9063-8dfe08ffe442}</Project>

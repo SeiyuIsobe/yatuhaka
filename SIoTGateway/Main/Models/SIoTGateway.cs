@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
+﻿using Autofac;
+using Main.DataInitialization;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using SIoTBroker;
@@ -26,6 +28,8 @@ namespace Main.Models
             _cancellationTokens = new Dictionary<string, CancellationTokenSource>();
             
             _sensorModuleList.Add(new SensorManageModule() { ModuleID = "aaa" });
+
+            BuildContainer();
         }
 
         internal void ActivatedSensor(string sensorModuleID)
@@ -47,6 +51,10 @@ namespace Main.Models
         /// </summary>
         public async void Start()
         {
+            // 断念
+            // サンプルを参考にしても同じように動かない
+            //var creator = _gatewayContainer.Resolve<IDataInitializer>();
+            //creator.BootstrapDevice("aaa");
 
             await Task.Run(async () =>
             {
@@ -72,6 +80,14 @@ namespace Main.Models
             }
 
             _cancellationTokens.Clear();
+        }
+
+        private IContainer _gatewayContainer;
+        public void BuildContainer()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterModule(new GatewayModule());
+            _gatewayContainer = builder.Build();
         }
     }
 }
