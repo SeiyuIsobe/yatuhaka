@@ -31,19 +31,6 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices/1.0.16": {
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.3",
-          "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86"
-        },
-        "compile": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        }
-      },
       "Microsoft.Azure.Devices.Client/1.0.21": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
@@ -2305,19 +2292,6 @@
         },
         "runtime": {
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
-        }
-      },
-      "Microsoft.Azure.Devices/1.0.16": {
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.3",
-          "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86"
-        },
-        "compile": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
         }
       },
       "Microsoft.Azure.Devices.Client/1.0.21": {
@@ -4661,19 +4635,6 @@
         },
         "runtime": {
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
-        }
-      },
-      "Microsoft.Azure.Devices/1.0.16": {
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.3",
-          "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86"
-        },
-        "compile": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
         }
       },
       "Microsoft.Azure.Devices.Client/1.0.21": {
@@ -7058,19 +7019,6 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices/1.0.16": {
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.3",
-          "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86"
-        },
-        "compile": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        }
-      },
       "Microsoft.Azure.Devices.Client/1.0.21": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
@@ -9421,19 +9369,6 @@
         },
         "runtime": {
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
-        }
-      },
-      "Microsoft.Azure.Devices/1.0.16": {
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.3",
-          "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86"
-        },
-        "compile": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
         }
       },
       "Microsoft.Azure.Devices.Client/1.0.21": {
@@ -11827,19 +11762,6 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices/1.0.16": {
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.3",
-          "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86"
-        },
-        "compile": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        }
-      },
       "Microsoft.Azure.Devices.Client/1.0.21": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
@@ -14190,19 +14112,6 @@
         },
         "runtime": {
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
-        }
-      },
-      "Microsoft.Azure.Devices/1.0.16": {
-        "dependencies": {
-          "Microsoft.AspNet.WebApi.Client": "5.2.3",
-          "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86"
-        },
-        "compile": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
-        },
-        "runtime": {
-          "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll": {}
         }
       },
       "Microsoft.Azure.Devices.Client/1.0.21": {
@@ -16628,21 +16537,6 @@
         "lib/net451/Microsoft.Azure.Amqp.XML",
         "lib/net451/Microsoft.Azure.Amqp.dll",
         "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll"
-      ]
-    },
-    "Microsoft.Azure.Devices/1.0.16": {
-      "sha512": "r938pBbAdN0ybphN/7a4xxnRtNLZ1ge79Sz6AsPJQuT8h0Y78lQ/SP/r6AWngZnwsINB+HyoOJAqU+OyuLY9KQ==",
-      "type": "package",
-      "path": "Microsoft.Azure.Devices/1.0.16",
-      "files": [
-        "Microsoft.Azure.Devices.1.0.16.nupkg.sha512",
-        "Microsoft.Azure.Devices.nuspec",
-        "lib/net451/Microsoft.Azure.Devices.XML",
-        "lib/net451/Microsoft.Azure.Devices.dll",
-        "lib/uap10.0/Microsoft.Azure.Devices.Uwp.XML",
-        "lib/uap10.0/Microsoft.Azure.Devices.Uwp.dll",
-        "lib/uap10.0/Microsoft.Azure.Devices.Uwp.pri",
-        "thirdpartynotice.txt"
       ]
     },
     "Microsoft.Azure.Devices.Client/1.0.21": {
@@ -23279,7 +23173,6 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.Azure.Devices >= 1.0.16",
       "Microsoft.Azure.Devices.Client >= 1.0.21",
       "Microsoft.Azure.Devices.Client.PCL >= 1.0.16",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",

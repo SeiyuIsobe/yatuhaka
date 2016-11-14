@@ -81,7 +81,7 @@ namespace SensorModuleSimulator
         {
             //Task.Run(() => Task.Delay(5000)).Wait();
 
-            Connect();
+            //Connect();
           
         }
 
@@ -268,6 +268,39 @@ namespace SensorModuleSimulator
                 _message = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        private void _ipclear_Click(object sender, RoutedEventArgs e)
+        {
+            _ip.Text = string.Empty;
+        }
+
+        private async void _ipaccept_Click(object sender, RoutedEventArgs e)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                _iotEndpoint = _ip.Text;
+
+                Connect();
+            });
+        }
+
+        private void _sougouDC_ip_Click(object sender, RoutedEventArgs e)
+        {
+            _ip.Text = _sougouDC_ip.Content.ToString();
+        }
+
+        private void _aterm_ip_Click(object sender, RoutedEventArgs e)
+        {
+            _ip.Text = _aterm_ip.Content.ToString();
+        }
+
+        private void _b0_Click(object sender, RoutedEventArgs e)
+        {
+            var b = sender as Button;
+            var number = b.Content.ToString();
+
+            _ip.Text = (_ip.Text + number);
         }
     }
 }

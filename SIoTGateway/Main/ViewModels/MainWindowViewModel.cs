@@ -4,15 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Main.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Main.ViewModels
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         #region プロパティ
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        // This method is called by the Set accessor of each property.
+        // The CallerMemberName attribute that is applied to the optional propertyName
+        // parameter causes the property name of the caller to be substituted as an argument.
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
+
         public Windows.UI.Core.CoreDispatcher Dispatcher { get; set; }
 
+        public string SelfIP
+        {
+            get
+            {
+                return _myIp;
+            }
 
+            set
+            {
+                if (value == string.Empty) return;
+                _myIp = value;
+                NotifyPropertyChanged();
+            }
+        }
         #endregion
 
         private Models.SIoTGateway _iotgateway = null;
@@ -32,5 +62,12 @@ namespace Main.ViewModels
         {
             _iotgateway.ActivatedSensor(sensorModuleID);
         }
+
+        public void GetMyIp(string ip)
+        {
+            this.SelfIP = ip;
+        }
+
+        private string _myIp = "127.0.0.1";
     }
 }

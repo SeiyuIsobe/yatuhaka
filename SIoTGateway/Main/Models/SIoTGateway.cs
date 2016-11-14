@@ -54,7 +54,7 @@ namespace Main.Models
             // 断念
             // サンプルを参考にしても同じように動かない
             //var creator = _gatewayContainer.Resolve<IDataInitializer>();
-            //creator.BootstrapDevice("aaa");
+            //creator.BootstrapDevice("aaaa23456789");
 
             await Task.Run(async () =>
             {

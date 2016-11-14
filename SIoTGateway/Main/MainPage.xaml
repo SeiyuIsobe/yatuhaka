@@ -13,6 +13,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="_sensor_attach" Content="センサー基板1アタッチ" Click="_sensor_attach_Click"/>
             </StackPanel>
+            <TextBlock Text="{Binding SelfIP}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         </StackPanel>
     </Grid>
 </Page>

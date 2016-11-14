@@ -46,6 +46,32 @@
                     <TextBlock Text="Receive:" Width="137"/>
                     <TextBlock Text="{Binding MessageFromCloud}" Width="600"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="_ip" Width="150" Height="25"/>
+                    <Button x:Name="_ipclear" Content="Clear" Click="_ipclear_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Button x:Name="_ipaccept" Content="Accept" Click="_ipaccept_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </StackPanel>
+                <StackPanel>
+                    <Grid Padding="0,10,0,0">
+                        <StackPanel Orientation="Vertical">
+                            <Button x:Name="_sougouDC_ip" Content="172.31.61." Click="_sougouDC_ip_Click"/>
+                            <Button x:Name="_aterm_ip" Content="192.168.61." Click="_aterm_ip_Click"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="_b0" Content="0" Click="_b0_Click"/>
+                                <Button x:Name="_b1" Content="1" Click="_b0_Click"/>
+                                <Button x:Name="_b2" Content="2" Click="_b0_Click"/>
+                                <Button x:Name="_b3" Content="3" Click="_b0_Click"/>
+                                <Button x:Name="_b4" Content="4" Click="_b0_Click"/>
+                                <Button x:Name="_b5" Content="5" Click="_b0_Click"/>
+                                <Button x:Name="_b6" Content="6" Click="_b0_Click"/>
+                                <Button x:Name="_b7" Content="7" Click="_b0_Click"/>
+                                <Button x:Name="_b8" Content="8" Click="_b0_Click"/>
+                                <Button x:Name="_b9" Content="9" Click="_b0_Click"/>
+                                <Button x:Name="_bp" Content="." Click="_b0_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

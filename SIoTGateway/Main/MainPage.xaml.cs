@@ -1,8 +1,11 @@
 ﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using uPLibrary.Networking.M2Mqtt;
 using Windows.ApplicationModel.Background;
@@ -86,6 +89,8 @@ namespace Main
                             {
                                 this.DataContext = _mainwindowVM;
                                 _mainwindowVM.Run();
+
+                                GetMyIp();
                             });
                             
                         }
@@ -116,6 +121,25 @@ namespace Main
                 //Signal the ApplicationTrigger
                 var result = await _trigger.RequestAsync();
             });
+        }
+
+        private async void GetMyIp()
+        {
+            var hostname = Dns.GetHostName();
+
+            var ips = await Dns.GetHostAddressesAsync(Dns.GetHostName());
+            foreach (IPAddress ip in ips)
+            {
+                //System.Diagnostics.Debug.WriteLine($"-> {ip.ToString()}");
+                if(ip.ToString().IndexOf("172.") == 0 || ip.ToString().IndexOf("192.") == 0)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        _mainwindowVM.GetMyIp(ip.ToString());
+                    });
+                    return;
+                }
+            }
         }
     }
 }
