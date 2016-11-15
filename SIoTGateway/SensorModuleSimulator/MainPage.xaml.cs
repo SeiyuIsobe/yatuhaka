@@ -55,24 +55,40 @@ namespace SensorModuleSimulator
             this.ErrorConnect += async (sender, e) =>
             {
                 System.Diagnostics.Debug.WriteLine("-> ブローカーに接続できませんでした");
-                System.Diagnostics.Debug.WriteLine("-> 10秒後に再トライします");
 
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                {
-                    this.MessageFromCloud = "10秒後に再トライします : " + DateTime.Now.ToString();
-                });
-
-                _periodicTimer = new Timer((s) =>
-                {
-                    _periodicTimer.Dispose();
-                    _periodicTimer = null;
-
-                    System.Diagnostics.Debug.WriteLine("-> 接続を再トライします");
-
-                    Connect();
-
-                }, null, 10000, Timeout.Infinite);
+                await RetryConnect();
             };
+
+            this.Disconnected += async (sender, e) =>
+            {
+                _sensor = null;
+                _accelSensor = null;
+
+                System.Diagnostics.Debug.WriteLine("-> ブローカーとの接続が切れました");
+
+                await RetryConnect();
+            };
+        }
+
+        private async Task RetryConnect()
+        {
+            System.Diagnostics.Debug.WriteLine("-> 3秒後に再トライします");
+
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                this.MessageFromCloud = "3秒後に再トライします : " + DateTime.Now.ToString();
+            });
+
+            _periodicTimer = new Timer((s) =>
+            {
+                _periodicTimer.Dispose();
+                _periodicTimer = null;
+
+                System.Diagnostics.Debug.WriteLine("-> 接続を再トライします");
+
+                Connect();
+
+            }, null, 3000, Timeout.Infinite);
         }
 
         private Timer _periodicTimer;
@@ -231,6 +247,13 @@ namespace SensorModuleSimulator
                 _client.Connect(_clientID);
                 if (true == _client.IsConnected)
                 {
+                    _client.ConnectionClosed += (sender, e) =>
+                    {
+                        _client = null;
+
+                        if (null != Disconnected) Disconnected(null, null);
+                    };
+
                     if (null != Connected) Connected(null, null);
                 }
             }
@@ -254,6 +277,7 @@ namespace SensorModuleSimulator
 
         public event EventHandler Connected;
         public event EventHandler ErrorConnect;
+        public event EventHandler Disconnected;
 
         private string _message = string.Empty;
         public string MessageFromCloud
