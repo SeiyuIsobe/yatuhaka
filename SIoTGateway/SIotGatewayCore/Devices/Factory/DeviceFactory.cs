@@ -10,6 +10,11 @@ namespace SIotGatewayCore.Devices.Factory
 {
     public class DeviceFactory : IDeviceFactory
     {
+        #region 受信イベント
+        public event EventHandler ReceivedTelemetry;
+        #endregion
+
+
         public IDevice CreateDevice(ILogger logger, ITransportFactory transportFactory, 
             ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider, InitialDeviceConfig config)
         {

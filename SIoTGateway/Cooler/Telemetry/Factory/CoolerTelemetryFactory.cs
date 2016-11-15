@@ -1,6 +1,7 @@
 ﻿using SIotGatewayCore.Devices;
 using SIotGatewayCore.Logging;
 using SIotGatewayCore.Telemetry.Factory;
+using System;
 
 namespace SIoTGateway.Cooler.Telemetry.Factory
 {
@@ -8,6 +9,9 @@ namespace SIoTGateway.Cooler.Telemetry.Factory
     {
         private readonly ILogger _logger;
 
+        #region 受信イベント
+        public event EventHandler ReceivedTelemetry;
+        #endregion
 
         public CoolerTelemetryFactory(ILogger logger)
         {
@@ -20,6 +24,13 @@ namespace SIoTGateway.Cooler.Telemetry.Factory
             device.TelemetryEvents.Add(startupTelemetry);
 
             var monitorTelemetry = new RemoteMonitorTelemetry(_logger, device.DeviceID);
+            monitorTelemetry.ReceivedTelemetry += (sender, e) =>
+            {
+                if (null != ReceivedTelemetry)
+                {
+                    ReceivedTelemetry(sender, null);
+                }
+            };
             device.TelemetryEvents.Add(monitorTelemetry);
 
             return monitorTelemetry;

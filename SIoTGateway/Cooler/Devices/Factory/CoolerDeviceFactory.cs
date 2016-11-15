@@ -6,11 +6,17 @@ using SIotGatewayCore.Devices.Factory;
 using SIotGatewayCore.Logging;
 using SIotGatewayCore.Telemetry.Factory;
 using SIotGatewayCore.Transport.Factory;
+using System;
 
 namespace SIoTGateway.Cooler.Devices.Factory
 {
     public class CoolerDeviceFactory : IDeviceFactory
     {
+        #region 受信イベント
+        public event EventHandler ReceivedTelemetry;
+        #endregion
+
+
         public IDevice CreateDevice(ILogger logger, ITransportFactory transportFactory,
             ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider, InitialDeviceConfig config)
         {

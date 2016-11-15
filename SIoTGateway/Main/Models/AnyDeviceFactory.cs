@@ -17,6 +17,11 @@ namespace Main.Models
 {
     public class AnyDeviceFactory : IDeviceFactory
     {
+        #region 受信イベント
+        public event EventHandler ReceivedTelemetry;
+        #endregion
+
+
         public IDevice CreateDevice(
             ILogger logger,
             ITransportFactory transportFactory,

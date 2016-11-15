@@ -50,7 +50,15 @@ namespace Main.ViewModels
         internal void Run()
         {
             _iotgateway = new Models.SIoTGateway();
+            _iotgateway.ReceivedTelemetry += async (sender, e) =>
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                {
+                    this.RecivedTelemetryData = sender.ToString();
+                });                
+            };
 
+            // ゲートウェイサービス開始
             _iotgateway.Start();
         }
 
@@ -69,5 +77,20 @@ namespace Main.ViewModels
         }
 
         private string _myIp = "127.0.0.1";
+
+        private string _recivedTelemetryData = string.Empty;
+        public string RecivedTelemetryData
+        {
+            get
+            {
+                return _recivedTelemetryData;
+            }
+
+            set
+            {
+                _recivedTelemetryData = value;
+                NotifyPropertyChanged();
+            }
+        }
     }
 }

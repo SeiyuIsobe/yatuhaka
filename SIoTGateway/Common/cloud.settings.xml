@@ -2,32 +2,32 @@
 <Environment version="1.0">
   <!-- General Settings -->
   <setting name="AllocationRegion" value="Japan West" />
-  <setting name="SubscriptionId" value="ef37b2a7-f60e-4328-a72a-8a178836e145" />
-  <setting name="ServiceStoreAccountName" value="localrmb85e8" />
-  <setting name="ServiceStoreAccountConnectionString" value="DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=localrmb85e8;AccountKey=bxvbhcGvOzVXjr/YpKQFcH+H+CaSIYObzeKfhi5dgkj5YqsdeNeXnbsV51NC8GvJkxoJebI49zupcrnXxeCrYQ==" />
-  <setting name="ServiceSBName" value="LocalRMcf696" />
-  <setting name="ServiceSBConnectionString" value="Endpoint=sb://localrmcf696.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=FMHuVTPOs2lUnSlD0wz/EN4XpUwXQ+ea0j8B6nPfYg8=" />
-  <setting name="ServiceEHName" value="LocalRM-ehout" />
+  <setting name="SubscriptionId" value="ec93a9d4-19f3-4aaf-b977-1f4404ec009d" />
+  <setting name="ServiceStoreAccountName" value="shimadzuiot" />
+  <setting name="ServiceStoreAccountConnectionString" value="DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=shimadzuiot;AccountKey=jP7UamQETBKjVdPDiH3HEydIdRr6xYpSyaAz6J6CD2mSBKOtjolQngDwNl2yVNCETXj8z28A5j8bep7a2NSVCw==" />
+  <setting name="ServiceSBName" value="shimadzuiot" />
+  <setting name="ServiceSBConnectionString" value="Endpoint=sb://shimadzuiot.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=2h8QuT9bD/ACZUmxUn4Y/NLP91t3mJffnn/4y6JSZIA=" />
+  <setting name="ServiceEHName" value="shimadzuiot-ehout" />
   <setting name="ServiceEHConsumerGroup" value="" />
-  <setting name="AzureAccountName" value="iseiyu@hotmail.co.jp" />
+  <setting name="AzureAccountName" value="isobe.seiyu.xc@shimadzu.jp" />
   <!-- IotHub section -->
-  <setting name="IotHubName" value="LocalRMaecbe.azure-devices.net" />
-  <setting name="IotHubConnectionString" value="HostName=LocalRMaecbe.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=zDNa122mD7HkQjVT/chmflwZt3jRqLQ21rHZwV5R0Vg=" />
+  <setting name="IotHubName" value="shimadzuiot.azure-devices.net" />
+  <setting name="IotHubConnectionString" value="HostName=shimadzuiot.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=vawbwr5VXMvEyWRllU+IwFmq9oasNy57CC8VCPWbNag=" />
   <!-- DocDB section -->
-  <setting name="DocDbEndPoint" value="https://localrm22b83.documents.azure.com:443/" />
-  <setting name="DocDBKey" value="IX6ZJEeXsWMZXnfM0wflb88IDh3oouP3FDKjjHuVR7QodFA4b7Fm0OiFJYPH2EjyYbNc3Wgrex7VFnYEL5OzUQ==" />
+  <setting name="DocDbEndPoint" value="https://shimadzuiot.documents.azure.com:443/" />
+  <setting name="DocDBKey" value="gWtGWqwqElOO2ialTjW9JDYE1rROEr3a9eMOuUaaKPI1Cvzx7YGmBKxDPb934g1tx4LQNwIQziNwyqoiFMLEYA==" />
   <!-- Active Directory -->
-  <setting name="AADTenant" value="1d61edc0-1f90-44fc-82ba-c3a00cd30833" />
+  <setting name="AADTenant" value="f4781729-e742-4338-bea6-f53f3e238427" />
   <setting name="AADInstance" value="https://login.microsoftonline.com/{0}" />
-  <setting name="AADClientId" value="753bfa4a-a4f5-46c4-9ba6-394d2dd5fc76" />
+  <setting name="AADClientId" value="7dcfb709-a806-4a7f-a981-970f562b9ec2" />
   <!-- Developer isolation -->
   <setting name="DeviceTableName" value="DeviceList" />
   <setting name="ObjectTypePrefix" value="" />
   <!-- Solution Attributes -->
   <setting name="SolutionName" value="Remote Monitoring Solution" />
   <!-- ActionsProcessor -->
-  <setting name="RulesEventHubName" value="LocalRM-ehruleout" />
-  <setting name="RulesEventHubConnectionString" value="Endpoint=sb://localrmcf696.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=FMHuVTPOs2lUnSlD0wz/EN4XpUwXQ+ea0j8B6nPfYg8=" />
+  <setting name="RulesEventHubName" value="shimadzuiot-ehruleout" />
+  <setting name="RulesEventHubConnectionString" value="Endpoint=sb://shimadzuiot.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=2h8QuT9bD/ACZUmxUn4Y/NLP91t3mJffnn/4y6JSZIA=" />
   <!-- Map Api -->
-  <setting name="MapApiQueryKey" value="" />
+  <setting name="MapApiQueryKey" value="Ak4FTi19IC6FSsdfUH4EY2msFOEOkC-namxykMLIZNjm_7DJ-GuP2MoV3Y8RLnBb" />
 </Environment>

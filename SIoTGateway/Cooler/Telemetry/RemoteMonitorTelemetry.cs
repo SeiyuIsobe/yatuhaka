@@ -49,6 +49,10 @@ namespace SIoTGateway.Cooler.Telemetry
 
         private Func<object, Task> _sendMessageAsync = null;
 
+        #region 受信イベント
+        public event EventHandler ReceivedTelemetry;
+        #endregion
+
         public RemoteMonitorTelemetry(ILogger logger, string deviceId)
         {
             _logger = logger;
@@ -83,6 +87,11 @@ namespace SIoTGateway.Cooler.Telemetry
                 if(null != _sendMessageAsync)
                 {
                     await _sendMessageAsync(monitorData);
+                }
+
+                if(null != ReceivedTelemetry)
+                {
+                    ReceivedTelemetry(msg, null);
                 }
             };
 

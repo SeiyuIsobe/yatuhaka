@@ -23,11 +23,23 @@ namespace Main.Models
     {
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens;
 
+        #region 受信イベント
+        public event EventHandler ReceivedTelemetry;
+        #endregion
+
         public SIoTGateway()
         {
             _cancellationTokens = new Dictionary<string, CancellationTokenSource>();
-            
-            _sensorModuleList.Add(new SensorManageModule() { ModuleID = "aaa" });
+
+            SensorManageModule sensormodule = new SensorManageModule() { ModuleID = "aaa" };
+            sensormodule.ReceivedTelemetry += (sender, e) =>
+            {
+                if (null != ReceivedTelemetry)
+                {
+                    ReceivedTelemetry(sender, null);
+                }
+            };
+            _sensorModuleList.Add(sensormodule);
 
             BuildContainer();
         }

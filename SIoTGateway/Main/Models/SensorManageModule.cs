@@ -23,6 +23,10 @@ namespace Main.Models
     {
         public string ModuleID { get; set; }
 
+        #region 受信イベント
+        public event EventHandler ReceivedTelemetry;
+        #endregion
+
         /// <summary>
         /// IoTゲートウェイサービスを開始する
         /// </summary>
@@ -41,6 +45,13 @@ namespace Main.Models
 
             // テレメトリー
             var telemetryFactory = new CoolerTelemetryFactory(logger);
+            telemetryFactory.ReceivedTelemetry += (sender, e) =>
+            {
+                if(null != ReceivedTelemetry)
+                {
+                    ReceivedTelemetry(sender, e);
+                }
+            };
 
             // Azure IoT Hubに接続するオブジェクトを生成する
             var transportFactory = new IotHubTransportFactory(logger, configProvider);
