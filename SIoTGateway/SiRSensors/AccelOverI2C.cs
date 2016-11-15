@@ -32,7 +32,7 @@ namespace SiRSensors
         ~AccelOverI2C()
         {
             /* Cleanup */
-            I2CAccel.Dispose();
+            if(null != I2CAccel) I2CAccel.Dispose();
         }
 
         public void Init()
