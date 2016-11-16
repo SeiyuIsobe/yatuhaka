@@ -238,8 +238,8 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        //private string _iotEndpoint = "192.168.137.8";
-        private string _iotEndpoint = "172.31.62.176";
+        private string _iotEndpoint = "192.168.137.8";
+        //private string _iotEndpoint = "172.31.62.176";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
 

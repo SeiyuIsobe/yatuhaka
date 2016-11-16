@@ -113,8 +113,11 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Factory
             device.DeviceProperties.InstalledRAM = randomId + " MB";
 
             // Choose a location among the 16 above and set Lat and Long for device properties
-            device.DeviceProperties.Latitude = _possibleDeviceLocations[randomId].Latitude;
-            device.DeviceProperties.Longitude = _possibleDeviceLocations[randomId].Longitude;
+            //device.DeviceProperties.Latitude = _possibleDeviceLocations[randomId].Latitude;
+            //device.DeviceProperties.Longitude = _possibleDeviceLocations[randomId].Longitude;
+            // “‡’Ã–{ŽÐ‚ÌˆÊ’u
+            device.DeviceProperties.Latitude = 35.009502;
+            device.DeviceProperties.Longitude = 135.728806;
         }
 
         private static void AssignTelemetry(DeviceModel device)
