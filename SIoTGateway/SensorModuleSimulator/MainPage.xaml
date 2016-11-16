@@ -18,7 +18,7 @@
                     <Setter Property="FontSize" Value="30"/>
                 </Style>
                 <Style TargetType="Button">
-                    <Setter Property="FontSize" Value="30"/>
+                    <Setter Property="FontSize" Value="40"/>
                 </Style>
             </StackPanel.Resources>
             <StackPanel Orientation="Vertical" Margin="0,30,0,0">
@@ -57,14 +57,16 @@
                 <StackPanel>
                     <Grid Padding="0,10,0,0">
                         <StackPanel Orientation="Vertical">
-                            <Button x:Name="_sougouDC_ip" Content="172.31.61." Click="_sougouDC_ip_Click"/>
-                            <Button x:Name="_aterm_ip" Content="192.168.61." Click="_aterm_ip_Click"/>
+                            <Button x:Name="_sougouDC_ip" Content="192.168.137.8" Click="_sougouDC_ip_Click"/>
+                            <!--<Button x:Name="_aterm_ip" Content="192.168.61." Click="_aterm_ip_Click"/>-->
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="_b0" Content="0" Click="_b0_Click"/>
                                 <Button x:Name="_b1" Content="1" Click="_b0_Click"/>
                                 <Button x:Name="_b2" Content="2" Click="_b0_Click"/>
                                 <Button x:Name="_b3" Content="3" Click="_b0_Click"/>
                                 <Button x:Name="_b4" Content="4" Click="_b0_Click"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <Button x:Name="_b5" Content="5" Click="_b0_Click"/>
                                 <Button x:Name="_b6" Content="6" Click="_b0_Click"/>
                                 <Button x:Name="_b7" Content="7" Click="_b0_Click"/>

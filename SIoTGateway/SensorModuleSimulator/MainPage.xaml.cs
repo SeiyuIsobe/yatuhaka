@@ -68,6 +68,7 @@ namespace SensorModuleSimulator
 
                 await RetryConnect();
             };
+
         }
 
         private async Task RetryConnect()
@@ -92,13 +93,15 @@ namespace SensorModuleSimulator
         }
 
         private Timer _periodicTimer;
+        private bool _retryIgnore = true;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             //Task.Run(() => Task.Delay(5000)).Wait();
 
-            //Connect();
-          
+            // 初回に一回
+            // ここで失敗すれば入力を待つ
+            Connect();
         }
 
         private void Init()
@@ -235,11 +238,12 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        private string _iotEndpoint = "192.168.11.10";
+        //private string _iotEndpoint = "192.168.137.8";
+        private string _iotEndpoint = "172.31.62.176";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
 
-        public void Connect()
+        public async void Connect()
         {
             try
             {
@@ -255,13 +259,29 @@ namespace SensorModuleSimulator
                     };
 
                     if (null != Connected) Connected(null, null);
+                    
                 }
             }
             catch (Exception e)
             {
                 _client = null;
 
-                if (null != ErrorConnect) ErrorConnect(null, null);
+                // 最初の一回の接続失敗はリトライしない
+                if(true == _retryIgnore)
+                {
+                    // リトライしない
+                    // 最初の一回だけのフラグを下す
+                    _retryIgnore = false;
+
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.MessageFromCloud = $"接続失敗：{_iotEndpoint}";
+                    });
+                }
+                else
+                {
+                    if (null != ErrorConnect) ErrorConnect(null, null);
+                }
             }
 
             //MqttHelper.Connect();
@@ -314,10 +334,10 @@ namespace SensorModuleSimulator
             _ip.Text = _sougouDC_ip.Content.ToString();
         }
 
-        private void _aterm_ip_Click(object sender, RoutedEventArgs e)
-        {
-            _ip.Text = _aterm_ip.Content.ToString();
-        }
+        //private void _aterm_ip_Click(object sender, RoutedEventArgs e)
+        //{
+        //    _ip.Text = _aterm_ip.Content.ToString();
+        //}
 
         private void _b0_Click(object sender, RoutedEventArgs e)
         {
