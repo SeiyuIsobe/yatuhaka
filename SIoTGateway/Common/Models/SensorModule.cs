@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models
     public class SensorModule
     {
         public string Name { get; set; }
+        public SensorList Sensors { get; set; }
 
         public override string ToString()
         {

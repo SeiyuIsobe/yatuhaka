@@ -110,7 +110,14 @@ namespace SensorModuleSimulator
             SendSensorModuleName();
 
             // デバイス名をGWに送る
-            SendDeviceNames();
+            //SendDeviceNames();
+
+            //InitSensor();
+
+        }
+
+        private void InitSensor()
+        {
 
             #region 加速度センサー
             _sensor = new AccelOnBoard();
@@ -163,9 +170,16 @@ namespace SensorModuleSimulator
 
         private void SendSensorModuleName()
         {
-            Publish("IamSensorModule", (new SensorModule() { Name = "SM19710613" }).ToString());
+            SensorList list = new SensorList();
+            list.Sensors.Add("_SM19710613_SNm54321_DKCooler_");
 
-            Task.Delay(3000).Wait();
+            var sensor = new SensorModule() { Name = "SM19710613" };
+            sensor.Sensors = list;
+
+            Publish("IamSensorModule", sensor.ToString());
+
+            // 10秒ぐらい待たなければ相手が用意出来てない？？？
+            Task.Delay(10000).Wait();
         }
 
         private void SendDeviceNames()
@@ -173,7 +187,9 @@ namespace SensorModuleSimulator
             SensorList list = new SensorList();
             list.Sensors.Add("_SM19710613_SNm54321_DKCooler_");
 
-            Publish("SM19710613/SendDeviceNames", list.ToString());
+            Publish("SendDeviceNames/SM19710613", list.ToString());
+
+            Task.Delay(1000).Wait();
         }
 
         #region INotifyPropertyChanged
