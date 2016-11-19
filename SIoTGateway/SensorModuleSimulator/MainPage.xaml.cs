@@ -106,6 +106,9 @@ namespace SensorModuleSimulator
 
         private void Init()
         {
+            // センサー基盤名をGWに送る
+            SendSensorModuleName();
+
             // デバイス名をGWに送る
             SendDeviceNames();
 
@@ -156,6 +159,13 @@ namespace SensorModuleSimulator
             };
             _accelSensor.Init();
             #endregion
+        }
+
+        private void SendSensorModuleName()
+        {
+            Publish("IamSensorModule", (new SensorModule() { Name = "SM19710613" }).ToString());
+
+            Task.Delay(3000).Wait();
         }
 
         private void SendDeviceNames()

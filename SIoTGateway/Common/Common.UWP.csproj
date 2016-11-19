@@ -162,6 +162,7 @@
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\SecurityKeys.cs" />
     <Compile Include="Models\SensorList.cs" />
+    <Compile Include="Models\SensorModule.cs" />
     <Compile Include="Models\Sensor\AccelaData.cs" />
     <Compile Include="Models\Sensor\PositionData.cs" />
     <Compile Include="Models\SystemProperties.cs" />
