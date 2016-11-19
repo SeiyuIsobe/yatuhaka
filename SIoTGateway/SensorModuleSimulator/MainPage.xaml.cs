@@ -161,9 +161,9 @@ namespace SensorModuleSimulator
         private void SendDeviceNames()
         {
             SensorList list = new SensorList();
-            list.Sensors.Add("_SMx12345_SNm54321_DKCooler_");
+            list.Sensors.Add("_SM19710613_SNm54321_DKCooler_");
 
-            Publish("SendDeviceNames", list.ToString());
+            Publish("SM19710613/SendDeviceNames", list.ToString());
         }
 
         #region INotifyPropertyChanged
@@ -238,7 +238,7 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        private string _iotEndpoint = "192.168.137.8";
+        private string _iotEndpoint = "192.168.11.10";
         //private string _iotEndpoint = "172.31.62.176";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
