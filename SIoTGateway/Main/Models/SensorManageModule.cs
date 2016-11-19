@@ -1,6 +1,9 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
+using Newtonsoft.Json;
 using SIoTGateway.Cooler.Devices.Factory;
 using SIoTGateway.Cooler.Telemetry.Factory;
 using SIotGatewayCore.Devices.Factory;
@@ -21,11 +24,57 @@ namespace Main.Models
     /// </summary>
     public class SensorManageModule
     {
-        public string ModuleID { get; set; }
+        public string ModuleID { get; private set; }
+        private SensorModuleWatcher _sensormoduleWatcher = null;
 
         #region 受信イベント
         public event EventHandler ReceivedTelemetry;
         #endregion
+
+        public SensorManageModule(string modeleID)
+        {
+            this.ModuleID = modeleID;
+
+            // センサー基盤から送られてくるデバイス名の一覧を受信する
+            _sensormoduleWatcher = new SensorModuleWatcher(this.ModuleID);
+            _sensormoduleWatcher.ReceivedDeviceNames += (sender, e) =>
+            {
+                var sensorlist = SensorList.ToObject(sender.ToString());
+
+                // 本来ならここでクラウドにデバイス名を登録したいところだが
+                // どうも現時点ではUWP用の.NETが対応してないらしいので出来ない。
+                // デバイス名は手動で登録してもらうようにする
+                // 受信したものは既に登録されているかどうかも構わずクラウドに登録する
+                foreach (string id in sensorlist.Sensors)
+                {
+                    DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
+
+                    // サンプルの通り以下のように登録したいが出来ない
+                    //var generator = new  SecurityKeyGenerator
+                    //SecurityKeys generatedSecurityKeys = (new SecurityKeyGenerator()).
+                    //_securityKeyGenerator.CreateRandomKeys();
+                    //await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
+
+                    var device_json = JsonConvert.SerializeObject(device);
+
+                    #region REST
+                    // RESTを直接たたくようにしてみたが、開発環境では証明書絡みでエラーが出る
+                    // クラウドのRESTをたたくとどうなるかは未確認
+                    //HttpClient httpClient = new HttpClient();
+                    //CancellationTokenSource _cts = new CancellationTokenSource();
+
+                    //var credentials = Encoding.ASCII.GetBytes("myUsername:myPassword");
+                    //httpClient.DefaultRequestHeaders.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Basic", Convert.ToBase64String(credentials));
+
+                    //var response = await httpClient.PostAsync(
+                    //    new Uri("https://localhost:44305/api/v1/devices"),
+                    //    new HttpStringContent(device_json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json")
+                    //    ).AsTask(_cts.Token);
+                    #endregion
+                }
+            };
+        }
+
 
         /// <summary>
         /// IoTゲートウェイサービスを開始する

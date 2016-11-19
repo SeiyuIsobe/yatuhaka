@@ -35,7 +35,7 @@ namespace Main
 
         private const int DEFAULT_DEVICE_POLL_INTERVAL_SECONDS = 120;
 
-        private SensorModuleWatcher _sensormoduleWatcher = null;
+        
 
         public BulkDeviceTester(ITransportFactory transportFactory, ILogger logger, IConfigurationProvider configProvider,
             ITelemetryFactory telemetryFactory, IDeviceFactory deviceFactory, IVirtualDeviceStorage virtualDeviceStorage)
@@ -54,44 +54,7 @@ namespace Main
 
             _devicePollIntervalSeconds = Convert.ToInt32(pollingIntervalString, CultureInfo.InvariantCulture);
 
-            // センサー基盤から送られてくるデバイス名の一覧を受信する
-            _sensormoduleWatcher = new SensorModuleWatcher();
-            _sensormoduleWatcher.ReceivedDeviceNames += (sender, e) =>
-            {
-                var sensorlist = SensorList.ToObject(sender.ToString());
-
-                // 本来ならここでクラウドにデバイス名を登録したいところだが
-                // どうも現時点ではUWP用の.NETが対応してないらしいので出来ない。
-                // デバイス名は手動で登録してもらうようにする
-                // 受信したものは既に登録されているかどうかも構わずクラウドに登録する
-                foreach (string id in sensorlist.Sensors)
-                {
-                    DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
-
-                    // サンプルの通り以下のように登録したいが出来ない
-                    //var generator = new  SecurityKeyGenerator
-                    //SecurityKeys generatedSecurityKeys = (new SecurityKeyGenerator()).
-                    //_securityKeyGenerator.CreateRandomKeys();
-                    //await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
-
-                    var device_json = JsonConvert.SerializeObject(device);
-
-                    #region REST
-                    // RESTを直接たたくようにしてみたが、開発環境では証明書絡みでエラーが出る
-                    // クラウドのRESTをたたくとどうなるかは未確認
-                    //HttpClient httpClient = new HttpClient();
-                    //CancellationTokenSource _cts = new CancellationTokenSource();
-
-                    //var credentials = Encoding.ASCII.GetBytes("myUsername:myPassword");
-                    //httpClient.DefaultRequestHeaders.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Basic", Convert.ToBase64String(credentials));
-
-                    //var response = await httpClient.PostAsync(
-                    //    new Uri("https://localhost:44305/api/v1/devices"),
-                    //    new HttpStringContent(device_json, Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json")
-                    //    ).AsTask(_cts.Token);
-                    #endregion
-                }
-            };
+            
         }
 
         /// <summary>

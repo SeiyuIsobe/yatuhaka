@@ -20,9 +20,22 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
 
         public SensorModuleWatcher()
         {
+            _mqtt = MqttHelper.Connect("127.0.0.1", Guid.NewGuid().ToString(), null);
+            _mqtt.Subscribe(new string[] { $"IamSensorModule" }, new byte[] { 0 });
+            _mqtt.MqttMsgPublishReceived += (sender, e) =>
+            {
+                var msg = Encoding.UTF8.GetString(e.Message);
+                var topic = e.Topic;
+
+                
+            };
+        }
+
+        public SensorModuleWatcher(string moduleID)
+        {
             // MQTT
-            _mqtt = MqttHelper.Connect("127.0.0.1", Guid.NewGuid().ToString(), "SendDeviceNames");
-            _mqtt.Subscribe(new string[] { "SendDeviceNames" }, new byte[] { 0 });
+            _mqtt = MqttHelper.Connect("127.0.0.1", Guid.NewGuid().ToString(), null);
+            _mqtt.Subscribe(new string[] { $"{moduleID}/SendDeviceNames" }, new byte[] { 0 });
             _mqtt.MqttMsgPublishReceived += (sender, e) =>
             {
                 var msg = Encoding.UTF8.GetString(e.Message);

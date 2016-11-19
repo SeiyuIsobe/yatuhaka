@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Main.DataInitialization;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
@@ -22,6 +23,7 @@ namespace Main.Models
     class SIoTGateway
     {
         private readonly Dictionary<string, CancellationTokenSource> _cancellationTokens;
+        private SensorModuleWatcher _sensormoduleWatcher = null;
 
         #region 受信イベント
         public event EventHandler ReceivedTelemetry;
@@ -31,7 +33,17 @@ namespace Main.Models
         {
             _cancellationTokens = new Dictionary<string, CancellationTokenSource>();
 
-            SensorManageModule sensormodule = new SensorManageModule() { ModuleID = "aaa" };
+            // センサー基盤から送られてくるデバイス名の一覧を受信する
+            _sensormoduleWatcher = new SensorModuleWatcher();
+            _sensormoduleWatcher.ReceivedDeviceNames += (sender, e) =>
+            {
+
+            };
+
+
+            // センサー基盤オブジェクトの生成
+            // センサー基盤のIDを設定する
+            SensorManageModule sensormodule = new SensorManageModule("SM19710613");
             sensormodule.ReceivedTelemetry += (sender, e) =>
             {
                 if (null != ReceivedTelemetry)
