@@ -88,6 +88,7 @@ namespace Main.ViewModels
 
             set
             {
+                //System.Diagnostics.Debug.WriteLine($"-> {value}");
                 _recivedTelemetryData = value;
                 NotifyPropertyChanged();
             }

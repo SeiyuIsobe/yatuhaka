@@ -3,6 +3,7 @@ using Main.DataInitialization;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using SIoTBroker;
 using SIoTGateway.Cooler.Devices.Factory;
@@ -31,27 +32,45 @@ namespace Main.Models
 
         public SIoTGateway()
         {
+            // キャンセルトークン
             _cancellationTokens = new Dictionary<string, CancellationTokenSource>();
 
             // センサー基盤から送られてくるデバイス名の一覧を受信する
             _sensormoduleWatcher = new SensorModuleWatcher();
-            _sensormoduleWatcher.ReceivedDeviceNames += (sender, e) =>
+            _sensormoduleWatcher.ReceivedSensorModuleName += (sender, e) =>
             {
-
-            };
-
-
-            // センサー基盤オブジェクトの生成
-            // センサー基盤のIDを設定する
-            SensorManageModule sensormodule = new SensorManageModule("SM19710613");
-            sensormodule.ReceivedTelemetry += (sender, e) =>
-            {
-                if (null != ReceivedTelemetry)
+                SensorModule obj = sender as SensorModule;
+                if(null != obj)
                 {
-                    ReceivedTelemetry(sender, null);
+                    // センサー基盤オブジェクトの生成
+                    // センサー基盤のIDを設定する
+                    SensorManageModule sensormodule = new SensorManageModule(obj.Name);
+                    sensormodule.ReceivedTelemetry += (ss, ee) =>
+                    {
+                        if (null != ReceivedTelemetry)
+                        {
+                            ReceivedTelemetry(ss, null);
+                        }
+                    };
+
+                    // キャンセル操作
+                    var deviceCancellationToken = new CancellationTokenSource();
+
+                    // 開始
+                    Task.Run(
+                        async () =>
+                        {
+                            await sensormodule.Start(deviceCancellationToken.Token);
+                        }, 
+                        deviceCancellationToken.Token);
+
+                    // もういらない？
+                    //_sensorModuleList.Add(sensormodule);
                 }
             };
-            _sensorModuleList.Add(sensormodule);
+
+
+            
 
             BuildContainer();
         }

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
         private MqttClient _mqtt = null;
         #endregion
 
+        public event EventHandler ReceivedSensorModuleName;
         public event EventHandler ReceivedDeviceNames;
 
         public SensorModuleWatcher()
@@ -27,7 +28,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
                 var msg = Encoding.UTF8.GetString(e.Message);
                 var topic = e.Topic;
 
-                
+                SensorModule data = JsonConvert.DeserializeObject<SensorModule>(msg);
+
+                if (null != ReceivedSensorModuleName)
+                {
+                    ReceivedSensorModuleName(data, null);
+                }
             };
         }
 
@@ -35,7 +41,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
         {
             // MQTT
             _mqtt = MqttHelper.Connect("127.0.0.1", Guid.NewGuid().ToString(), null);
-            _mqtt.Subscribe(new string[] { $"{moduleID}/SendDeviceNames" }, new byte[] { 0 });
+            _mqtt.Subscribe(new string[] { $"SendDeviceNames/{moduleID}" }, new byte[] { 0 });
             _mqtt.MqttMsgPublishReceived += (sender, e) =>
             {
                 var msg = Encoding.UTF8.GetString(e.Message);
@@ -48,6 +54,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
                     ReceivedDeviceNames(data, null);
                 }
             };
+            System.Diagnostics.Debug.WriteLine($"-> SensorModuleWatcher");
         }
     }
 }

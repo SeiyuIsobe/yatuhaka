@@ -106,8 +106,6 @@ namespace SIotGatewayCore.Transport
                 try
                 {
                     await _deviceClient.SendEventAsync(message);
-
-                    System.Diagnostics.Debug.WriteLine($"->{JsonConvert.SerializeObject(eventData)}");
                 }
                 catch (Exception ex)
                 {

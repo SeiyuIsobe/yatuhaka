@@ -75,72 +75,82 @@ namespace Main
                 //
                 while (!token.IsCancellationRequested)
                 {
-                    var newDevices = new List<InitialDeviceConfig>();
-                    var removedDevices = new List<string>();
-
-                    // Azureからデバイスのリストを取得する
-                    // 「無効」になっているデバイスは取得しない
-                    var devices = await _deviceStorage.GetDeviceListAsync();
-
-                    if (devices != null && devices.Any())
+                    // センサー基盤と繋がっていない間は何もしない
+                    // 繋がっている場合は_deviceListに要素がある
+                    //if (null != _deviceList && _deviceList.Count > 0)
                     {
-                        newDevices = devices.Where(d => !_deviceList.Any(x => x.DeviceId == d.DeviceId)).ToList();
-                        removedDevices =
-                            _deviceList.Where(d => !devices.Any(x => x.DeviceId == d.DeviceId))
-                                .Select(x => x.DeviceId)
-                                .ToList();
-                    }
-                    else if (_deviceList != null && _deviceList.Any())
-                    {
-                        removedDevices = _deviceList.Select(x => x.DeviceId).ToList();
-                    }
+                        var newDevices = new List<InitialDeviceConfig>();
+                        var removedDevices = new List<string>();
 
-                    if (newDevices.Count > 0)
-                    {
-                        System.Diagnostics.Debug.WriteLine("-> New Device found.");
-                        //_logger.LogInfo("********** {0} NEW DEVICES FOUND ********** ", newDevices.Count);
-                    }
-                    if (removedDevices.Count > 0)
-                    {
-                        System.Diagnostics.Debug.WriteLine("-> Device Removed.");
-                        //_logger.LogInfo("********** {0} DEVICES REMOVED ********** ", removedDevices.Count);
-                    }
+                        // Azureからデバイスのリストを取得する
+                        // 「無効」になっているデバイスは取得しない
+                        var devices = await _deviceStorage.GetDeviceListAsync();
 
-
-                    //reset the base list of devices for comparison the next
-                    //time we retrieve the device list
-                    _deviceList = devices;
-
-                    if (removedDevices.Any())
-                    {
-                        //stop processing any devices that have been removed
-                        dm.StopDevices(removedDevices);
-                    }
-
-                    //begin processing any new devices that were retrieved
-                    //
-                    // デバイス
-                    // クラウドにあってこちらに無いデバイス
-                    if (newDevices.Any())
-                    {
-                        var devicesToProcess = new List<IDevice>();
-
-                        // ここでAzureから取得できるデバイスの情報には、デバイス名、接続文字列、キーの3つなので
-                        // デバイスの種類が何なのか分からない
-                        // ↓
-                        // デバイスの種類が分かるようにデバイス名にデバイスの種類を埋め込む
-                        foreach (var deviceConfig in newDevices)
+                        if (devices != null && devices.Any())
                         {
-                            //_logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
-                            System.Diagnostics.Debug.WriteLine($"-> SETTING UP NEW DEVICE : {deviceConfig.DeviceId}");
-                            devicesToProcess.Add(_deviceFactory.CreateDevice(_logger, _transportFactory, _telemetryFactory, _configProvider, deviceConfig));
+                            // センサー基盤に繋がっているデバイスリストとWebで「有効」になっているデバイスリストを
+                            // 突き合わせて、一致するものを取得する
+                            newDevices = devices.Where(d => !_deviceList.Any(x => x.DeviceId == d.DeviceId)).ToList();
+
+                            // 
+                            removedDevices =
+                                _deviceList.Where(d => !devices.Any(x => x.DeviceId == d.DeviceId))
+                                    .Select(x => x.DeviceId)
+                                    .ToList();
+                        }
+                        else if (_deviceList != null && _deviceList.Any())
+                        {
+                            removedDevices = _deviceList.Select(x => x.DeviceId).ToList();
                         }
 
+                        if (newDevices.Count > 0)
+                        {
+                            System.Diagnostics.Debug.WriteLine("-> New Device found.");
+                            //_logger.LogInfo("********** {0} NEW DEVICES FOUND ********** ", newDevices.Count);
+                        }
+                        if (removedDevices.Count > 0)
+                        {
+                            System.Diagnostics.Debug.WriteLine("-> Device Removed.");
+                            //_logger.LogInfo("********** {0} DEVICES REMOVED ********** ", removedDevices.Count);
+                        }
+
+
+                        //reset the base list of devices for comparison the next
+                        //time we retrieve the device list
+                        _deviceList = devices;
+
+                        if (removedDevices.Any())
+                        {
+                            //stop processing any devices that have been removed
+                            dm.StopDevices(removedDevices);
+                        }
+
+                        //begin processing any new devices that were retrieved
+                        //
+                        // デバイス
+                        // クラウドにあってこちらに無いデバイス
+                        if (newDevices.Any())
+                        {
+                            var devicesToProcess = new List<IDevice>();
+
+                            // ここでAzureから取得できるデバイスの情報には、デバイス名、接続文字列、キーの3つなので
+                            // デバイスの種類が何なのか分からない
+                            // ↓
+                            // デバイスの種類が分かるようにデバイス名にデバイスの種類を埋め込む
+                            foreach (var deviceConfig in newDevices)
+                            {
+                                //_logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
+                                System.Diagnostics.Debug.WriteLine($"-> SETTING UP NEW DEVICE : {deviceConfig.DeviceId}");
+                                devicesToProcess.Add(_deviceFactory.CreateDevice(_logger, _transportFactory, _telemetryFactory, _configProvider, deviceConfig));
+                            }
+
 #pragma warning disable 4014
-                        //don't wait for this to finish
-                        dm.StartDevicesAsync(devicesToProcess);
+                            //don't wait for this to finish
+                            dm.StartDevicesAsync(devicesToProcess);
 #pragma warning restore 4014
+                        }
                     }
+
                     await Task.Delay(TimeSpan.FromSeconds(_devicePollIntervalSeconds), token);
                 }
             }
@@ -153,6 +163,23 @@ namespace Main
             {
                 //ensure that all devices have been stopped
                 dm.StopAllDevices();
+            }
+        }
+
+        public void SetDevice(List<string> list)
+        {
+            if(null == _deviceList)
+            {
+                _deviceList = new List<InitialDeviceConfig>();
+            }
+            else
+            {
+                _deviceList.Clear();
+            }
+
+            foreach(string name in list)
+            {
+                _deviceList.Add(new InitialDeviceConfig() { DeviceId = name });
             }
         }
     }

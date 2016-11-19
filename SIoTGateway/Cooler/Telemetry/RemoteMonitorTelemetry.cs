@@ -76,23 +76,28 @@ namespace SIoTGateway.Cooler.Telemetry
                 var topic = e.Topic;
 
                 AccelaData data = JsonConvert.DeserializeObject<AccelaData>(msg);
-
-                System.Diagnostics.Debug.WriteLine($"-> {topic}, {msg}");
-
-                var monitorData = new RemoteMonitorTelemetryData();
-                monitorData.DeviceId = _deviceId;
-                monitorData.Temperature = data.X;
-                monitorData.Humidity = data.Y;
-
-                if(null != _sendMessageAsync)
+                if (null == data)
                 {
-                    await _sendMessageAsync(monitorData);
-                }
 
-                if(null != ReceivedTelemetry)
-                {
-                    ReceivedTelemetry(msg, null);
                 }
+                else
+                {
+                    var monitorData = new RemoteMonitorTelemetryData();
+                    monitorData.DeviceId = _deviceId;
+                    monitorData.Temperature = data.X;
+                    monitorData.Humidity = data.Y;
+
+                    if (null != _sendMessageAsync)
+                    {
+                        await _sendMessageAsync(monitorData);
+                    }
+
+                    if (null != ReceivedTelemetry)
+                    {
+                        ReceivedTelemetry(msg, null);
+                    }
+                }
+                
             };
 
 
