@@ -66,7 +66,19 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
             //    //{
 
             //cloud.setting.xmlはlocal.config.userと同じ
-            this.environment = new EnvironmentDescription("Common\\cloud.settings.xml");
+
+#if ISEIYU
+            if (true == File.Exists("Common\\cloud.settings.iseiyu.xml"))
+            {
+                this.environment = new EnvironmentDescription("Common\\cloud.settings.iseiyu.xml");
+            }
+#else
+            if(true == File.Exists("Common\\cloud.settings.xml"))
+            {
+                this.environment = new EnvironmentDescription("Common\\cloud.settings.xml");
+            }
+
+#endif
 
             //    //    return;
             //    //}

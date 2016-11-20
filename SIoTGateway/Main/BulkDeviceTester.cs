@@ -77,7 +77,7 @@ namespace Main
                 {
                     // センサー基盤と繋がっていない間は何もしない
                     // 繋がっている場合は_deviceListに要素がある
-                    //if (null != _deviceList && _deviceList.Count > 0)
+                    if (null != _deviceList && _deviceList.Count > 0)
                     {
                         var newDevices = new List<InitialDeviceConfig>();
                         var removedDevices = new List<string>();
@@ -90,7 +90,7 @@ namespace Main
                         {
                             // センサー基盤に繋がっているデバイスリストとWebで「有効」になっているデバイスリストを
                             // 突き合わせて、一致するものを取得する
-                            newDevices = devices.Where(d => !_deviceList.Any(x => x.DeviceId == d.DeviceId)).ToList();
+                            newDevices = devices.Where(d => _deviceList.Any(x => x.DeviceId == d.DeviceId)).ToList();
 
                             // 
                             removedDevices =

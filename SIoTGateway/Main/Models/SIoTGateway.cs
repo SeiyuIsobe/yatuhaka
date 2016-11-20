@@ -44,7 +44,7 @@ namespace Main.Models
                 {
                     // センサー基盤オブジェクトの生成
                     // センサー基盤のIDを設定する
-                    SensorManageModule sensormodule = new SensorManageModule(obj.Name);
+                    SensorManageModule sensormodule = new SensorManageModule(obj);
                     sensormodule.ReceivedTelemetry += (ss, ee) =>
                     {
                         if (null != ReceivedTelemetry)

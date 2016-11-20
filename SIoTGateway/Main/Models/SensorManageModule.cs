@@ -32,9 +32,9 @@ namespace Main.Models
         public event EventHandler ReceivedTelemetry;
         #endregion
 
-        public SensorManageModule(string modeleID)
+        public SensorManageModule(string moduleID)
         {
-            this.ModuleID = modeleID;
+            this.ModuleID = moduleID;
 
             // センサー基盤から送られてくるデバイス名の一覧を受信する
             _sensormoduleWatcher = new SensorModuleWatcher(this.ModuleID);
@@ -42,6 +42,15 @@ namespace Main.Models
             {
                 _sensorlist = SensorList.ToObject(sender.ToString());
             };
+        }
+
+        public SensorManageModule(SensorModule module)
+        {
+            this.ModuleID = module.Name;
+
+            //_sensormoduleWatcher = new SensorModuleWatcher(this.ModuleID);
+
+            _sensorlist = module.Sensors;
         }
 
         private BulkDeviceTester _tester = null;
@@ -90,7 +99,7 @@ namespace Main.Models
 
             //// Start Simulator
             var _tester = new BulkDeviceTester(transportFactory, logger, configProvider, telemetryFactory, deviceFactory, deviceStorage);
-            //_tester.SetDevice(_sensorlist.Sensors);
+            _tester.SetDevice(_sensorlist.Sensors);
             await Task.Run(() => _tester.ProcessDevicesAsync(token), token);
         }
     }

@@ -12,4 +12,11 @@
     <AuthenticationMode>Universal</AuthenticationMode>
     <RemoteDebugMachine>iotpc1</RemoteDebugMachine>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug iseiyu|ARM'">
+    <RemoteDebugEnabled>true</RemoteDebugEnabled>
+    <RemoteDebugMachine>iotpc1</RemoteDebugMachine>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug iseiyu|x64'">
+    <RemoteDebugMachine>iotpc1</RemoteDebugMachine>
+  </PropertyGroup>
 </Project>
