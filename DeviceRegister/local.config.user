@@ -1,0 +1,32 @@
+<Environment version="1.0">
+  <!-- General Settings -->
+  <setting name="AllocationRegion" value="Japan West" />
+  <setting name="SubscriptionId" value="ef37b2a7-f60e-4328-a72a-8a178836e145" />
+  <setting name="ServiceStoreAccountName" value="localrmb85e8" />
+  <setting name="ServiceStoreAccountConnectionString" value="DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=localrmb85e8;AccountKey=bxvbhcGvOzVXjr/YpKQFcH+H+CaSIYObzeKfhi5dgkj5YqsdeNeXnbsV51NC8GvJkxoJebI49zupcrnXxeCrYQ==" />
+  <setting name="ServiceSBName" value="LocalRM04d3f" />
+  <setting name="ServiceSBConnectionString" value="Endpoint=sb://localrm04d3f.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=S7C2tw/mnHNzy3OvNAM3nTuegSH3TZsfCksXbslByTg=" />
+  <setting name="ServiceEHName" value="LocalRM-ehout" />
+  <setting name="ServiceEHConsumerGroup" value="" />
+  <setting name="AzureAccountName" value="iseiyu@hotmail.co.jp" />
+  <!-- IotHub section -->
+  <setting name="IotHubName" value="LocalRMaecbe.azure-devices.net" />
+  <setting name="IotHubConnectionString" value="HostName=LocalRMaecbe.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=zDNa122mD7HkQjVT/chmflwZt3jRqLQ21rHZwV5R0Vg=" />
+  <!-- DocDB section -->
+  <setting name="DocDbEndPoint" value="https://localrm22b83.documents.azure.com:443/" />
+  <setting name="DocDBKey" value="IX6ZJEeXsWMZXnfM0wflb88IDh3oouP3FDKjjHuVR7QodFA4b7Fm0OiFJYPH2EjyYbNc3Wgrex7VFnYEL5OzUQ==" />
+  <!-- Active Directory -->
+  <setting name="AADTenant" value="1d61edc0-1f90-44fc-82ba-c3a00cd30833" />
+  <setting name="AADInstance" value="https://login.microsoftonline.com/{0}" />
+  <setting name="AADClientId" value="753bfa4a-a4f5-46c4-9ba6-394d2dd5fc76" />
+  <!-- Developer isolation -->
+  <setting name="DeviceTableName" value="DeviceList" />
+  <setting name="ObjectTypePrefix" value="" />
+  <!-- Solution Attributes -->
+  <setting name="SolutionName" value="Remote Monitoring Solution" />
+  <!-- ActionsProcessor -->
+  <setting name="RulesEventHubName" value="LocalRM-ehruleout" />
+  <setting name="RulesEventHubConnectionString" value="Endpoint=sb://localrm04d3f.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=S7C2tw/mnHNzy3OvNAM3nTuegSH3TZsfCksXbslByTg=" />
+  <!-- Map Api -->
+  <setting name="MapApiQueryKey" value="" />
+</Environment>
