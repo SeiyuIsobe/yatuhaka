@@ -172,6 +172,7 @@ namespace SensorModuleSimulator
         {
             SensorList list = new SensorList();
             list.Sensors.Add("_SM19710613_SNm54321_DKCooler_");
+            list.Sensors.Add("SampleDevice001_957");
 
             var sensor = new SensorModule() { Name = "SM19710613" };
             sensor.Sensors = list;
