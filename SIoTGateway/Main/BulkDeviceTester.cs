@@ -79,6 +79,7 @@ namespace Main
                     // 繋がっている場合は_deviceListに要素がある
                     if (null != _deviceList && _deviceList.Count > 0)
                     {
+                        var newDevicesOnCloud = new List<InitialDeviceConfig>();
                         var newDevices = new List<InitialDeviceConfig>();
                         var removedDevices = new List<string>();
 
@@ -90,7 +91,10 @@ namespace Main
                         {
                             // センサー基盤に繋がっているデバイスリストとWebで「有効」になっているデバイスリストを
                             // 突き合わせて、一致するものを取得する
-                            newDevices = devices.Where(d => _deviceList.Any(x => x.DeviceId == d.DeviceId)).ToList();
+                            // クラウド側の一致したものをnewDevicesOnCloudに格納
+                            // センサー基盤の一致したものをnewDevicesに格納
+                            newDevicesOnCloud = devices.Where(d => _deviceList.Any(x => x.DeviceId == d.DeviceId)).ToList();
+                            newDevices = _deviceList.Where(d => devices.Any(x => x.DeviceId == d.DeviceId)).ToList();
 
                             // 
                             removedDevices =
@@ -114,10 +118,8 @@ namespace Main
                             //_logger.LogInfo("********** {0} DEVICES REMOVED ********** ", removedDevices.Count);
                         }
 
-
-                        //reset the base list of devices for comparison the next
-                        //time we retrieve the device list
-                        _deviceList = devices;
+                        // 一致するデバイスを保存する
+                        //_deviceList = newDevices;
 
                         if (removedDevices.Any())
                         {
@@ -133,16 +135,22 @@ namespace Main
                         {
                             var devicesToProcess = new List<IDevice>();
 
-                            // ここでAzureから取得できるデバイスの情報には、デバイス名、接続文字列、キーの3つなので
-                            // デバイスの種類が何なのか分からない
-                            // ↓
-                            // デバイスの種類が分かるようにデバイス名にデバイスの種類を埋め込む
+                            // 
                             foreach (var deviceConfig in newDevices)
                             {
-                                //_logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
-                                System.Diagnostics.Debug.WriteLine($"-> SETTING UP NEW DEVICE : {deviceConfig.DeviceId}");
-                                devicesToProcess.Add(_deviceFactory.CreateDevice(_logger, _transportFactory, _telemetryFactory, _configProvider, deviceConfig));
+                                // 起動直後でインスタンスが生成されていないデバイス
+                                if(null == deviceConfig.Key)
+                                {
+                                    var config = newDevicesOnCloud.Where(d => d.DeviceId == deviceConfig.DeviceId).ToList();
+
+                                    //_logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
+                                    System.Diagnostics.Debug.WriteLine($"-> SETTING UP NEW DEVICE : {deviceConfig.DeviceId}");
+                                    devicesToProcess.Add(_deviceFactory.CreateDevice(_logger, _transportFactory, _telemetryFactory, _configProvider, config[0]));
+                                }
                             }
+
+                            // 一致するデバイスを保存する
+                            _deviceList = newDevicesOnCloud;
 
 #pragma warning disable 4014
                             //don't wait for this to finish

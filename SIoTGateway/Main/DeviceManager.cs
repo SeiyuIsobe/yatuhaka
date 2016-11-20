@@ -63,15 +63,19 @@ namespace Main
         {
             foreach (var deviceId in deviceIds)
             {
-                var cancellationToken = _cancellationTokens[deviceId];
-
-                if (cancellationToken != null)
+                try
                 {
-                    cancellationToken.Cancel();
-                    _cancellationTokens.Remove(deviceId);
+                    var cancellationToken = _cancellationTokens[deviceId];
 
-                    _logger.LogInfo("********** STOPPED DEVICE : {0} ********** ", deviceId);
+                    if (cancellationToken != null)
+                    {
+                        cancellationToken.Cancel();
+                        _cancellationTokens.Remove(deviceId);
+
+                        _logger.LogInfo("********** STOPPED DEVICE : {0} ********** ", deviceId);
+                    }
                 }
+                catch { }
             }
         }
 

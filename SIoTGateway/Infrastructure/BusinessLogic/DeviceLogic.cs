@@ -114,6 +114,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             {
                 try
                 {
+                    // ここだ！
+                    // シミュレータの場合、ストレージのDeviceListに登録する処理が走るのはここを通るから
+                    // Webで登録した場合はここを通らない
                     await _virtualDeviceStorage.AddOrUpdateDeviceAsync(new InitialDeviceConfig()
                     {
                         DeviceId = device.DeviceProperties.DeviceID,
