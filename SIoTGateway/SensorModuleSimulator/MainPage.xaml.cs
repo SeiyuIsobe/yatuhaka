@@ -112,7 +112,7 @@ namespace SensorModuleSimulator
             // デバイス名をGWに送る
             //SendDeviceNames();
 
-            //InitSensor();
+            InitSensor();
 
         }
 
@@ -171,10 +171,10 @@ namespace SensorModuleSimulator
         private void SendSensorModuleName()
         {
             SensorList list = new SensorList();
-            list.Sensors.Add("_SM19710613_SNm54321_DKCooler_");
-            list.Sensors.Add("SampleDevice001_957");
+            list.Sensors.Add("GW6210833_SM0771254175_SN19710613_DKCooler_958");
+            list.Sensors.Add("GW6210833_SM0771254175_SN19760824_DKCooler_958");
 
-            var sensor = new SensorModule() { Name = "SM19710613" };
+            var sensor = new SensorModule() { Name = "SM0771254175" };
             sensor.Sensors = list;
 
             Publish("IamSensorModule", sensor.ToString());
