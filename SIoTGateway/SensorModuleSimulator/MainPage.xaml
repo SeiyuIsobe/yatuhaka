@@ -57,7 +57,7 @@
                 <StackPanel>
                     <Grid Padding="0,10,0,0">
                         <StackPanel Orientation="Vertical">
-                            <Button x:Name="_sougouDC_ip" Content="192.168.137.8" Click="_sougouDC_ip_Click"/>
+                            <Button x:Name="_sougouDC_ip" Content="172.31.62.176" Click="_sougouDC_ip_Click"/>
                             <!--<Button x:Name="_aterm_ip" Content="192.168.61." Click="_aterm_ip_Click"/>-->
                             <StackPanel Orientation="Horizontal">
                                 <Button x:Name="_b0" Content="0" Click="_b0_Click"/>
@@ -77,6 +77,7 @@
                         </StackPanel>
                     </Grid>
                 </StackPanel>
+                <ListBox ItemsSource="{Binding Sensors}" VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
     </Grid>

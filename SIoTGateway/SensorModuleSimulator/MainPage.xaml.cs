@@ -168,7 +168,7 @@ namespace SensorModuleSimulator
             #endregion
         }
 
-        private void SendSensorModuleName()
+        private async void SendSensorModuleName()
         {
             SensorList list = new SensorList();
             list.Sensors.Add("GW6210833_SM0771254175_SN19710613_DKCooler_958");
@@ -178,6 +178,11 @@ namespace SensorModuleSimulator
             sensor.Sensors = list;
 
             Publish("IamSensorModule", sensor.ToString());
+
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                this.Sensors = list.Sensors;
+            });
 
             // 10秒ぐらい待たなければ相手が用意出来てない？？？
             Task.Delay(10000).Wait();
@@ -259,6 +264,21 @@ namespace SensorModuleSimulator
             set
             {
                 _zAxis = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private List<string> _sensors = null;
+        public List<string> Sensors
+        {
+            get
+            {
+                return _sensors;
+            }
+
+            set
+            {
+                _sensors = value;
                 NotifyPropertyChanged();
             }
         }
