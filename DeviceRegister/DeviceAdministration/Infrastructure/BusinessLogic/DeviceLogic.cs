@@ -888,5 +888,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 return null;
             }
         }
+
+        public async Task<List<DeviceModel>> GetAllDeviceAsync()
+        {
+            return await _deviceRegistryListRepository.GetDevicesAllAsync();
+        }
     }
 }

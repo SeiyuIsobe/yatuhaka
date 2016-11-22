@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -49,11 +50,11 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
                 Task.Run(async () => bootstrappedDevices = await _deviceLogic.BootstrapDefaultDevices()).Wait();
 
                 // 2) create default rules
-                Task.Run(() => _deviceRulesLogic.BootstrapDefaultRulesAsync(bootstrappedDevices)).Wait();
+                //Task.Run(() => _deviceRulesLogic.BootstrapDefaultRulesAsync(bootstrappedDevices)).Wait();
 
                 // 3) create action mappings (do this last to ensure that we'll try to 
                 //    recreate if any of the above throws)
-                _actionMappingLogic.InitializeDataIfNecessaryAsync();
+                //_actionMappingLogic.InitializeDataIfNecessaryAsync();
             } 
             catch (Exception ex)
             {
@@ -61,5 +62,18 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
             }
         }
 
+        public async Task<List<DeviceModel>> GetAllDevicesAsync()
+        {
+            return await _deviceLogic.GetAllDeviceAsync();
+        }
+
+        public async Task<DeviceModel> UpdateDeviceAsync(DeviceModel device)
+        {
+            // IoT Hub
+            await _deviceLogic.UpdateDeviceEnabledStatusAsync(device.DeviceProperties.DeviceID, (bool)device.DeviceProperties.HubEnabledState);
+
+            // DocumentDB
+            return await _deviceLogic.UpdateDeviceAsync(device);
+        }
     }
 }

@@ -16,6 +16,7 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.Sim
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Logging;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Repository;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Transport.Factory;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 {
@@ -63,6 +64,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                     BuildContainer();
 
                     StartDataInitializationAsNeeded();
+                    //StartSimulator();
 
                     RunAsync().Wait();
                 }
@@ -72,6 +74,37 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 cancellationTokenSource.Cancel();
                 Trace.TraceError("Webjob terminating: {0}", ex.ToString());
             }
+        }
+
+        private async static void StartDataInitializationAsNeeded()
+        {
+            var creator = simulatorContainer.Resolve<IDataInitializer>();
+            var list = await creator.GetAllDevicesAsync();
+
+            var res = list.FindAll(d => d.DeviceProperties.DeviceID == "GW6210833_SM0771254175_SN19710613_DKCooler_958");
+            if(null != res && res.Count > 0)
+            {
+                DeviceModel dm = res[0] as DeviceModel;
+
+                // nullの場合は登録された直後
+                if (null == dm.DeviceProperties.HubEnabledState)
+                {
+                    // 状態の設定：true→実行中、false→無効
+                    // ここでtrueとしたいが、時間差かなにかでDeviceListには登録されない
+                    // 現時点では良い方法が思いつかないので手動で実行中にする
+                    dm.DeviceProperties.HubEnabledState = false;
+
+                    dm.IsSimulatedDevice = true;
+                }
+                else
+                {
+                    dm.DeviceProperties.HubEnabledState = !(dm.DeviceProperties.HubEnabledState);
+                }
+
+
+                await creator.UpdateDeviceAsync(dm);
+            }
+
         }
 
         static void BuildContainer()
@@ -88,30 +121,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 cancellationTokenSource.Cancel();
             }
         }
-
-        static void CreateInitialDataAsNeeded(object state)
-        {
-            _timer.Dispose();
-            if (!cancellationTokenSource.Token.IsCancellationRequested)
-            {
-                Trace.TraceInformation("Preparing to add initial data");
-                var creator = simulatorContainer.Resolve<IDataInitializer>();
-                creator.CreateInitialDataIfNeeded();
-            }
-        }
-
-        static void StartDataInitializationAsNeeded()
-        {
-            //We have observed that Azure reliably starts the web job twice on a fresh deploy. The second start
-            //is reliably about 7 seconds after the first start (under current conditions -- this is admittedly
-            //not a perfect solution, but absent visibility into the black box of Azure this is what works at
-            //the time) with a shutdown command being received on the current instance in the interim. We want
-            //to further bolster our guard against starting a data initialization process that may be aborted
-            //in the middle of its work. So we want to delay the data initialization for about 10 seconds to
-            //give ourselves the best chance of receiving the shutdown command if it is going to come in. After
-            //this delay there is an extremely good chance that we are on a stable start that will remain in place.
-            _timer = new Timer(CreateInitialDataAsNeeded, null, 10000, Timeout.Infinite);
-        }
         
         static async Task RunAsync()
         {
@@ -124,6 +133,36 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 }
                 catch (TaskCanceledException) { }
             }
+        }
+
+        static void StartSimulator()
+        {
+            // Dependencies to inject into the Bulk Device Tester
+            var logger = new TraceLogger();
+            var configProvider = new ConfigurationProvider();
+            var tableStorageClientFactory = new AzureTableStorageClientFactory();
+            var telemetryFactory = new CoolerTelemetryFactory(logger);
+
+            var transportFactory = new IotHubTransportFactory(logger, configProvider);
+
+            IVirtualDeviceStorage deviceStorage = null;
+            var useConfigforDeviceList = Convert.ToBoolean(configProvider.GetConfigurationSettingValueOrDefault("UseConfigForDeviceList", "False"), CultureInfo.InvariantCulture);
+
+            if (useConfigforDeviceList)
+            {
+                deviceStorage = new AppConfigRepository(configProvider, logger);
+            }
+            else
+            {
+                deviceStorage = new VirtualDeviceTableStorage(configProvider, tableStorageClientFactory);
+            }
+
+            IDeviceFactory deviceFactory = new CoolerDeviceFactory();
+
+            // Start Simulator
+            Trace.TraceInformation("Starting Simulator");
+            var tester = new BulkDeviceTester(transportFactory, logger, configProvider, telemetryFactory, deviceFactory, deviceStorage);
+            Task.Run(() => tester.ProcessDevicesAsync(cancellationTokenSource.Token), cancellationTokenSource.Token);
         }
     }
 }

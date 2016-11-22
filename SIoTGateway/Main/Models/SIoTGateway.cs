@@ -62,7 +62,8 @@ namespace Main.Models
                         {
                             await sensormodule.Start(deviceCancellationToken.Token);
                         }, 
-                        deviceCancellationToken.Token);
+                        deviceCancellationToken.Token
+                    );
 
                     // もういらない？
                     //_sensorModuleList.Add(sensormodule);

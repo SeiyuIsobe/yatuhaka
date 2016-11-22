@@ -107,10 +107,16 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
                     {
                         var devicesToProcess = new List<IDevice>();
 
+                        // 目的のデバイス名
+                        string targetDeviceID = "aaaa";
+
                         foreach (var deviceConfig in newDevices)
                         {
-                            _logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
-                            devicesToProcess.Add(_deviceFactory.CreateDevice(_logger, _transportFactory, _telemetryFactory, _configProvider, deviceConfig));
+                            if(targetDeviceID == deviceConfig.DeviceId)
+                            {
+                                _logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
+                                devicesToProcess.Add(_deviceFactory.CreateDevice(_logger, _transportFactory, _telemetryFactory, _configProvider, deviceConfig));
+                            }
                         }
 
 #pragma warning disable 4014

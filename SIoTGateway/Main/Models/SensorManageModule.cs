@@ -16,6 +16,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic;
 
 namespace Main.Models
 {
@@ -48,12 +50,11 @@ namespace Main.Models
         {
             this.ModuleID = module.Name;
 
-            //_sensormoduleWatcher = new SensorModuleWatcher(this.ModuleID);
-
             _sensorlist = module.Sensors;
         }
 
         private BulkDeviceTester _tester = null;
+        private IContainer _gatewayContainer = null;
 
         /// <summary>
         /// IoTゲートウェイサービスを開始する

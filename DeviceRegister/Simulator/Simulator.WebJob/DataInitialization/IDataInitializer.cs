@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
     public interface IDataInitializer
     {
         void CreateInitialDataIfNeeded();
+        Task<List<DeviceModel>> GetAllDevicesAsync();
+        Task<DeviceModel> UpdateDeviceAsync(DeviceModel device);
     }
 }

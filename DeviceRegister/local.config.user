@@ -4,8 +4,8 @@
   <setting name="SubscriptionId" value="ef37b2a7-f60e-4328-a72a-8a178836e145" />
   <setting name="ServiceStoreAccountName" value="localrmb85e8" />
   <setting name="ServiceStoreAccountConnectionString" value="DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=localrmb85e8;AccountKey=bxvbhcGvOzVXjr/YpKQFcH+H+CaSIYObzeKfhi5dgkj5YqsdeNeXnbsV51NC8GvJkxoJebI49zupcrnXxeCrYQ==" />
-  <setting name="ServiceSBName" value="LocalRM04d3f" />
-  <setting name="ServiceSBConnectionString" value="Endpoint=sb://localrm04d3f.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=S7C2tw/mnHNzy3OvNAM3nTuegSH3TZsfCksXbslByTg=" />
+  <setting name="ServiceSBName" value="LocalRMcf696" />
+  <setting name="ServiceSBConnectionString" value="Endpoint=sb://localrmcf696.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=FMHuVTPOs2lUnSlD0wz/EN4XpUwXQ+ea0j8B6nPfYg8=" />
   <setting name="ServiceEHName" value="LocalRM-ehout" />
   <setting name="ServiceEHConsumerGroup" value="" />
   <setting name="AzureAccountName" value="iseiyu@hotmail.co.jp" />
@@ -26,7 +26,7 @@
   <setting name="SolutionName" value="Remote Monitoring Solution" />
   <!-- ActionsProcessor -->
   <setting name="RulesEventHubName" value="LocalRM-ehruleout" />
-  <setting name="RulesEventHubConnectionString" value="Endpoint=sb://localrm04d3f.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=S7C2tw/mnHNzy3OvNAM3nTuegSH3TZsfCksXbslByTg=" />
+  <setting name="RulesEventHubConnectionString" value="Endpoint=sb://localrmcf696.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=FMHuVTPOs2lUnSlD0wz/EN4XpUwXQ+ea0j8B6nPfYg8=" />
   <!-- Map Api -->
   <setting name="MapApiQueryKey" value="" />
 </Environment>

@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
             device.TelemetryEvents.Add(startupTelemetry);
 
             var monitorTelemetry = new RemoteMonitorTelemetry(_logger, device.DeviceID);
-            device.TelemetryEvents.Add(monitorTelemetry);
+            //device.TelemetryEvents.Add(monitorTelemetry);
 
             return monitorTelemetry;
         }
