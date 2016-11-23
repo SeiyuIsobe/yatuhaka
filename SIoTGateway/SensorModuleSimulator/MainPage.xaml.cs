@@ -188,15 +188,15 @@ namespace SensorModuleSimulator
             Task.Delay(10000).Wait();
         }
 
-        private void SendDeviceNames()
-        {
-            SensorList list = new SensorList();
-            list.Sensors.Add("_SM19710613_SNm54321_DKCooler_");
+        //private void SendDeviceNames()
+        //{
+        //    SensorList list = new SensorList();
+        //    list.Sensors.Add("_SM19710613_SNm54321_DKCooler_");
 
-            Publish("SendDeviceNames/SM19710613", list.ToString());
+        //    Publish("SendDeviceNames/SM19710613", list.ToString());
 
-            Task.Delay(1000).Wait();
-        }
+        //    Task.Delay(1000).Wait();
+        //}
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
