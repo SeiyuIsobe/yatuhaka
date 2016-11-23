@@ -75,5 +75,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
             // DocumentDB
             return await _deviceLogic.UpdateDeviceAsync(device);
         }
+
+        public async Task<string> RegistDeviceId(string deviceId)
+        {
+            return await _deviceLogic.BootstrapDefaultDevices(deviceId);
+        }
     }
 }

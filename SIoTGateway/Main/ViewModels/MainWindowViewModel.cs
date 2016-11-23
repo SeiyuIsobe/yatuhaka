@@ -59,7 +59,7 @@ namespace Main.ViewModels
             };
 
             // ゲートウェイサービス開始
-            _iotgateway.Start();
+            //_iotgateway.Start();
         }
 
         /// <summary>

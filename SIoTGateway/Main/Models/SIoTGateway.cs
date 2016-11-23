@@ -93,6 +93,7 @@ namespace Main.Models
         /// <summary>
         /// IoTゲートウェイサービスを開始する
         /// </summary>
+        [Obsolete("使用禁止", true)]
         public async void Start()
         {
             // 断念

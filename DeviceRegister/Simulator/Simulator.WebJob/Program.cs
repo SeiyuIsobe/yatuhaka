@@ -63,8 +63,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 {
                     BuildContainer();
 
-                    StartDataInitializationAsNeeded();
-                    //StartSimulator();
+                    RegistDevice();
 
                     RunAsync().Wait();
                 }
@@ -76,13 +75,43 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             }
         }
 
-        private async static void StartDataInitializationAsNeeded()
+        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19710613_DKCooler_958";
+
+        private async static void RegistDevice()
         {
             var creator = simulatorContainer.Resolve<IDataInitializer>();
             var list = await creator.GetAllDevicesAsync();
+            var deviceId = _deviceId_debug;
 
-            var res = list.FindAll(d => d.DeviceProperties.DeviceID == "GW6210833_SM0771254175_SN19710613_DKCooler_958");
-            if(null != res && res.Count > 0)
+            var res = list.FindAll(d => d.DeviceProperties.DeviceID == deviceId);
+            if (null != res && res.Count == 0)
+            {
+                //
+                // デバイスの自動登録
+                //
+                await creator.RegistDeviceId(deviceId);
+
+                //
+                // デバイスの詳細情報登録
+                //
+                await RegistDeviceDetail();
+            }
+        }
+
+        private static void StartDataInitializationAsNeeded()
+        {
+            
+
+        }
+
+        private static async Task RegistDeviceDetail()
+        {
+            var creator = simulatorContainer.Resolve<IDataInitializer>();
+            var list = await creator.GetAllDevicesAsync();
+            var deviceId = _deviceId_debug;
+
+            var res = list.FindAll(d => d.DeviceProperties.DeviceID == deviceId);
+            if (null != res && res.Count > 0)
             {
                 DeviceModel dm = res[0] as DeviceModel;
 
@@ -104,7 +133,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 
                 await creator.UpdateDeviceAsync(dm);
             }
-
         }
 
         static void BuildContainer()

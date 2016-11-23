@@ -15,5 +15,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
         void CreateInitialDataIfNeeded();
         Task<List<DeviceModel>> GetAllDevicesAsync();
         Task<DeviceModel> UpdateDeviceAsync(DeviceModel device);
+        Task<string> RegistDeviceId(string deviceId);
     }
 }

@@ -893,5 +893,14 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         {
             return await _deviceRegistryListRepository.GetDevicesAllAsync();
         }
+
+        public async Task<string> BootstrapDefaultDevices(string id)
+        {
+            DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
+            SecurityKeys generatedSecurityKeys = _securityKeyGenerator.CreateRandomKeys();
+            await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
+
+            return id;
+        }
     }
 }
