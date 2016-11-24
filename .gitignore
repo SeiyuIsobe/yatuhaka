@@ -45,3 +45,5 @@
 /SIoTGateway/SIotGatewayCore/obj/x64/Debug
 /SIoTGateway/SiRSensors/obj
 /SIoTGateway/SensorModuleSimulator/SensorModuleSimulator.csproj.user
+/DeviceRegister/Build_Output/Debug
+/DeviceRegister/Common/obj/Debug

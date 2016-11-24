@@ -78,7 +78,15 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob
 
         public async Task<string> RegistDeviceId(string deviceId)
         {
-            return await _deviceLogic.BootstrapDefaultDevices(deviceId);
+            // 既に登録されていると例外が飛ぶ
+            try
+            {
+                return await _deviceLogic.BootstrapDefaultDevices(deviceId);
+            }
+            catch
+            {
+                return deviceId;
+            }
         }
     }
 }

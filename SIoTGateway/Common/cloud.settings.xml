@@ -3,31 +3,31 @@
   <!-- General Settings -->
   <setting name="AllocationRegion" value="Japan West" />
   <setting name="SubscriptionId" value="ec93a9d4-19f3-4aaf-b977-1f4404ec009d" />
-  <setting name="ServiceStoreAccountName" value="shimadzuiot" />
-  <setting name="ServiceStoreAccountConnectionString" value="DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=shimadzuiot;AccountKey=jP7UamQETBKjVdPDiH3HEydIdRr6xYpSyaAz6J6CD2mSBKOtjolQngDwNl2yVNCETXj8z28A5j8bep7a2NSVCw==" />
-  <setting name="ServiceSBName" value="shimadzuiot" />
-  <setting name="ServiceSBConnectionString" value="Endpoint=sb://shimadzuiot.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=2h8QuT9bD/ACZUmxUn4Y/NLP91t3mJffnn/4y6JSZIA=" />
-  <setting name="ServiceEHName" value="shimadzuiot-ehout" />
+  <setting name="ServiceStoreAccountName" value="localrm463be" />
+  <setting name="ServiceStoreAccountConnectionString" value="DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=localrm463be;AccountKey=lbEVySiMqcUpKohl8fKgNclOVcoi4xajUjvz1iDoVqIWGgWOBwb76S+HYR7uQjBb3WhF9GTXvdKMTmbIwWIiaQ==" />
+  <setting name="ServiceSBName" value="LocalRM808a0" />
+  <setting name="ServiceSBConnectionString" value="Endpoint=sb://localrm808a0.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=QwMLDOjtiyyONHVWjqmvuait+yX+foZ0FKMQp+BxJxE=" />
+  <setting name="ServiceEHName" value="LocalRM-ehout" />
   <setting name="ServiceEHConsumerGroup" value="" />
   <setting name="AzureAccountName" value="isobe.seiyu.xc@shimadzu.jp" />
   <!-- IotHub section -->
-  <setting name="IotHubName" value="shimadzuiot.azure-devices.net" />
-  <setting name="IotHubConnectionString" value="HostName=shimadzuiot.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=vawbwr5VXMvEyWRllU+IwFmq9oasNy57CC8VCPWbNag=" />
+  <setting name="IotHubName" value="LocalRMb8dd9.azure-devices.net" />
+  <setting name="IotHubConnectionString" value="HostName=LocalRMb8dd9.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=Oo85WmGaGmHUG/Xzk4bNZUgdCXgF42kNO/HS/cuvVIU=" />
   <!-- DocDB section -->
-  <setting name="DocDbEndPoint" value="https://shimadzuiot.documents.azure.com:443/" />
-  <setting name="DocDBKey" value="gWtGWqwqElOO2ialTjW9JDYE1rROEr3a9eMOuUaaKPI1Cvzx7YGmBKxDPb934g1tx4LQNwIQziNwyqoiFMLEYA==" />
+  <setting name="DocDbEndPoint" value="https://localrm42b33.documents.azure.com:443/" />
+  <setting name="DocDBKey" value="tKUfXKseHA1c4A0BEai35chfR1elYhqTUkUCcfRDbsl1ioI3PWRCYITrAUyMM7pGstAEI1TJTChHz1aO6jKC9g==" />
   <!-- Active Directory -->
   <setting name="AADTenant" value="f4781729-e742-4338-bea6-f53f3e238427" />
   <setting name="AADInstance" value="https://login.microsoftonline.com/{0}" />
-  <setting name="AADClientId" value="7dcfb709-a806-4a7f-a981-970f562b9ec2" />
+  <setting name="AADClientId" value="fc4167c9-23ca-4387-9099-910335c706ad" />
   <!-- Developer isolation -->
   <setting name="DeviceTableName" value="DeviceList" />
   <setting name="ObjectTypePrefix" value="" />
   <!-- Solution Attributes -->
   <setting name="SolutionName" value="Remote Monitoring Solution" />
   <!-- ActionsProcessor -->
-  <setting name="RulesEventHubName" value="shimadzuiot-ehruleout" />
-  <setting name="RulesEventHubConnectionString" value="Endpoint=sb://shimadzuiot.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=2h8QuT9bD/ACZUmxUn4Y/NLP91t3mJffnn/4y6JSZIA=" />
+  <setting name="RulesEventHubName" value="LocalRM-ehruleout" />
+  <setting name="RulesEventHubConnectionString" value="Endpoint=sb://localrm808a0.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=QwMLDOjtiyyONHVWjqmvuait+yX+foZ0FKMQp+BxJxE=" />
   <!-- Map Api -->
-  <setting name="MapApiQueryKey" value="Ak4FTi19IC6FSsdfUH4EY2msFOEOkC-namxykMLIZNjm_7DJ-GuP2MoV3Y8RLnBb" />
+  <setting name="MapApiQueryKey" value="" />
 </Environment>

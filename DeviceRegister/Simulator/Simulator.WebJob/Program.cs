@@ -91,6 +91,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 //
                 await creator.RegistDeviceId(deviceId);
 
+                // 一定時間待つ
+                await Task.Delay(3000);
+
                 //
                 // デバイスの詳細情報登録
                 //
