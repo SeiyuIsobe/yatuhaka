@@ -134,6 +134,7 @@
     <Compile Include="Helpers\BlobStorageClientFactory.cs" />
     <Compile Include="Helpers\BlobStorageReader.cs" />
     <Compile Include="Helpers\DeviceCreatorHelper.cs" />
+    <Compile Include="Helpers\DeviceFactoryResolver.cs" />
     <Compile Include="Helpers\DocumentDBClient.cs" />
     <Compile Include="Helpers\DynamicValuesHelper.cs" />
     <Compile Include="Helpers\FunctionalHelper.cs" />
@@ -144,9 +145,11 @@
     <Compile Include="Helpers\IBlobStorageClientFactory.cs" />
     <Compile Include="Helpers\ICustomTypeDescriptor.cs" />
     <Compile Include="Helpers\IDocumentDBClient.cs" />
+    <Compile Include="Helpers\IHelper.cs" />
     <Compile Include="Helpers\MqttHelper.cs" />
     <Compile Include="Helpers\ParsingHelper.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
+    <Compile Include="Helpers\TelemetryFactoryResolver.cs" />
     <Compile Include="Interfaces\ISensor.cs" />
     <Compile Include="Models\ApiRegistrationModel.cs" />
     <Compile Include="Models\ApiRegistrationTableEntity.cs" />

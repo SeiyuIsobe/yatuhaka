@@ -1,25 +1,37 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+﻿using SIotGatewayCore.Telemetry.Factory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Logging;
-using SIotGatewayCore.Telemetry.Factory;
-using System;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using System.Text.RegularExpressions;
 
-namespace SIoTGateway.Cooler.Telemetry.Factory
+namespace ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory
 {
-    public class CoolerTelemetryFactory : ITelemetryFactory, ITelemetryFactoryHelper
+    /// <summary>
+    /// 加速度センサー
+    /// </summary>
+    public class TelemetryFactory : ITelemetryFactory, ITelemetryFactoryHelper
     {
         private readonly ILogger _logger;
         private readonly string _kindRegx = @"_DK\w*_";
-        private readonly string _kind = "Cooler";
+        private readonly string _kind = "Accel";
 
         #region 受信イベント
         public event EventHandler ReceivedTelemetry;
         #endregion
 
-        public CoolerTelemetryFactory(ILogger logger)
+        public TelemetryFactory(ILogger logger)
         {
             _logger = logger;
+        }
+
+        public ITelemetryFactory CreateTelemetry(string deviceId)
+        {
+            throw new NotImplementedException();
         }
 
         public object PopulateDeviceWithTelemetryEvents(IDevice device)
@@ -38,11 +50,6 @@ namespace SIoTGateway.Cooler.Telemetry.Factory
             device.TelemetryEvents.Add(monitorTelemetry);
 
             return monitorTelemetry;
-        }
-
-        public ITelemetryFactory CreateTelemetry(string deviceId)
-        {
-            throw new NotImplementedException();
         }
 
         public object CallTelemetryFactory(string deviceId)

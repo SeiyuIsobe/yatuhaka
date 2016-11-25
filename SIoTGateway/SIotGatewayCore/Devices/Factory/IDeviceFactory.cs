@@ -11,8 +11,8 @@ namespace SIotGatewayCore.Devices.Factory
         IDevice CreateDevice(Logging.ILogger logger, ITransportFactory transportFactory,
             ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider, InitialDeviceConfig config);
 
-        #region 受信イベント
-        event EventHandler ReceivedTelemetry;
-        #endregion
+        //#region 受信イベント
+        //event EventHandler ReceivedTelemetry;
+        //#endregion
     }
 }

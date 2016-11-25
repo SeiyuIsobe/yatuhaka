@@ -136,7 +136,7 @@ namespace SensorModuleSimulator
 
                     if (null != _client)
                     {
-                        Publish("hogehoge", ((ISensor)s2).Data);
+                        Publish("GW6210833_SM0771254175_SN19760824_DKAccel_958", ((ISensor)s2).Data);
                     }
                 }
             };
@@ -160,7 +160,7 @@ namespace SensorModuleSimulator
 
                     if (null != _client)
                     {
-                        Publish("hogehoge", ((ISensor)s2).Data);
+                        Publish("GW6210833_SM0771254175_SN19760824_DKAccel_958", ((ISensor)s2).Data);
                     }
                 }
             };
@@ -172,7 +172,7 @@ namespace SensorModuleSimulator
         {
             SensorList list = new SensorList();
             list.Sensors.Add("GW6210833_SM0771254175_SN19710613_DKCooler_958");
-            list.Sensors.Add("GW6210833_SM0771254175_SN19760824_DKCooler_958");
+            list.Sensors.Add("GW6210833_SM0771254175_SN19760824_DKAccel_958");
 
             var sensor = new SensorModule() { Name = "SM0771254175" };
             sensor.Sensors = list;
@@ -285,8 +285,8 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        private string _iotEndpoint = "192.168.11.10";
-        //private string _iotEndpoint = "172.31.62.176";
+        //private string _iotEndpoint = "192.168.11.10";
+        private string _iotEndpoint = "172.31.62.176";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
 

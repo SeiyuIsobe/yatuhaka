@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic;
+using SIotGatewayCore.Telemetry.Factory;
 
 namespace Main.Models
 {
@@ -38,12 +39,12 @@ namespace Main.Models
         {
             this.ModuleID = moduleID;
 
-            // センサー基盤から送られてくるデバイス名の一覧を受信する
-            _sensormoduleWatcher = new SensorModuleWatcher(this.ModuleID);
-            _sensormoduleWatcher.ReceivedDeviceNames += (sender, e) =>
-            {
-                _sensorlist = SensorList.ToObject(sender.ToString());
-            };
+            //// センサー基盤から送られてくるデバイス名の一覧を受信する
+            //_sensormoduleWatcher = new SensorModuleWatcher(this.ModuleID);
+            //_sensormoduleWatcher.ReceivedDeviceNames += (sender, e) =>
+            //{
+            //    _sensorlist = SensorList.ToObject(sender.ToString());
+            //};
         }
 
         public SensorManageModule(SensorModule module)
@@ -53,8 +54,8 @@ namespace Main.Models
             _sensorlist = module.Sensors;
         }
 
-        private BulkDeviceTester _tester = null;
-        private IContainer _gatewayContainer = null;
+        //private BulkDeviceTester _tester = null;
+        //private IContainer _gatewayContainer = null;
 
         /// <summary>
         /// IoTゲートウェイサービスを開始する
@@ -73,14 +74,14 @@ namespace Main.Models
             var tableStorageClientFactory = new AzureTableStorageClientFactory();
 
             // テレメトリー
-            var telemetryFactory = new CoolerTelemetryFactory(logger);
-            telemetryFactory.ReceivedTelemetry += (sender, e) =>
-            {
-                if(null != ReceivedTelemetry)
-                {
-                    ReceivedTelemetry(sender, e);
-                }
-            };
+            ITelemetryFactory telemetryFactory = null;// new AnyTelemetryFactory(logger);
+            //telemetryFactory.ReceivedTelemetry += (sender, e) =>
+            //{
+            //    if (null != ReceivedTelemetry)
+            //    {
+            //        ReceivedTelemetry(sender, e);
+            //    }
+            //};
 
             // Azure IoT Hubに接続するオブジェクトを生成する
             var transportFactory = new IotHubTransportFactory(logger, configProvider);
@@ -92,11 +93,7 @@ namespace Main.Models
             deviceStorage = new VirtualDeviceTableStorage(configProvider, tableStorageClientFactory);
 
             //
-            // ここでCoolerDeviceFactoryに決め打ってしまっているのは良くない
-            //
-            //IDeviceFactory deviceFactory = new CoolerDeviceFactory();
-            // デバイス名に埋め込まれた種類によってデバイスを作成するAnyDeviceFactoryを使うことにする
-            IDeviceFactory deviceFactory = new AnyDeviceFactory();
+            IDeviceFactory deviceFactory = null;// new AnyDeviceFactory();
 
             //// Start Simulator
             var _tester = new BulkDeviceTester(transportFactory, logger, configProvider, telemetryFactory, deviceFactory, deviceStorage);

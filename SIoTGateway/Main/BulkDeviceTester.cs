@@ -4,6 +4,8 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using Newtonsoft.Json;
+using SIoTGateway.Cooler.Devices.Factory;
+using SIoTGateway.Cooler.Telemetry.Factory;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Devices.Factory;
 using SIotGatewayCore.Logging;
@@ -35,7 +37,8 @@ namespace Main
 
         private const int DEFAULT_DEVICE_POLL_INTERVAL_SECONDS = 120;
 
-        
+        private TelemetryFactoryResolver _telemetryFactoryResolver = new TelemetryFactoryResolver();
+        private DeviceFactoryResolver _deviceFactoryResolver = new DeviceFactoryResolver();
 
         public BulkDeviceTester(ITransportFactory transportFactory, ILogger logger, IConfigurationProvider configProvider,
             ITelemetryFactory telemetryFactory, IDeviceFactory deviceFactory, IVirtualDeviceStorage virtualDeviceStorage)
@@ -54,7 +57,15 @@ namespace Main
 
             _devicePollIntervalSeconds = Convert.ToInt32(pollingIntervalString, CultureInfo.InvariantCulture);
 
-            
+            #region ここに使うセンサーのファクトリーを登録する
+            // デバイスファクトリーの解決装置
+            _deviceFactoryResolver.Add(new CoolerDeviceFactory());
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
+
+            // テレメトリーファクトリーの解決装置
+            _telemetryFactoryResolver.Add(new CoolerTelemetryFactory(_logger));
+            _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory.TelemetryFactory(_logger));
+            #endregion
         }
 
         /// <summary>
@@ -109,17 +120,10 @@ namespace Main
 
                         if (newDevices.Count > 0)
                         {
-                            System.Diagnostics.Debug.WriteLine("-> New Device found.");
-                            //_logger.LogInfo("********** {0} NEW DEVICES FOUND ********** ", newDevices.Count);
                         }
                         if (removedDevices.Count > 0)
                         {
-                            System.Diagnostics.Debug.WriteLine("-> Device Removed.");
-                            //_logger.LogInfo("********** {0} DEVICES REMOVED ********** ", removedDevices.Count);
                         }
-
-                        // 一致するデバイスを保存する
-                        //_deviceList = newDevices;
 
                         if (removedDevices.Any())
                         {
@@ -141,11 +145,19 @@ namespace Main
                                 // 起動直後でインスタンスが生成されていないデバイス
                                 if(null == deviceConfig.Key)
                                 {
+                                    // キーはクラウド側が持っているので
+                                    // クラウド側を絞り出す
                                     var config = newDevicesOnCloud.Where(d => d.DeviceId == deviceConfig.DeviceId).ToList();
 
-                                    //_logger.LogInfo("********** SETTING UP NEW DEVICE : {0} ********** ", deviceConfig.DeviceId);
-                                    System.Diagnostics.Debug.WriteLine($"-> SETTING UP NEW DEVICE : {deviceConfig.DeviceId}");
-                                    devicesToProcess.Add(_deviceFactory.CreateDevice(_logger, _transportFactory, _telemetryFactory, _configProvider, config[0]));
+                                    // テレメトリー
+                                    var telemetryFactory = _telemetryFactoryResolver.Resolve(deviceConfig.DeviceId);
+
+                                    // デバイス
+                                    var df = _deviceFactoryResolver.Resolve(deviceConfig.DeviceId);
+                                    var device = ((IDeviceFactory)df).CreateDevice(_logger, _transportFactory, (ITelemetryFactory)telemetryFactory, _configProvider, config[0]);
+
+                                    // リストに追加
+                                    devicesToProcess.Add(device);
                                 }
                             }
 

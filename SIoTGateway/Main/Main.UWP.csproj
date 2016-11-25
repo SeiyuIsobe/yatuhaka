@@ -104,6 +104,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\AnyDeviceFactory.cs" />
+    <Compile Include="Models\AnyTelemetryFactory.cs" />
     <Compile Include="Models\SensorManageModule.cs" />
     <Compile Include="Models\SIoTGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,6 +138,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Acceleration\Acceleration.UWP.csproj">
+      <Project>{248f2f66-1732-4885-b917-01c5c0511336}</Project>
+      <Name>Acceleration.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.UWP.csproj">
       <Project>{7dfccb60-f0aa-4178-905b-f9008aa7d1e3}</Project>
       <Name>Common.UWP</Name>

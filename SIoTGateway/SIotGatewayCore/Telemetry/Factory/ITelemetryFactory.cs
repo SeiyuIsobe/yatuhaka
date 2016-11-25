@@ -13,5 +13,6 @@ namespace SIotGatewayCore.Telemetry.Factory
         /// so that it can be used by the caller of this method
         /// </returns>
         object PopulateDeviceWithTelemetryEvents(IDevice device);
+        ITelemetryFactory CreateTelemetry(string deviceId);
     }
 }

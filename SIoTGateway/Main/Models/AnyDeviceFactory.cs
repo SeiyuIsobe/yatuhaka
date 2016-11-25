@@ -15,6 +15,7 @@ using SIoTGateway.Cooler.Devices;
 
 namespace Main.Models
 {
+    [Obsolete("使用禁止", true)]
     public class AnyDeviceFactory : IDeviceFactory
     {
         #region 受信イベント
@@ -29,7 +30,7 @@ namespace Main.Models
             IConfigurationProvider configurationProvider,
             InitialDeviceConfig config)
         {
-            var deviceKind = GetDeviceKindHelper.GetDeviceKind(/*config.DeviceId*/"abc_DKCooler_eee");
+            var deviceKind = GetDeviceKindHelper.GetDeviceKind(config.DeviceId);
 
             IDevice device;
 
@@ -46,8 +47,6 @@ namespace Main.Models
                     device.Init(config);
                     return device;
             };
-
-            
         }
     }
 }

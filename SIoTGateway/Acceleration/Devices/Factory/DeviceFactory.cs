@@ -1,20 +1,24 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
-using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using SIotGatewayCore.Devices.Factory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using SIotGatewayCore.Devices;
-using SIotGatewayCore.Devices.Factory;
 using SIotGatewayCore.Logging;
 using SIotGatewayCore.Telemetry.Factory;
 using SIotGatewayCore.Transport.Factory;
-using System;
 using System.Text.RegularExpressions;
 
-namespace SIoTGateway.Cooler.Devices.Factory
+namespace ShimadzuIoT.Sensors.Acceleration.Devices.Factory
 {
-    public class CoolerDeviceFactory : IDeviceFactory, IDeviceFactoryHelper
+    public class DeviceFactory : IDeviceFactory, IDeviceFactoryHelper
     {
         private readonly string _kindRegx = @"_DK\w*_";
-        private readonly string _kind = "Cooler";
+        private readonly string _kind = "Accel";
 
         public object CallDeviceFactory(string deviceId)
         {
@@ -33,15 +37,9 @@ namespace SIoTGateway.Cooler.Devices.Factory
             return null;
         }
 
-        //#region 受信イベント
-        //public event EventHandler ReceivedTelemetry;
-        //#endregion
-
-
-        public IDevice CreateDevice(ILogger logger, ITransportFactory transportFactory,
-            ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider, InitialDeviceConfig config)
+        public IDevice CreateDevice(ILogger logger, ITransportFactory transportFactory, ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider, InitialDeviceConfig config)
         {
-            var device = new CoolerDevice(logger, transportFactory, telemetryFactory, configurationProvider);
+            var device = new Device(logger, transportFactory, telemetryFactory, configurationProvider);
             device.Init(config);
             return device;
         }

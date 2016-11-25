@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             }
         }
 
-        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19710613_DKCooler_958";
+        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_DKAccel_958";
 
         private async static void RegistDevice()
         {
