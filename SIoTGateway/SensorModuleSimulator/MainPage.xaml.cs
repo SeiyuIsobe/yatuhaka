@@ -136,7 +136,7 @@ namespace SensorModuleSimulator
 
                     if (null != _client)
                     {
-                        Publish("GW6210833_SM0771254175_SN19760824_DKAccel_958", ((ISensor)s2).Data);
+                        Publish("GW6210833_SM0771254175_SN19710613_DKCooler_958", ((ISensor)s2).Data);
                     }
                 }
             };
@@ -160,7 +160,11 @@ namespace SensorModuleSimulator
 
                     if (null != _client)
                     {
-                        Publish("GW6210833_SM0771254175_SN19760824_DKAccel_958", ((ISensor)s2).Data);
+                        try
+                        {
+                            Publish("GW6210833_SM0771254175_SN19710613_DKCooler_958", ((ISensor)s2).Data);
+                        }
+                        catch { }
                     }
                 }
             };
