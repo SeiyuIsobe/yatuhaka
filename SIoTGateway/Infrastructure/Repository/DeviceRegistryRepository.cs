@@ -267,5 +267,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 return deviceList.OrderByDescending(keySelector).AsQueryable();
             }
         }
+
+        public async Task<List<DeviceModel>> GetDevicesAllAsync()
+        {
+            return await this.GetAllDevicesAsync();
+        }
     }
 }

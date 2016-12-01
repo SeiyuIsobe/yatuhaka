@@ -89,7 +89,13 @@ namespace SIotGatewayCore.Transport
 
             if (!string.IsNullOrWhiteSpace(objectType) && !string.IsNullOrEmpty(objectTypePrefix))
             {
-                eventData.ObjectType = objectTypePrefix + objectType;
+                //eventData.ObjectType = objectTypePrefix + objectType;
+
+                // 加速度センサー
+                if(objectType == "Acceleration")
+                {
+
+                }
             }
 
             // sample code to trace the raw JSON that is being sent
@@ -97,6 +103,8 @@ namespace SIotGatewayCore.Transport
             //Trace.TraceInformation(rawJson);
 
             bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventData));
+
+            //System.Diagnostics.Debug.WriteLine($"-> {JsonConvert.SerializeObject(eventData)}");
 
             var message = new Microsoft.Azure.Devices.Client.Message(bytes);
             message.Properties["EventId"] = eventId.ToString();

@@ -37,8 +37,9 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry
             monitorData.X = data.X;
             monitorData.Y = data.Y;
             monitorData.Z = data.Z;
+            //monitorData.ObjectType = "Acceleration";
 
-            if (null != _sendMessageAsync)
+            if (null != _sendMessageAsync && true == this.TelemetryActive)
             {
                 await _sendMessageAsync(monitorData);
             }

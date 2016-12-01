@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Models;
+using System.Collections.Generic;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Repository
 {
@@ -12,5 +14,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         /// <param name="query">The device query.</param>
         /// <returns></returns>
         Task<DeviceListQueryResult> GetDeviceList(DeviceListQuery query);
+
+        Task<List<DeviceModel>> GetDevicesAllAsync();
     }
 }

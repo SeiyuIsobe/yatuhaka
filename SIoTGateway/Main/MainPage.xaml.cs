@@ -39,6 +39,20 @@ namespace Main
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             StartBroker();
+
+            //断念
+            //GetDeviceModel();
+        }
+
+        private void GetDeviceModel()
+        {
+            var url = "https://localhost:44305/api/v1/devices/GW6210833_SM0771254175_SN19760824_DKAccel_958";
+            var req = WebRequest.Create(url);
+            var res = req.GetResponseAsync();
+
+            //using (var resStream = res.GetResponseStream())
+            //{
+            //}
         }
 
         private void _sensor_attach_Click(object sender, RoutedEventArgs e)

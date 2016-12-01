@@ -68,8 +68,8 @@ namespace SIoTGateway.Cooler.Telemetry
             _externalTemperatureGenerator = new SampleDataGenerator(-20, 120);
 
             // MQTT
-            _mqtt = MqttHelper.Connect("127.0.0.1", deviceId, /*deviceId*/"hogehoge");
-            _mqtt.Subscribe(new string[] { "hogehoge" }, new byte[] { 0 });
+            _mqtt = MqttHelper.Connect("127.0.0.1", deviceId, null);
+            _mqtt.Subscribe(new string[] { deviceId }, new byte[] { 0 });
             _mqtt.MqttMsgPublishReceived += async (sender, e) =>
             {
                 var msg = Encoding.UTF8.GetString(e.Message);
@@ -178,6 +178,11 @@ namespace SIoTGateway.Cooler.Telemetry
         public void ChangeSetPointTemperature(double newSetPointTemperature)
         {
             _temperatureGenerator.ShiftSubsequentData(newSetPointTemperature);
+        }
+
+        public void SetSendMessageAsyncFunction(CancellationToken token, Func<object, Task> sendMessageAsync)
+        {
+            _sendMessageAsync = sendMessageAsync;
         }
     }
 }

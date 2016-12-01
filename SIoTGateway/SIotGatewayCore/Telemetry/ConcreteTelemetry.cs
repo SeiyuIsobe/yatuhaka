@@ -43,5 +43,10 @@ namespace SIotGatewayCore.Telemetry
                 groupCount++;
             }
         }
+
+        public void SetSendMessageAsyncFunction(CancellationToken token, Func<object, Task> sendMessageAsync)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

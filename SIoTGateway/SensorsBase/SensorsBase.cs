@@ -75,13 +75,13 @@ namespace ShimadzuIoT.Sensors
         {
         }
 
-        public Task SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync)
+        virtual public Task SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync)
         {
             // これ必要
             _sendMessageAsync = sendMessageAsync;
 
-            // このwhile必要か分からん
-            // 戻り値がTaskなので必要らしいが・・・
+            //このwhile必要か分からん
+            //// 戻り値がTaskなので必要らしいが・・・
             while (true)
             {
             }
@@ -99,5 +99,12 @@ namespace ShimadzuIoT.Sensors
                 ReceivedTelemetry(msg, null);
             }
         }
+
+        public void SetSendMessageAsyncFunction(CancellationToken token, Func<object, Task> sendMessageAsync)
+        {
+            _sendMessageAsync = sendMessageAsync;
+        }
+
+        public bool TelemetryActive { get; set; } = true;
     }
 }

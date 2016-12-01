@@ -21,5 +21,6 @@ namespace SIotGatewayCore.Telemetry
         /// <param name="token">Cancellation token to cancel process</param>
         /// <returns>Task that completes when all tasks are sent</returns>
         Task SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync);
+        void SetSendMessageAsyncFunction(CancellationToken token, Func<object, Task> sendMessageAsync);
     }
 }

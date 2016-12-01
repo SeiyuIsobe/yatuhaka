@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ namespace Main.Models
                     // センサー基盤オブジェクトの生成
                     // センサー基盤のIDを設定する
                     SensorManageModule sensormodule = new SensorManageModule(obj);
+                    sensormodule.DataInitializer = this.DataInitializer;
                     sensormodule.ReceivedTelemetry += (ss, ee) =>
                     {
                         if (null != ReceivedTelemetry)
@@ -74,6 +76,8 @@ namespace Main.Models
             
 
             BuildContainer();
+
+         
         }
 
         internal void ActivatedSensor(string sensorModuleID)
@@ -133,6 +137,16 @@ namespace Main.Models
             var builder = new ContainerBuilder();
             builder.RegisterModule(new GatewayModule());
             _gatewayContainer = builder.Build();
+        }
+
+        public IDataInitializer DataInitializer
+        {
+            get
+            {
+                if (null == _gatewayContainer) return null;
+
+                return _gatewayContainer.Resolve<IDataInitializer>();
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using SIotGatewayCore.Devices;
+using System;
+using System.Threading.Tasks;
 
 namespace SIotGatewayCore.Telemetry.Factory
 {
@@ -14,5 +16,6 @@ namespace SIotGatewayCore.Telemetry.Factory
         /// </returns>
         object PopulateDeviceWithTelemetryEvents(IDevice device);
         ITelemetryFactory CreateTelemetry(string deviceId);
+        object PopulateDeviceWithTelemetryEvents(IDevice device, Func<object, Task> sendMessageAsync);
     }
 }

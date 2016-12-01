@@ -154,6 +154,10 @@
       <Project>{8e372b79-7ced-4ef3-9bf2-2e67f9b69c43}</Project>
       <Name>Infrastructure.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SensorsBase\SensorsBase.UWP.csproj">
+      <Project>{8c1cf29b-2dca-4023-9abd-8b04c99b4c3e}</Project>
+      <Name>SensorsBase.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SIoTBrorker\SIoTBroker.UWP.csproj">
       <Project>{f797f431-96a6-4a5a-9063-8dfe08ffe442}</Project>
       <Name>SIoTBroker.UWP</Name>

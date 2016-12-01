@@ -4,6 +4,7 @@ using SIotGatewayCore.Logging;
 using SIotGatewayCore.Telemetry.Factory;
 using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace SIoTGateway.Cooler.Telemetry.Factory
 {
@@ -24,8 +25,8 @@ namespace SIoTGateway.Cooler.Telemetry.Factory
 
         public object PopulateDeviceWithTelemetryEvents(IDevice device)
         {
-            var startupTelemetry = new StartupTelemetry(_logger, device);
-            device.TelemetryEvents.Add(startupTelemetry);
+            //var startupTelemetry = new StartupTelemetry(_logger, device);
+            //device.TelemetryEvents.Add(startupTelemetry);
 
             var monitorTelemetry = new RemoteMonitorTelemetry(_logger, device.DeviceID);
             monitorTelemetry.ReceivedTelemetry += (sender, e) =>
@@ -60,6 +61,11 @@ namespace SIoTGateway.Cooler.Telemetry.Factory
             }
 
             return null;
+        }
+
+        public object PopulateDeviceWithTelemetryEvents(IDevice device, Func<object, Task> sendMessageAsync)
+        {
+            throw new NotImplementedException();
         }
     }
 }

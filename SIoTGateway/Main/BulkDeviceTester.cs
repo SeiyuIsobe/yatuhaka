@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
+﻿using Main.DataInitialization;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
@@ -155,6 +156,7 @@ namespace Main
                                     // デバイス
                                     var df = _deviceFactoryResolver.Resolve(deviceConfig.DeviceId);
                                     var device = ((IDeviceFactory)df).CreateDevice(_logger, _transportFactory, (ITelemetryFactory)telemetryFactory, _configProvider, config[0]);
+                                    //var devicemodel = await this.DataInitializer.GetAllDevicesAsync(); UWPはDocumentDBにアクセスできなかった
 
                                     // リストに追加
                                     devicesToProcess.Add(device);
@@ -202,5 +204,7 @@ namespace Main
                 _deviceList.Add(new InitialDeviceConfig() { DeviceId = name });
             }
         }
+
+        public IDataInitializer DataInitializer { get; set; }
     }
 }

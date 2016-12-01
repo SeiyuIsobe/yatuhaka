@@ -107,6 +107,7 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandProcessors\ChangeElapseTimeCommandProcessor.cs" />
     <Compile Include="Devices\Device.cs" />
     <Compile Include="Devices\Factory\DeviceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,9 +117,7 @@
     <Compile Include="Telemetry\StartupTelemetry.cs" />
     <EmbeddedResource Include="Properties\Acceleration.rd.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CommandProcessors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.UWP.csproj">
       <Project>{7dfccb60-f0aa-4178-905b-f9008aa7d1e3}</Project>

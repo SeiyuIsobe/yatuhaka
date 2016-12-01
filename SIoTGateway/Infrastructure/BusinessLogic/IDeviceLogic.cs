@@ -25,5 +25,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         IList<DeviceTelemetryFieldModel> ExtractTelemetry(DeviceModel device);
 
         Task<string> BootstrapDevice(string id);
+        Task<List<DeviceModel>> GetAllDeviceAsync();
+        Task<string> BootstrapDefaultDevices(string id);
     }
 }

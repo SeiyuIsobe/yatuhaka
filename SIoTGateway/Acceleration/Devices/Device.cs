@@ -1,4 +1,9 @@
 ﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Factory;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
+using ShimadzuIoT.Sensors.Acceleration.Telemetry;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Logging;
 using SIotGatewayCore.Telemetry.Factory;
@@ -20,6 +25,28 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
                ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider)
             : base(logger, transportFactory, telemetryFactory, configurationProvider)
         {
+        }
+
+        protected override void InitCommandProcessors()
+        {
+
+        }
+
+        public void OnStartTelemetryCommand()
+        {
+            var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
+            remoteMonitorTelemetry.TelemetryActive = true;
+        }
+
+        public void OnStopTelemetryCommnad()
+        {
+            var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
+            remoteMonitorTelemetry.TelemetryActive = false;
+        }
+
+        public void OnChangeElapseTime(int time)
+        {
+
         }
     }
 }

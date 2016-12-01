@@ -34,11 +34,25 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// センサーにテレメトリーを送信するオブジェクトを登録
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
         public object PopulateDeviceWithTelemetryEvents(IDevice device)
         {
-            var startupTelemetry = new StartupTelemetry(_logger, device);
-            device.TelemetryEvents.Add(startupTelemetry);
+            return PopulateDeviceWithTelemetryEvents(device, null);
+        }
 
+        public object PopulateDeviceWithTelemetryEvents(IDevice device, Func<object, Task> sendMessageAsync)
+        {
+            // 今回の実験用では最初に登録した情報のままでいく
+            //
+            //// 最初の一発だけ送信するテレメトリー
+            //var startupTelemetry = new StartupTelemetry(_logger, device);
+            //device.TelemetryEvents.Add(startupTelemetry);
+
+            // センサーデータを送信するテレメトリー
             var monitorTelemetry = new RemoteMonitorTelemetry(_logger, device.DeviceID);
             monitorTelemetry.ReceivedTelemetry += (sender, e) =>
             {

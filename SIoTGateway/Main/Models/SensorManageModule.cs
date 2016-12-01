@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic;
 using SIotGatewayCore.Telemetry.Factory;
+using Main.DataInitialization;
 
 namespace Main.Models
 {
@@ -98,7 +99,10 @@ namespace Main.Models
             //// Start Simulator
             var _tester = new BulkDeviceTester(transportFactory, logger, configProvider, telemetryFactory, deviceFactory, deviceStorage);
             _tester.SetDevice(_sensorlist.Sensors);
+            _tester.DataInitializer = this.DataInitializer;
             await Task.Run(() => _tester.ProcessDevicesAsync(token), token);
         }
+
+        public IDataInitializer DataInitializer { get; set; }
     }
 }

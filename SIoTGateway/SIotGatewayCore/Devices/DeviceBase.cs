@@ -80,6 +80,15 @@ namespace SIotGatewayCore.Devices
             Transport = TransportFactory.CreateTransport(this);
             _telemetryController = TelemetryFactory.PopulateDeviceWithTelemetryEvents(this);
 
+            // テレメトリーにデータの送信先を指定する
+            foreach (ITelemetry telemetry in TelemetryEvents)
+            {
+                telemetry.SetSendMessageAsyncFunction(new CancellationToken(), async (object eventData) =>
+                {
+                    await Transport.SendEventAsync(eventData);
+                });
+            }
+
             InitCommandProcessors();
         }
 
@@ -167,51 +176,82 @@ namespace SIotGatewayCore.Devices
         /// <returns></returns>
         private async Task StartSendLoopAsync(CancellationToken token)
         {
-            try
+            // 今回の実験用では最初に登録した情報のままでいく
+            //
+            //// スタートアップ
+            //ITelemetry startup = TelemetryEvents[0];
+            //await startup.SendEventsAsync(token, async (object eventData) =>
+            //{
+            //    await Transport.SendEventAsync(eventData);
+            //});
+
+            //// 2つ目以降はセンサーデータを送信するテレメトリー
+            //if(TelemetryEvents.Count > 1)
+            //{
+            //    // サブスクライブ開始の合図
+            //    for(int i = 1; i < TelemetryEvents.Count; i++)
+            //    {
+            //        TelemetryEvents[i].SetSendMessageAsyncFunction(token, async (object eventData) =>
+            //        {
+            //            await Transport.SendEventAsync(eventData);
+            //        });
+            //    }
+            //}
+
+            // 意味ないけど無限ループを回す
+            do
             {
-                Logger.LogInfo("Booting device {0}...", DeviceID);
-
-                do
-                {
-                    _currentEventGroup = 0;
-
-                    Logger.LogInfo("Starting events list for device {0}...", DeviceID);
-
-                    while (_currentEventGroup < TelemetryEvents.Count && !token.IsCancellationRequested)
-                    {
-                        Logger.LogInfo("Device {0} starting IEventGroup {1}...", DeviceID, _currentEventGroup);
-
-                        var eventGroup = TelemetryEvents[_currentEventGroup];
-
-                        await eventGroup.SendEventsAsync(token, async (object eventData) =>
-                        {
-                            await Transport.SendEventAsync(eventData);
-                        });
-
-                        _currentEventGroup++;
-                    }
-
-                    Logger.LogInfo("Device {0} finished sending all events in list...", DeviceID);
-
-                } while (RepeatEventListForever && !token.IsCancellationRequested);
-
-                Logger.LogWarning("Device {0} sent all events and is shutting down send loop. (Set RepeatEventListForever = true on the device to loop forever.)", DeviceID);
-
+                await Task.Delay(1000);
             }
-            catch (TaskCanceledException)
-            {
-                //do nothing if the task was cancelled
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("Unexpected Exception starting device send loop: {0}", ex.ToString());
-            }
-
-            if (token.IsCancellationRequested)
-            {
-                Logger.LogInfo("********** Processing Device {0} has been cancelled - StartSendLoopAsync Ending. **********", DeviceID);
-            }
+            while (RepeatEventListForever && !token.IsCancellationRequested);
         }
+        //private async Task StartSendLoopAsync(CancellationToken token)
+        //{
+        //    try
+        //    {
+        //        Logger.LogInfo("Booting device {0}...", DeviceID);
+
+        //        do
+        //        {
+        //            _currentEventGroup = 0;
+
+        //            Logger.LogInfo("Starting events list for device {0}...", DeviceID);
+
+        //            while (_currentEventGroup < TelemetryEvents.Count && !token.IsCancellationRequested)
+        //            {
+        //                Logger.LogInfo("Device {0} starting IEventGroup {1}...", DeviceID, _currentEventGroup);
+
+        //                var eventGroup = TelemetryEvents[_currentEventGroup];
+
+        //                await eventGroup.SendEventsAsync(token, async (object eventData) =>
+        //                {
+        //                    await Transport.SendEventAsync(eventData);
+        //                });
+
+        //                _currentEventGroup++;
+        //            }
+
+        //            Logger.LogInfo("Device {0} finished sending all events in list...", DeviceID);
+
+        //        } while (RepeatEventListForever && !token.IsCancellationRequested);
+
+        //        Logger.LogWarning("Device {0} sent all events and is shutting down send loop. (Set RepeatEventListForever = true on the device to loop forever.)", DeviceID);
+
+        //    }
+        //    catch (TaskCanceledException)
+        //    {
+        //        //do nothing if the task was cancelled
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.LogError("Unexpected Exception starting device send loop: {0}", ex.ToString());
+        //    }
+
+        //    if (token.IsCancellationRequested)
+        //    {
+        //        Logger.LogInfo("********** Processing Device {0} has been cancelled - StartSendLoopAsync Ending. **********", DeviceID);
+        //    }
+        //}
 
         /// <summary>
         /// Starts the loop that listens for events/commands from the IoT Hub to be sent to this device

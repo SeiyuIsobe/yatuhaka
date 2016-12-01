@@ -20,6 +20,7 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastr
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Repository;
 //using D = Dynamitey;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic
 {
@@ -368,7 +369,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                     {
                         DeviceId = deviceId,
                         HostName = _configProvider.GetConfigurationSettingValue("iotHub.HostName"),
-                        Key = securityKeys.PrimaryKey
+                        Key = securityKeys.PrimaryKey,
+                        DeviceModelJson = JsonConvert.SerializeObject(repositoryDevice)
                     });
                 }
                 catch (Exception ex)
@@ -896,6 +898,20 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             {
                 return null;
             }
+        }
+
+        public async Task<List<DeviceModel>> GetAllDeviceAsync()
+        {
+            return await _deviceRegistryListRepository.GetDevicesAllAsync();
+        }
+
+        public async Task<string> BootstrapDefaultDevices(string id)
+        {
+            DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
+            SecurityKeys generatedSecurityKeys = _securityKeyGenerator.CreateRandomKeys();
+            await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
+
+            return id;
         }
     }
 }

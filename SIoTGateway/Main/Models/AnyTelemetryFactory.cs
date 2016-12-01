@@ -52,5 +52,10 @@ namespace Main.Models
                     return null;
             };
         }
+
+        public object PopulateDeviceWithTelemetryEvents(IDevice device, Func<object, Task> sendMessageAsync)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

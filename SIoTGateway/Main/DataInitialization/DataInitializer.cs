@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,33 @@ namespace Main.DataInitialization
             string ret_string = string.Empty;
 
             Task.Run(async () => ret_string = await _deviceLogic.BootstrapDevice(id)).Wait();
+        }
+
+        public async Task<List<DeviceModel>> GetAllDevicesAsync()
+        {
+            return await _deviceLogic.GetAllDeviceAsync();
+        }
+
+        public async Task<DeviceModel> UpdateDeviceAsync(DeviceModel device)
+        {
+            // IoT Hub
+            await _deviceLogic.UpdateDeviceEnabledStatusAsync(device.DeviceProperties.DeviceID, (bool)device.DeviceProperties.HubEnabledState);
+
+            // DocumentDB
+            return await _deviceLogic.UpdateDeviceAsync(device);
+        }
+
+        public async Task<string> RegistDeviceId(string deviceId)
+        {
+            // 既に登録されていると例外が飛ぶ
+            try
+            {
+                return await _deviceLogic.BootstrapDefaultDevices(deviceId);
+            }
+            catch
+            {
+                return deviceId;
+            }
         }
     }
 }

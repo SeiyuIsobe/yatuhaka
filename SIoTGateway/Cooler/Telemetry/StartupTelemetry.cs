@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Logging;
@@ -24,6 +25,11 @@ namespace SIoTGateway.Cooler.Telemetry
                 _logger.LogInfo("Sending initial data for device {0}", _device.DeviceID);
                 await sendMessageAsync(_device.GetDeviceInfo());
             }
+        }
+
+        public void SetSendMessageAsyncFunction(CancellationToken token, Func<object, Task> sendMessageAsync)
+        {
+            throw new NotImplementedException();
         }
     }
 }
