@@ -238,6 +238,10 @@
       <Project>{54B5B211-B661-42E9-AF2D-87712A37D608}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Sensors\Acceleration\Acceleration.csproj">
+      <Project>{CCF97149-3FBC-4807-8E7D-0A8B04ACD804}</Project>
+      <Name>Acceleration</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">

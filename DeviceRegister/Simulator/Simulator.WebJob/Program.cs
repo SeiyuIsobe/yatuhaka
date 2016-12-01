@@ -17,6 +17,8 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.Sim
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Repository;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Transport.Factory;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
+using ShimadzuIoT.Sensors.Acceleration.CommandProcessors;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 {
@@ -75,7 +77,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             }
         }
 
-        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_DKAccel_958";
+        //private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_DKAccel_958";
+        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19710613_DKCooler_958";
 
         private async static void RegistDevice()
         {
@@ -127,6 +130,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                     dm.DeviceProperties.HubEnabledState = false;
 
                     dm.IsSimulatedDevice = true;
+
+                    AssignCommands(dm);
                 }
                 else
                 {
@@ -194,6 +199,32 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             Trace.TraceInformation("Starting Simulator");
             var tester = new BulkDeviceTester(transportFactory, logger, configProvider, telemetryFactory, deviceFactory, deviceStorage);
             Task.Run(() => tester.ProcessDevicesAsync(cancellationTokenSource.Token), cancellationTokenSource.Token);
+        }
+
+        private static void AssignCommands(DeviceModel device)
+        {
+            //device.Commands.Add(new Command("PingDevice"));
+            device.Commands.Add(new Command("StartTelemetry"));
+            device.Commands.Add(new Command("StopTelemetry"));
+
+            // ChangeElapseTimeCommandProcessor
+            device.Commands.Add(
+                new Command(
+                    ChangeElapseTimeCommandParameter.CommandName,
+                    new[]
+                    {
+                        new Parameter(
+                            ChangeElapseTimeCommandParameter.TimeProperty,
+                            ChangeElapseTimeCommandParameter.Time_
+                            )
+                    }
+                )
+            );
+
+
+            //device.Commands.Add(new Command("ChangeSetPointTemp", new[] { new Parameter("SetPointTemp", "double"), new Parameter("SetPointHimd", "double") }));
+            //device.Commands.Add(new Command("DiagnosticTelemetry", new[] { new Parameter("Active", "boolean") }));
+            //device.Commands.Add(new Command("ChangeDeviceState", new[] { new Parameter("DeviceState", "string") }));
         }
     }
 }
