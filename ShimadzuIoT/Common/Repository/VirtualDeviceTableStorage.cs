@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repositor
                 {
                     HostName = device.HostName,
                     DeviceId = device.DeviceId,
-                    Key = device.Key
+                    Key = device.Key,
+                    DeviceModelJson = device.DeviceModelJson
                 };
                 devices.Add(deviceConfig);
             }
@@ -68,7 +69,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repositor
             {
                 DeviceId = deviceConfig.DeviceId,
                 HostName = deviceConfig.HostName,
-                Key = deviceConfig.Key
+                Key = deviceConfig.Key,
+                DeviceModelJson = deviceConfig.DeviceModelJson
             };
             var operation = TableOperation.InsertOrReplace(deviceEnity);
             await _azureTableStorageClient.ExecuteAsync(operation);

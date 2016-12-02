@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E53B88B0-668E-486A-B379-8ECA69291CDC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ShimadzuIoT.Sensors.Acceleration</RootNamespace>
+    <AssemblyName>Acceleration</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Acceleration.UWP\CommandProcessors\ChangeElapseTimeCommandProcessor.cs">
+      <Link>CommandProcessors\ChangeElapseTimeCommandProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Acceleration.UWP\Devices\Device.cs">
+      <Link>Devices\Device.cs</Link>
+    </Compile>
+    <Compile Include="..\Acceleration.UWP\Devices\Factory\DeviceFactory.cs">
+      <Link>Devices\Factory\DeviceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Acceleration.UWP\Telemetry\Data\RemoteMonitorTelemetryData.cs">
+      <Link>Telemetry\Data\RemoteMonitorTelemetryData.cs</Link>
+    </Compile>
+    <Compile Include="..\Acceleration.UWP\Telemetry\Factory\TelemetryFactory.cs">
+      <Link>Telemetry\Factory\TelemetryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Acceleration.UWP\Telemetry\RemoteMonitorTelemetry.cs">
+      <Link>Telemetry\RemoteMonitorTelemetry.cs</Link>
+    </Compile>
+    <Compile Include="..\Acceleration.UWP\Telemetry\StartupTelemetry.cs">
+      <Link>Telemetry\StartupTelemetry.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{f046a103-6dbd-48ab-9648-3d7f390821e4}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ShimadzuIoTGatewayCore\ShimadzuIoTGatewayCore.csproj">
+      <Project>{1348742f-5ea6-4964-b155-0388bfa59ca4}</Project>
+      <Name>ShimadzuIoTGatewayCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SensorsBase\SensorsBase.csproj">
+      <Project>{060bf4ba-05fc-4e65-8ca8-90f9d59faac8}</Project>
+      <Name>SensorsBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
+﻿using System;
+
+namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
 {
     public class BlobStorageClientFactory : IBlobStorageClientFactory
     {
@@ -15,8 +17,19 @@
 
         public IBlobStorageClient CreateClient(string storageConnectionString, string containerName)
         {
-            return _blobStorageClient ??
-                   (_blobStorageClient = new BlobStorageClient(storageConnectionString, containerName));
+            try
+            {
+                if(null == _blobStorageClient)
+                {
+                    _blobStorageClient = new BlobStorageClient(storageConnectionString, containerName);
+                }
+
+                return _blobStorageClient;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
     }
 }

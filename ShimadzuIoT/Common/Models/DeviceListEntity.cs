@@ -27,5 +27,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models
         }
 
         public string Key { get; set; }
+        public string DeviceModelJson { get; set; }
     }
 }

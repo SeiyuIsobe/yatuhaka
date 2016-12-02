@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Main;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +26,121 @@ namespace ShimadzuIoTGateway
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private Main.ViewModels.MainWindowViewModel _mainwindowVM = null;
+
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            StartBroker();
+
+            //断念
+            //GetDeviceModel();
+        }
+
+        private void _sensor_attach_Click(object sender, RoutedEventArgs e)
+        {
+            _mainwindowVM.ActivatedSensor("aaa");
+        }
+
+
+        private ApplicationTrigger _trigger = null;
+
+        /// <summary>
+        /// MQTTをバックグラウンドで起動する
+        /// </summary>
+        /// <remarks>
+        /// 注意！！！
+        /// 開発でローカル環境においてMQTTブローカには繋がらない場合がある
+        /// Progressイベントの中でタスクがスタートしたという合図のあとは繋がる
+        /// </remarks>
+        private async void StartBroker()
+        {
+            // 一旦削除
+            TaskRegistHelper.UnregisterBackgroundTasks("SIoTBroker");
+            _trigger = new ApplicationTrigger();
+
+            #region MQTT broker
+            try
+            {
+                var registration = TaskRegistHelper.RegisterBackgroundTask(
+                    "SIoTBroker.SIoTBroker",
+                    "SIoTBroker",
+                    _trigger,
+                    null);
+
+                await registration;
+
+                // タスク進捗のイベント
+                ((IBackgroundTaskRegistration)registration.Result).Progress += async (ss, ee) =>
+                {
+                    int prg = (int)(ee.Progress);
+
+                    if (prg == 555) // タスクがスタートしたという合図
+                    {
+                        if (null == _mainwindowVM)
+                        {
+                            _mainwindowVM = new Main.ViewModels.MainWindowViewModel();
+                            _mainwindowVM.Dispatcher = Dispatcher;
+
+                            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                            {
+                                this.DataContext = _mainwindowVM;
+                                _mainwindowVM.Run();
+
+                                GetMyIp();
+                            });
+
+                        }
+                    }
+                };
+
+                // タスク終了のイベント
+                ((IBackgroundTaskRegistration)registration.Result).Completed += (ss, se) =>
+                {
+                    System.Diagnostics.Debug.WriteLine("-> task registration is completed.");
+                };
+
+            }
+            catch (Exception ex)
+            {
+                // バックグラウンドタスクの登録に失敗した
+                // 必要ならば対処する
+                throw;
+            }
+            #endregion
+
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            {
+                // Reset the completion status
+                var settings = ApplicationData.Current.LocalSettings;
+                settings.Values.Remove("SIoTBroker");
+
+                //Signal the ApplicationTrigger
+                var result = await _trigger.RequestAsync();
+            });
+        }
+
+        private async void GetMyIp()
+        {
+            var hostname = Dns.GetHostName();
+
+            var ips = await Dns.GetHostAddressesAsync(Dns.GetHostName());
+            foreach (IPAddress ip in ips)
+            {
+                //System.Diagnostics.Debug.WriteLine($"-> {ip.ToString()}");
+                if (ip.ToString().IndexOf("172.") == 0 || ip.ToString().IndexOf("192.") == 0)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        _mainwindowVM.GetMyIp(ip.ToString());
+                    });
+                    return;
+                }
+            }
         }
     }
 }

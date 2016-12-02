@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
     {
         private static Dictionary<string, string> _db = new Dictionary<string, string>()
         {
+            {"ActionMappingStoreBlobName", "mappings.json"},
             {"device.StorageConnectionString","config:ServiceStoreAccountConnectionString"},
             {"device.TableName","config:DeviceTableName"},
             {"iotHub.ConnectionString","config:IotHubConnectionString"},
@@ -26,7 +27,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
             {"ida.AADTenant","actionmappings"},
             {"MapApiQueryKey","actionmappings"},
             {"iotHub.HostName","config:IotHubName"},
-            {"DevicePollIntervalSeconds", "20" }
+            {"DevicePollIntervalSeconds", "20" },
+            {"ActionMappingStoreContainerName", "actionmappings"}
         };
 
         public static string GetSetting(string key)

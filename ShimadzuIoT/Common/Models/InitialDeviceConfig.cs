@@ -12,5 +12,6 @@
         public string HostName { get; set; }
         public string DeviceId { get; set; }
         public string Key { get; set; }
+        public string DeviceModelJson { get; set; }
     }
 }

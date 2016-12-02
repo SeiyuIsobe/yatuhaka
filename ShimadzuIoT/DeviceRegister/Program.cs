@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using DeviceRegister.DataInitialization;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,29 +33,47 @@ namespace DeviceRegister
             _simulatorContainer = builder.Build();
         }
 
-        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_DKAccel_958";
+        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_DKAccel_123";
 
         private async static void RegistDevice()
         {
-            var creator = _simulatorContainer.Resolve<IDataInitializer>();
-            var list = await creator.GetAllDevicesAsync();
-            var deviceId = _deviceId_debug;
-
-            var res = list.FindAll(d => d.DeviceProperties.DeviceID == deviceId);
-            if (null != res && res.Count == 0)
+            try
             {
-                //
-                // デバイスの自動登録
-                //
-                await creator.RegistDeviceId(deviceId);
+                Trace.WriteLine($"以下のデバイスをAzureに登録します");
+                Trace.WriteLine($"{_deviceId_debug}");
 
-                // 一定時間待つ
-                await Task.Delay(3000);
+                var creator = _simulatorContainer.Resolve<IDataInitializer>();
+                var list = await creator.GetAllDevicesAsync();
+
+                Trace.WriteLine($"Azureのデバイス数：{list.Count}");
+
+                var deviceId = _deviceId_debug;
+
+                var res = list.FindAll(d => d.DeviceProperties.DeviceID == deviceId);
+                if (null != res && res.Count == 0)
+                {
+                    //
+                    // デバイスの自動登録
+                    //
+                    await creator.RegistDeviceId(deviceId);
+
+                    // 一定時間待つ
+                    await Task.Delay(3000);
+
+                }
+                else
+                {
+                    Trace.WriteLine("既に登録されていました");
+                }
 
                 //
                 // デバイスの詳細情報登録
                 //
                 await RegistDeviceDetail();
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine($"->{e.Message}");
             }
         }
 
@@ -67,6 +86,8 @@ namespace DeviceRegister
             var res = list.FindAll(d => d.DeviceProperties.DeviceID == deviceId);
             if (null != res && res.Count > 0)
             {
+                Trace.WriteLine("詳細情報を新規登録します");
+
                 DeviceModel dm = res[0] as DeviceModel;
 
                 // nullの場合は登録された直後
@@ -78,14 +99,19 @@ namespace DeviceRegister
                     dm.DeviceProperties.HubEnabledState = false;
 
                     dm.IsSimulatedDevice = true;
+
+                    //AssignCommands(dm);
                 }
                 else
                 {
+                    Trace.WriteLine("詳細情報を更新します");
+
                     dm.DeviceProperties.HubEnabledState = !(dm.DeviceProperties.HubEnabledState);
                 }
 
-
                 await creator.UpdateDeviceAsync(dm);
+
+                Trace.WriteLine("処理が終わりました");
             }
         }
 
@@ -101,5 +127,33 @@ namespace DeviceRegister
                 catch (TaskCanceledException) { }
             }
         }
+
+#if false
+        private static void AssignCommands(DeviceModel device)
+        {
+            //device.Commands.Add(new Command("PingDevice"));
+            device.Commands.Add(new Command("StartTelemetry"));
+            device.Commands.Add(new Command("StopTelemetry"));
+
+            // ChangeElapseTimeCommandProcessor
+            device.Commands.Add(
+                new Command(
+                    ChangeElapseTimeCommandParameter.CommandName,
+                    new[]
+                    {
+                        new Parameter(
+                            ChangeElapseTimeCommandParameter.TimeProperty,
+                            ChangeElapseTimeCommandParameter.Time_
+                            )
+                    }
+                )
+            );
+
+
+            //device.Commands.Add(new Command("ChangeSetPointTemp", new[] { new Parameter("SetPointTemp", "double"), new Parameter("SetPointHimd", "double") }));
+            //device.Commands.Add(new Command("DiagnosticTelemetry", new[] { new Parameter("Active", "boolean") }));
+            //device.Commands.Add(new Command("ChangeDeviceState", new[] { new Parameter("DeviceState", "string") }));
+        }
+#endif
     }
 }

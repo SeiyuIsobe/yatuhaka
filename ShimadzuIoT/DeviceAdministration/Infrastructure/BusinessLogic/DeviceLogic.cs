@@ -20,6 +20,7 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Repository;
+using Newtonsoft.Json;
 #if !WINDOWS_UWP
 using D = Dynamitey;
 #endif
@@ -375,7 +376,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                     {
                         DeviceId = deviceId,
                         HostName = _configProvider.GetConfigurationSettingValue("iotHub.HostName"),
-                        Key = securityKeys.PrimaryKey
+                        Key = securityKeys.PrimaryKey,
+                        DeviceModelJson = JsonConvert.SerializeObject(repositoryDevice)
                     });
                 }
                 catch (Exception ex)
@@ -904,8 +906,17 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         {
             return await _deviceRegistryListRepository.GetDevicesAllAsync();
         }
-
+        
         public async Task<string> BootstrapDefaultDevices(string id)
+        {
+            DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
+            SecurityKeys generatedSecurityKeys = _securityKeyGenerator.CreateRandomKeys();
+            await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
+
+            return id;
+        }
+
+        public async Task<string> BootstrapDevice(string id)
         {
             DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
             SecurityKeys generatedSecurityKeys = _securityKeyGenerator.CreateRandomKeys();

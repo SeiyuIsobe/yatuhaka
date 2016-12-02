@@ -5,9 +5,16 @@
     xmlns:local="using:ShimadzuIoTGateway"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="30">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="_sensor_attach" Content="センサー基板1アタッチ" Click="_sensor_attach_Click"/>
+            </StackPanel>
+            <TextBlock Text="{Binding SelfIP}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBlock Text="{Binding RecivedTelemetryData}"/>
+        </StackPanel>
     </Grid>
 </Page>
