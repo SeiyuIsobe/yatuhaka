@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using uPLibrary.Networking.M2Mqtt;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
@@ -36,12 +37,35 @@ namespace Main
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            StartBroker();
+            //StartBroker();
 
             //断念
             //GetDeviceModel();
+
+            await Task.Run(async () =>
+            {
+                SIoTBroker.SIoTBroker broker = new SIoTBroker.SIoTBroker();
+                broker.Start();
+
+                if (null == _mainwindowVM)
+                {
+                    _mainwindowVM = new Main.ViewModels.MainWindowViewModel();
+                    _mainwindowVM.Dispatcher = Dispatcher;
+
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.DataContext = _mainwindowVM;
+                        _mainwindowVM.Run();
+
+                        GetMyIp();
+                    });
+
+                }
+
+                while (true) { }
+            });
         }
 
         private void GetDeviceModel()
