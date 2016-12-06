@@ -65,3 +65,4 @@
 /DeviceRegister/Sensors/Acceleration/*.user
 /DeviceRegister/Sensors/SensorBase/*.user
 /ShimadzuIoT
+/SIoTGateway/packages
