@@ -19,15 +19,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
 
         public string GetConfigurationSettingValueOrDefault(string configurationSettingName, string defaultValue)
         {
-            //System.Diagnostics.Debug.WriteLine($"=>{configurationSettingName}");
+            //string configValue = CloudConfigurationManager.GetSetting(configurationSettingName);
 
-            //if (!this.configuration.ContainsKey(configurationSettingName))
-            //{
-            string configValue = CloudConfigurationManager.GetSetting(configurationSettingName);
-            //    bool isEmulated = Environment.CommandLine.Contains("iisexpress.exe") || 
-            //        Environment.CommandLine.Contains("w3wp.exe") ||
-            //        Environment.CommandLine.Contains("WebJob.exe") || // ローカルデバッグ用に追加
-            //        Environment.CommandLine.Contains("WebJob.vshost.exe");
+            var cloud = new CloudConfigurationManager();
+            string configValue = cloud.GetSetting(configurationSettingName, true);
 
             if (configValue.StartsWith(ConfigToken, StringComparison.OrdinalIgnoreCase))
             {

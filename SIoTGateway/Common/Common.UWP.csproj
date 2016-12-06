@@ -182,6 +182,7 @@
     <EmbeddedResource Include="Properties\Common.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="appconfig_clone.xml" />
     <Content Include="cloud.settings.iseiyu.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
