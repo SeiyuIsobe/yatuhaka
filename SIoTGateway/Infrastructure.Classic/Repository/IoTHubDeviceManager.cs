@@ -26,7 +26,14 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
 
         public async Task<Device> AddDeviceAsync(Device device)
         {
-            return await this._deviceManager.AddDeviceAsync(device);
+            try
+            {
+                return await this._deviceManager.AddDeviceAsync(device);
+            }
+            catch
+            {
+                return device;
+            }
         }
 
         public async Task<Device> GetDeviceAsync(string deviceId)

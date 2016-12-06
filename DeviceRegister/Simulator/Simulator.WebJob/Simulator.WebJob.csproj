@@ -255,6 +255,10 @@
       <Project>{90a6862a-902a-4145-bf6a-a5b5bce5f706}</Project>
       <Name>Infrastructure.Classic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\SIoTGateway\Sensors\Acceleration.Classic\Acceleration.Classic.csproj">
+      <Project>{10B765CD-DCE8-4342-9055-96B83403DE6E}</Project>
+      <Name>Acceleration.Classic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\SIoTGateway\SIoTGatewayCore.Classic\SIoTGatewayCore.Classic.csproj">
       <Project>{8dc2ba6a-141d-43df-9ea4-8e6a7470c201}</Project>
       <Name>SIoTGatewayCore.Classic</Name>

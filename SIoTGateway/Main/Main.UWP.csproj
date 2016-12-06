@@ -103,8 +103,6 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\AnyDeviceFactory.cs" />
-    <Compile Include="Models\AnyTelemetryFactory.cs" />
     <Compile Include="Models\SensorManageModule.cs" />
     <Compile Include="Models\SIoTGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,10 +136,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Acceleration\Acceleration.UWP.csproj">
-      <Project>{248f2f66-1732-4885-b917-01c5c0511336}</Project>
-      <Name>Acceleration.UWP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Common.UWP.csproj">
       <Project>{7dfccb60-f0aa-4178-905b-f9008aa7d1e3}</Project>
       <Name>Common.UWP</Name>
@@ -154,7 +148,11 @@
       <Project>{8e372b79-7ced-4ef3-9bf2-2e67f9b69c43}</Project>
       <Name>Infrastructure.UWP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SensorsBase\SensorsBase.UWP.csproj">
+    <ProjectReference Include="..\Sensors\Acceleration\Acceleration.UWP.csproj">
+      <Project>{248f2f66-1732-4885-b917-01c5c0511336}</Project>
+      <Name>Acceleration.UWP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sensors\SensorsBase\SensorsBase.UWP.csproj">
       <Project>{8c1cf29b-2dca-4023-9abd-8b04c99b4c3e}</Project>
       <Name>SensorsBase.UWP</Name>
     </ProjectReference>
