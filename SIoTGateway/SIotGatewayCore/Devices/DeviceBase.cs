@@ -56,6 +56,16 @@ namespace SIotGatewayCore.Devices
         public List<ITelemetry> TelemetryEvents { get; private set; }
         public bool RepeatEventListForever { get; set; }
 
+#if !WINDOWS_UWP
+        virtual public object OperationValue
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+#endif
+
         protected object _telemetryController;
 
         /// <summary>

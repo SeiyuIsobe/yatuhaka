@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             {
                 return await this._deviceManager.AddDeviceAsync(device);
             }
-            catch
+            catch(ArgumentException e)
             {
                 return device;
             }

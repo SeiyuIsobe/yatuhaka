@@ -9,16 +9,13 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configuration
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob;
-using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.Cooler.Devices.Factory;
-using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.Cooler.Telemetry.Factory;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.DataInitialization;
-using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Devices.Factory;
-using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Logging;
-using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Repository;
-using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator.WebJob.SimulatorCore.Transport.Factory;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
 using ShimadzuIoT.Sensors.Acceleration.CommandProcessors;
+using SIotGatewayCore.Devices.Factory;
+using SIotGatewayCore.Devices;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 {
@@ -27,8 +24,16 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
         static CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         static IContainer _simulatorContainer;
 
+        // デバイス・テレメトリーファクトリー解決装置
+        private static DeviceFactoryResolver _deviceFactoryResolver = new DeviceFactoryResolver();
+
         static void Main(string[] args)
         {
+            #region ここに使うセンサーのファクトリーを登録する
+            // デバイスファクトリーの解決装置
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
+            #endregion
+
             BuildContainer();
 
             RegistDevice();
@@ -53,7 +58,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 Trace.WriteLine($"{_deviceId_debug}");
 
                 var creator = _simulatorContainer.Resolve<IDataInitializer>();
-                var list = await creator.GetAllDevicesAsync();
+                var list = await creator.GetAllDevicesAsync(); // DocumentDBより登録デバイスを取得する
 
                 Trace.WriteLine($"Azureのデバイス数：{list.Count}");
 
@@ -110,19 +115,43 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 
                     dm.IsSimulatedDevice = true;
 
+                    // コマンド
                     AssignCommands(dm);
+
+                    // センサー制御値
+                    AssignOperationValue(dm);
                 }
                 else
                 {
                     Trace.WriteLine("詳細情報を更新します");
 
                     dm.DeviceProperties.HubEnabledState = !(dm.DeviceProperties.HubEnabledState);
+
+                    // センサー制御値（デバッグ用）
+                    AssignOperationValue(dm);
                 }
 
                 await creator.UpdateDeviceAsync(dm);
 
                 Trace.WriteLine("処理が終わりました");
             }
+        }
+
+        /// <summary>
+        /// デバイス名からデバイスを特定し、デフォルト値をセットする
+        /// </summary>
+        /// <param name="dm"></param>
+        private static void AssignOperationValue(DeviceModel dm)
+        {
+            // デバイス名
+            var deviceId = dm.DeviceProperties.DeviceID;
+
+            // デバイスを特定
+            var df = _deviceFactoryResolver.Resolve(deviceId);
+            var device = ((IDeviceFactory)df).CreateDevice(null, null, null, null, null);
+
+            // デフォルト値をセットする
+            dm.OperationValue = JsonConvert.SerializeObject(device.OperationValue);
         }
 
         static async Task RunAsync()

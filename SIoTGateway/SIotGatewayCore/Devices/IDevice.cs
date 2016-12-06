@@ -34,5 +34,9 @@ namespace SIotGatewayCore.Devices
         DeviceModel GetDeviceInfo();
 
         Task StartAsync(CancellationToken token);
+
+#if !WINDOWS_UWP
+        object OperationValue { get; }
+#endif
     }
 }

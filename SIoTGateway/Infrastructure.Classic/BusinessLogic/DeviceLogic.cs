@@ -376,7 +376,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                     {
                         DeviceId = deviceId,
                         HostName = _configProvider.GetConfigurationSettingValue("iotHub.HostName"),
-                        Key = securityKeys.PrimaryKey,
+                        Key = securityKeys == null ? "" : securityKeys.PrimaryKey,
                         DeviceModelJson = JsonConvert.SerializeObject(repositoryDevice)
                     });
                 }

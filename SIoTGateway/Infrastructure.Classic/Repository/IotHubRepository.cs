@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 await AzureRetryHelper.OperationWithBasicRetryAsync(async () =>
                                                                     await this._deviceManager.GetDeviceAsync(deviceId));
 
-            if(null == iotHubDevice)
+            if(null != iotHubDevice)
             {
                 iotHubDevice.Status = isEnabled ? DeviceStatus.Enabled : DeviceStatus.Disabled;
 
