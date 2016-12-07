@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SensorsBase.Classic\OperationValueBase.cs">
+      <Link>OperationValueBase.cs</Link>
+    </Compile>
     <Compile Include="..\SensorsBase.Classic\SensorsBase.cs">
       <Link>SensorsBase.cs</Link>
     </Compile>

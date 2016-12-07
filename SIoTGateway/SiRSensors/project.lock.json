@@ -31,12 +31,11 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices.Client/1.0.21": {
+      "Microsoft.Azure.Devices.Client/1.0.16": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
           "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86",
-          "Validation": "2.2.8"
+          "PCLCrypto": "1.0.86"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd": {}
@@ -1980,15 +1979,15 @@
           }
         }
       },
-      "Validation/2.2.8": {
+      "Validation/2.0.6.15003": {
         "compile": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         },
         "runtime": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -2030,12 +2029,11 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices.Client/1.0.21": {
+      "Microsoft.Azure.Devices.Client/1.0.16": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
           "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86",
-          "Validation": "2.2.8"
+          "PCLCrypto": "1.0.86"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd": {}
@@ -3840,15 +3838,15 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Validation/2.2.8": {
+      "Validation/2.0.6.15003": {
         "compile": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         },
         "runtime": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -3890,12 +3888,11 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices.Client/1.0.21": {
+      "Microsoft.Azure.Devices.Client/1.0.16": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
           "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86",
-          "Validation": "2.2.8"
+          "PCLCrypto": "1.0.86"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd": {}
@@ -5658,15 +5655,15 @@
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Validation/2.2.8": {
+      "Validation/2.0.6.15003": {
         "compile": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         },
         "runtime": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -5708,12 +5705,11 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices.Client/1.0.21": {
+      "Microsoft.Azure.Devices.Client/1.0.16": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
           "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86",
-          "Validation": "2.2.8"
+          "PCLCrypto": "1.0.86"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd": {}
@@ -7526,15 +7522,15 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Validation/2.2.8": {
+      "Validation/2.0.6.15003": {
         "compile": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         },
         "runtime": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -7576,12 +7572,11 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices.Client/1.0.21": {
+      "Microsoft.Azure.Devices.Client/1.0.16": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
           "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86",
-          "Validation": "2.2.8"
+          "PCLCrypto": "1.0.86"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd": {}
@@ -9344,15 +9339,15 @@
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Validation/2.2.8": {
+      "Validation/2.0.6.15003": {
         "compile": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         },
         "runtime": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -9394,12 +9389,11 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices.Client/1.0.21": {
+      "Microsoft.Azure.Devices.Client/1.0.16": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
           "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86",
-          "Validation": "2.2.8"
+          "PCLCrypto": "1.0.86"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd": {}
@@ -11212,15 +11206,15 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Validation/2.2.8": {
+      "Validation/2.0.6.15003": {
         "compile": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         },
         "runtime": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -11262,12 +11256,11 @@
           "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll": {}
         }
       },
-      "Microsoft.Azure.Devices.Client/1.0.21": {
+      "Microsoft.Azure.Devices.Client/1.0.16": {
         "dependencies": {
           "Microsoft.AspNet.WebApi.Client": "5.2.3",
           "Microsoft.Azure.Amqp": "1.1.5",
-          "PCLCrypto": "1.0.86",
-          "Validation": "2.2.8"
+          "PCLCrypto": "1.0.86"
         },
         "compile": {
           "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd": {}
@@ -13030,15 +13023,15 @@
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Validation/2.2.8": {
+      "Validation/2.0.6.15003": {
         "compile": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         },
         "runtime": {
-          "lib/dotnet/Validation.dll": {}
+          "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -13114,18 +13107,16 @@
         "lib/uap10.0/Microsoft.Azure.Amqp.Uwp.dll"
       ]
     },
-    "Microsoft.Azure.Devices.Client/1.0.21": {
-      "sha512": "bwBcIPloBt1ZaJGss/H4b46OYUwpNpWl84S0HslQidYx90NxmZaQQmuVPIRbE3LCrLLCM6j+BJ3SvI2vYnYmLw==",
+    "Microsoft.Azure.Devices.Client/1.0.16": {
+      "sha512": "E9l+U6bcJSjxvvYVfD+olrHOn+2e1ltv6CVu61x655/M7+Pl5B1JueTjrp2Q52YbnGgGlsXRMv1tHvj6olL+fA==",
       "type": "package",
-      "path": "Microsoft.Azure.Devices.Client/1.0.21",
+      "path": "Microsoft.Azure.Devices.Client/1.0.16",
       "files": [
-        "Microsoft.Azure.Devices.Client.1.0.21.nupkg.sha512",
+        "Microsoft.Azure.Devices.Client.1.0.16.nupkg.sha512",
         "Microsoft.Azure.Devices.Client.nuspec",
         "build/native/Microsoft.Azure.Devices.Client.targets",
         "lib/native/Microsoft.Azure.Devices.Client.winmd",
         "lib/net45/Microsoft.Azure.Devices.Client.dll",
-        "lib/portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10/Microsoft.Azure.Devices.Client.PCL.dll",
-        "lib/uap10.0/Microsoft.Azure.Devices.Client.pri",
         "lib/uap10.0/Microsoft.Azure.Devices.Client.winmd",
         "thirdpartynotice.txt"
       ]
@@ -16901,40 +16892,27 @@
         "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll"
       ]
     },
-    "Validation/2.2.8": {
-      "sha512": "DMNc7JhPlgRwnR+NNb+ldoluObL+RBw96aMoiZae/Looa4vgaAnIysmle/bV2OKqDNW9oUBDckPyfa2+sX6JdA==",
+    "Validation/2.0.6.15003": {
+      "sha512": "8vgCOG9mPeOd3xwyL20OT9RyOKq9PmJb0Iltzwj6eay38Cq2v6ojvpSDbc+sc6YXit+iAVyyvHTS29rBvDpdDQ==",
       "type": "package",
-      "path": "Validation/2.2.8",
+      "path": "Validation/2.0.6.15003",
       "files": [
-        "README.md",
-        "Validation.2.2.8.nupkg.sha512",
+        "Validation.2.0.6.15003.nupkg.sha512",
         "Validation.nuspec",
-        "lib/dotnet/Validation.dll",
-        "lib/dotnet/Validation.xml",
-        "lib/portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10/Validation.dll",
-        "lib/portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10/Validation.xml",
-        "lib/portable-net45+dnxcore50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10/Validation.dll",
-        "lib/portable-net45+dnxcore50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10/Validation.xml",
-        "tools/2013/RequiresNotNull.snippet",
-        "tools/2013/RequiresNotNullOrEmpty.snippet",
-        "tools/2015/RequiresNotNull.snippet",
-        "tools/2015/RequiresNotNullOrEmpty.snippet",
-        "tools/install_snippets.cmd",
-        "tools/uninstall_snippets.cmd"
+        "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.dll",
+        "lib/portable-net40+sl50+win+wpa81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10/Validation.xml"
       ]
     },
-    "WindowsAzure.Storage/7.2.1": {
-      "sha512": "PWSqaIFaUvi2DgHeDotoRtv1new1m3jfwsb+T6nZfpVdYYIzyYUOFPBxJ0f8yHUq8C9Na8avNc08YsdgDIoTZg==",
+    "WindowsAzure.Storage/7.0.0": {
+      "sha512": "AKxGH6NpZN0fRc2eRKtlDdkk1JW5uqCMeHCF06Z/L5xkYajM7OWquzsjAkQsi2s5a2O0Y4iE6WZOcT5PLE0IMA==",
       "type": "package",
-      "path": "WindowsAzure.Storage/7.2.1",
+      "path": "WindowsAzure.Storage/7.0.0",
       "files": [
-        "WindowsAzure.Storage.7.2.1.nupkg.sha512",
+        "WindowsAzure.Storage.7.0.0.nupkg.sha512",
         "WindowsAzure.Storage.nuspec",
         "lib/net40/Microsoft.WindowsAzure.Storage.dll",
         "lib/net40/Microsoft.WindowsAzure.Storage.pdb",
         "lib/net40/Microsoft.WindowsAzure.Storage.xml",
-        "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll",
-        "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.pdb",
         "lib/win8/Microsoft.WindowsAzure.Storage.dll",
         "lib/win8/Microsoft.WindowsAzure.Storage.pdb",
         "lib/wp8/Microsoft.WindowsAzure.Storage.dll",

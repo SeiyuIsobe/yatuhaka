@@ -93,7 +93,7 @@ namespace SensorModuleSimulator
         }
 
         private Timer _periodicTimer;
-        private bool _retryIgnore = true;
+        private bool _retryIgnore = false;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {

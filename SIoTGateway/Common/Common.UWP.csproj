@@ -116,6 +116,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common.Classic\Models\Sensor\IOperationValue.cs">
+      <Link>Models\Sensor\IOperationValue.cs</Link>
+    </Compile>
     <Compile Include="CloudConfigurationManager.cs" />
     <Compile Include="Configurations\ConfigurationProvider.cs" />
     <Compile Include="Configurations\EnvironmentDescription.cs" />

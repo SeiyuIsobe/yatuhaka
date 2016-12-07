@@ -14,6 +14,8 @@ using SIotGatewayCore.Telemetry;
 using SIotGatewayCore.Telemetry.Factory;
 using SIotGatewayCore.Transport;
 using SIotGatewayCore.Transport.Factory;
+using Newtonsoft.Json;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Sensor;
 //using Microsoft.Azure.Devices.Common.Exceptions;
 
 namespace SIotGatewayCore.Devices
@@ -32,6 +34,7 @@ namespace SIotGatewayCore.Devices
         protected readonly IConfigurationProvider ConfigProvider;
         protected ITransport Transport;
         protected CommandProcessor RootCommandProcessor;
+        protected string _operationValueStream = string.Empty;
 
         public string DeviceID
         {
@@ -56,15 +59,13 @@ namespace SIotGatewayCore.Devices
         public List<ITelemetry> TelemetryEvents { get; private set; }
         public bool RepeatEventListForever { get; set; }
 
-#if !WINDOWS_UWP
         virtual public object OperationValue
         {
             get
             {
-                throw new NotImplementedException();
+                return _operationValueStream; // これは使ってはいけない
             }
         }
-#endif
 
         protected object _telemetryController;
 
@@ -104,12 +105,13 @@ namespace SIotGatewayCore.Devices
 
         protected virtual void InitDeviceInfo(InitialDeviceConfig config)
         {
-            DeviceModel initialDevice = SampleDeviceFactory.GetSampleSimulatedDevice(config.DeviceId, config.Key);
+            DeviceModel initialDevice = JsonConvert.DeserializeObject<DeviceModel>(config.DeviceModelJson);
             DeviceProperties = initialDevice.DeviceProperties;
             Commands = initialDevice.Commands ?? new List<Command>();
             Telemetry = initialDevice.Telemetry ?? new List<Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Telemetry>();
             HostName = config.HostName;
             PrimaryAuthKey = config.Key;
+            _operationValueStream = initialDevice.OperationValue; // JSON
         }
 
         /// <summary>

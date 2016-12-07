@@ -3,6 +3,7 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Factory;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
+using Newtonsoft.Json;
 using ShimadzuIoT.Sensors.Acceleration.Telemetry;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Logging;
@@ -21,15 +22,14 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
     /// </summary>
     public class Device : DeviceBase
     {
-#if !WINDOWS_UWP
         // センサー制御値
-        private OperationValue _operationValue = new OperationValue();
-#endif
+        //private OperationValue _operationValue = new OperationValue();
 
         public Device(ILogger logger, ITransportFactory transportFactory,
                ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider)
             : base(logger, transportFactory, telemetryFactory, configurationProvider)
         {
+            //_operationValue = JsonConvert.DeserializeObject<OperationValue>(base._operationValueStream);
         }
 
         protected override void InitCommandProcessors()
@@ -54,15 +54,23 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
 
         }
 
-#if !WINDOWS_UWP
         // センサー制御値
         public override object OperationValue
         {
             get
             {
-                return _operationValue;
+                return JsonConvert.DeserializeObject<OperationValue>(base._operationValueStream);
             }
         }
-#endif
+
+        //public override void SetOperationValue(string valuestream)
+        //{
+        //    var deviceModel = JsonConvert.DeserializeObject<DeviceModel>(valuestream);
+
+        //    if (null != deviceModel && null != ((DeviceModel)deviceModel).OperationValue)
+        //    {
+        //        _operationValue = JsonConvert.DeserializeObject<OperationValue>(((DeviceModel)deviceModel).OperationValue.ToString());
+        //    }
+        //}
     }
 }

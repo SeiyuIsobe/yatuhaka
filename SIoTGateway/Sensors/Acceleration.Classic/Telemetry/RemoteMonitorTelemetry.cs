@@ -11,6 +11,7 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 using ShimadzuIoT.Sensors.Acceleration.Telemetry.Data;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Sensor;
 using Newtonsoft.Json;
+using SIotGatewayCore.Devices;
 
 namespace ShimadzuIoT.Sensors.Acceleration.Telemetry
 {
@@ -19,10 +20,16 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry
     /// </summary>
     public class RemoteMonitorTelemetry : SensorsBase
     {
-        public RemoteMonitorTelemetry(ILogger logger, string deviceId)
-            :base(logger, deviceId)
+        private OperationValue _operationValue = null;
+
+        public RemoteMonitorTelemetry(ILogger logger, IDevice device)
+            :base(logger, device)
         {
             _mqtt.MqttMsgPublishReceived += OnMqttMsgPublishReceived;
+
+            _operationValue = (OperationValue)(base.OperationValue);
+
+            base.TelemetryActive = _operationValue.IsAvailable; // 送る・送らないフラグ
         }
 
         override async public void OnMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
@@ -37,9 +44,8 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry
             monitorData.X = data.X;
             monitorData.Y = data.Y;
             monitorData.Z = data.Z;
-            //monitorData.ObjectType = "Acceleration";
 
-            if (null != _sendMessageAsync && true == this.TelemetryActive)
+            if (null != _sendMessageAsync && true == base.TelemetryActive)
             {
                 await _sendMessageAsync(monitorData);
             }
