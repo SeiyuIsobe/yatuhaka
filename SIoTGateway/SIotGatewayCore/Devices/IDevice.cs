@@ -36,5 +36,7 @@ namespace SIotGatewayCore.Devices
         Task StartAsync(CancellationToken token);
 
         object OperationValue { get; }
+
+        string OperationValueDefault { get; }
     }
 }

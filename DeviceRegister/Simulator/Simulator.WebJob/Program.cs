@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             var device = ((IDeviceFactory)df).CreateDevice(null, null, null, null, null);
 
             // デフォルト値をセットする
-            dm.OperationValue = JsonConvert.SerializeObject(device.OperationValue);
+            dm.OperationValue = device.OperationValueDefault;
         }
 
         static async Task RunAsync()
@@ -167,11 +167,22 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             }
         }
 
+        /// <summary>
+        /// コマンド登録
+        /// </summary>
+        /// <param name="device"></param>
         private static void AssignCommands(DeviceModel device)
         {
-            //device.Commands.Add(new Command("PingDevice"));
-            //device.Commands.Add(new Command("StartTelemetry"));
-            //device.Commands.Add(new Command("StopTelemetry"));
+
+            device.Commands.Add(
+                new Command(
+                    StartCommandProcessorParameter.CommandName
+                    ));
+
+            device.Commands.Add(
+                new Command(
+                    StopCommandProcessorParameter.CommandName
+                    ));
 
             // ChangeElapseTimeCommandProcessor
             device.Commands.Add(
@@ -186,11 +197,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                     }
                 )
             );
-
-
-            //device.Commands.Add(new Command("ChangeSetPointTemp", new[] { new Parameter("SetPointTemp", "double"), new Parameter("SetPointHimd", "double") }));
-            //device.Commands.Add(new Command("DiagnosticTelemetry", new[] { new Parameter("Active", "boolean") }));
-            //device.Commands.Add(new Command("ChangeDeviceState", new[] { new Parameter("DeviceState", "string") }));
         }
     }
 }

@@ -38,7 +38,11 @@ namespace SIotGatewayCore.Devices
 
         public string DeviceID
         {
-            get { return DeviceProperties.DeviceID; }
+            get
+            {
+                if (null == DeviceProperties) return string.Empty;
+                return DeviceProperties.DeviceID;
+            }
             set { DeviceProperties.DeviceID = value; }
         }
 
@@ -64,6 +68,14 @@ namespace SIotGatewayCore.Devices
             get
             {
                 return _operationValueStream; // これは使ってはいけない
+            }
+        }
+
+        public virtual string OperationValueDefault
+        {
+            get
+            {
+                throw new NotImplementedException();
             }
         }
 
