@@ -1,5 +1,5 @@
-﻿using ShimadzuIoT.Sensors.Acceleration.Devices;
-using SIotGatewayCore.CommandProcessors;
+﻿using SIotGatewayCore.CommandProcessors;
+using SIotGatewayCore.Devices;
 using SIotGatewayCore.Transport;
 using System;
 using System.Collections.Generic;
@@ -7,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShimadzuIoT.Sensors.Acceleration.CommandProcessors
+namespace ShimadzuIoT.Sensors.Common.CommandProcessors
 {
+    /// <summary>
+    /// センサーデータをクラウドに送るコマンド
+    /// </summary>
     public class StartCommandProcessor : CommandProcessor
     {
         private const string COMMAND_NAME = "StartTelemetry";
 
-        public StartCommandProcessor(Device device)
+        public StartCommandProcessor(DeviceBase device)
             : base(device)
         {
 
@@ -25,7 +28,7 @@ namespace ShimadzuIoT.Sensors.Acceleration.CommandProcessors
             {
                 try
                 {
-                    var device = Device as Device;
+                    var device = Device as DeviceBase;
                     device.OnStartTelemetryCommand();
                     return CommandProcessingResult.Success;
                 }
@@ -50,8 +53,17 @@ namespace ShimadzuIoT.Sensors.Acceleration.CommandProcessors
                 return COMMAND_NAME;
             }
         }
+
+        public static string CommandName
+        {
+            get
+            {
+                return (new StartCommandProcessor(null)).MyNameTelemetry;
+            }
+        }
     }
 
+    [Obsolete("使用禁止", true)]
     public class StartCommandProcessorParameter : StartCommandProcessor
     {
         public StartCommandProcessorParameter()

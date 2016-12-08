@@ -29,7 +29,7 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry
 
             _operationValue = (OperationValue)(base.OperationValue);
 
-            base.TelemetryActive = _operationValue.IsAvailable; // 送る・送らないフラグ
+            base.TelemetryActive = _operationValue.IsAvailableCommandParameter.IsAvailable; // 送る・送らないフラグ
         }
 
         override async public void OnMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)

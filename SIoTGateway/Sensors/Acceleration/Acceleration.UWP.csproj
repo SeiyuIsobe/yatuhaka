@@ -107,14 +107,11 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Acceleration.Classic\CommandParameters\ElapsedTimeCommandParameter.cs">
+      <Link>CommandParameters\ElapsedTimeCommandParameter.cs</Link>
+    </Compile>
     <Compile Include="..\Acceleration.Classic\CommandProcessors\ChangeElapseTimeCommandProcessor.cs">
       <Link>CommandProcessors\ChangeElapseTimeCommandProcessor.cs</Link>
-    </Compile>
-    <Compile Include="..\Acceleration.Classic\CommandProcessors\StartCommandProcessor.cs">
-      <Link>CommandProcessors\StartCommandProcessor.cs</Link>
-    </Compile>
-    <Compile Include="..\Acceleration.Classic\CommandProcessors\StopCommandProcessor.cs">
-      <Link>CommandProcessors\StopCommandProcessor.cs</Link>
     </Compile>
     <Compile Include="..\Acceleration.Classic\Devices\Device.cs">
       <Link>Devices\Device.cs</Link>

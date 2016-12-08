@@ -6,6 +6,8 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Comman
 using Newtonsoft.Json;
 using ShimadzuIoT.Sensors.Acceleration.CommandProcessors;
 using ShimadzuIoT.Sensors.Acceleration.Telemetry;
+using ShimadzuIoT.Sensors.Common.CommandParameters;
+using ShimadzuIoT.Sensors.Common.CommandProcessors;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Logging;
 using SIotGatewayCore.Telemetry.Factory;
@@ -46,16 +48,36 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
 
         }
 
-        public void OnStartTelemetryCommand()
+        public override void OnStartTelemetryCommand()
         {
             var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
             remoteMonitorTelemetry.TelemetryActive = true;
+
+            // DeviceModelを更新
+            var operationValue = JsonConvert.DeserializeObject<OperationValue>(base.InitialDevice.OperationValue);
+            var param = operationValue.IsAvailableCommandParameter;
+
+            // フラグを更新
+            param.IsAvailable = remoteMonitorTelemetry.TelemetryActive;
+
+            // 更新
+            base.InitialDevice.OperationValue = JsonConvert.SerializeObject(operationValue);
         }
 
-        public void OnStopTelemetryCommnad()
+        public override void OnStopTelemetryCommnad()
         {
             var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
             remoteMonitorTelemetry.TelemetryActive = false;
+
+            // DeviceModelを更新
+            var operationValue = JsonConvert.DeserializeObject<OperationValue>(base.InitialDevice.OperationValue);
+            var param = operationValue.IsAvailableCommandParameter;
+
+            // フラグを更新
+            param.IsAvailable = remoteMonitorTelemetry.TelemetryActive;
+
+            // 更新
+            base.InitialDevice.OperationValue = JsonConvert.SerializeObject(operationValue);
         }
 
         public void OnChangeElapseTime(int time)

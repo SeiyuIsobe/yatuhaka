@@ -79,6 +79,19 @@ namespace SIotGatewayCore.Devices
             }
         }
 
+        public DeviceModel InitialDevice
+        {
+            get
+            {
+                return _initialDevice;
+            }
+
+            set
+            {
+                _initialDevice = value;
+            }
+        }
+
         protected object _telemetryController;
 
         /// <summary>
@@ -115,6 +128,8 @@ namespace SIotGatewayCore.Devices
             InitCommandProcessors();
         }
 
+        private DeviceModel _initialDevice = null;
+
         protected virtual void InitDeviceInfo(InitialDeviceConfig config)
         {
             DeviceModel initialDevice = JsonConvert.DeserializeObject<DeviceModel>(config.DeviceModelJson);
@@ -124,6 +139,8 @@ namespace SIotGatewayCore.Devices
             HostName = config.HostName;
             PrimaryAuthKey = config.Key;
             _operationValueStream = initialDevice.OperationValue; // JSON
+
+            InitialDevice = initialDevice; // DeviceModelを保持
         }
 
         /// <summary>
@@ -377,6 +394,20 @@ namespace SIotGatewayCore.Devices
             }
 
             Logger.LogInfo("********** Processing Device {0} has been cancelled - StartReceiveLoopAsync Ending. **********", DeviceID);
+        }
+
+        /// <summary>
+        /// 共通コマンド
+        /// </summary>
+        public virtual void OnStartTelemetryCommand()
+        {
+        }
+
+        /// <summary>
+        /// 共通コマンド
+        /// </summary>
+        public virtual void OnStopTelemetryCommnad()
+        {
         }
     }
 }

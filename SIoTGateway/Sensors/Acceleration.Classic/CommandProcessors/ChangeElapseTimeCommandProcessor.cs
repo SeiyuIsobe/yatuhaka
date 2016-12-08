@@ -59,8 +59,17 @@ namespace ShimadzuIoT.Sensors.Acceleration.CommandProcessors
                 return COMMAND_NAME;
             }
         }
+
+        public static string CommandName
+        {
+            get
+            {
+                return (new ChangeElapseTimeCommandProcessor(null)).MyNameTelemetry;
+            }
+        }
     }
 
+    [Obsolete("使用禁止", true)]
     public class ChangeElapseTimeCommandParameter : ChangeElapseTimeCommandProcessor
     {
         public ChangeElapseTimeCommandParameter()

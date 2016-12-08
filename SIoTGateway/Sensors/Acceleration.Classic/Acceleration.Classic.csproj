@@ -48,9 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandParameters\ElapsedTimeCommandParameter.cs" />
     <Compile Include="CommandProcessors\ChangeElapseTimeCommandProcessor.cs" />
-    <Compile Include="CommandProcessors\StartCommandProcessor.cs" />
-    <Compile Include="CommandProcessors\StopCommandProcessor.cs" />
     <Compile Include="Devices\Device.cs" />
     <Compile Include="Devices\Factory\DeviceFactory.cs" />
     <Compile Include="OperationValue.cs" />
