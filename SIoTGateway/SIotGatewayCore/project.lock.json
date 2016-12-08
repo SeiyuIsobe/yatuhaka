@@ -16945,7 +16945,8 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.Azure.Devices.Client >= 1.0.21",
-      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0"
+      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0",
+      "Newtonsoft.Json >= 6.0.8"
     ],
     "UAP,Version=v10.0": []
   }
