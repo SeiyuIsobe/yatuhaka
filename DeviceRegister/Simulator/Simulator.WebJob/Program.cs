@@ -16,6 +16,8 @@ using ShimadzuIoT.Sensors.Acceleration.CommandProcessors;
 using SIotGatewayCore.Devices.Factory;
 using SIotGatewayCore.Devices;
 using Newtonsoft.Json;
+using ShimadzuIoT.Sensors.Common.CommandProcessors;
+using ShimadzuIoT.Sensors.Acceleration.CommandParameters;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 {
@@ -54,19 +56,21 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
         {
             try
             {
-                Trace.WriteLine($"以下のデバイスをAzureに登録します");
-                Trace.WriteLine($"{_deviceId_debug}");
+                Console.WriteLine($"以下のデバイスをAzureに登録します");
+                Console.WriteLine($"--> {_deviceId_debug}");
 
                 var creator = _simulatorContainer.Resolve<IDataInitializer>();
                 var list = await creator.GetAllDevicesAsync(); // DocumentDBより登録デバイスを取得する
 
-                Trace.WriteLine($"Azureのデバイス数：{list.Count}");
+                Console.WriteLine($"Azureのデバイス数：{list.Count}");
 
                 var deviceId = _deviceId_debug;
 
                 var res = list.FindAll(d => d.DeviceProperties.DeviceID == deviceId);
                 if (null != res && res.Count == 0)
                 {
+                    Console.WriteLine($"Azure IoTにデバイスを新規登録します");
+
                     //
                     // デバイスの自動登録
                     //
@@ -78,7 +82,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 }
                 else
                 {
-                    Trace.WriteLine("既に登録されていました");
+                    Console.WriteLine("既に登録されていました");
                 }
 
                 //
@@ -101,13 +105,13 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             var res = list.FindAll(d => d.DeviceProperties.DeviceID == deviceId);
             if (null != res && res.Count > 0)
             {
-                Trace.WriteLine("詳細情報を新規登録します");
-
                 DeviceModel dm = res[0] as DeviceModel;
 
                 // nullの場合は登録された直後
                 if (null == dm.DeviceProperties.HubEnabledState)
                 {
+                    Console.WriteLine("詳細情報を新規登録します");
+
                     // 状態の設定：true→実行中、false→無効
                     // ここでtrueとしたいが、時間差かなにかでDeviceListには登録されない
                     // 現時点では良い方法が思いつかないので手動で実行中にする
@@ -123,7 +127,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
                 }
                 else
                 {
-                    Trace.WriteLine("詳細情報を更新します");
+                    Console.WriteLine("詳細情報を更新します");
 
                     dm.DeviceProperties.HubEnabledState = !(dm.DeviceProperties.HubEnabledState);
 
@@ -133,7 +137,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 
                 await creator.UpdateDeviceAsync(dm);
 
-                Trace.WriteLine("処理が終わりました");
+                Console.WriteLine("処理が終わりました");
             }
         }
 
@@ -176,23 +180,23 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
 
             device.Commands.Add(
                 new Command(
-                    StartCommandProcessorParameter.CommandName
+                    StartCommandProcessor.CommandName
                     ));
 
             device.Commands.Add(
                 new Command(
-                    StopCommandProcessorParameter.CommandName
+                    StopCommandProcessor.CommandName
                     ));
 
             // ChangeElapseTimeCommandProcessor
             device.Commands.Add(
                 new Command(
-                    ChangeElapseTimeCommandParameter.CommandName,
+                    ChangeElapseTimeCommandProcessor.CommandName,
                     new[]
                     {
                         new Parameter(
-                            ChangeElapseTimeCommandParameter.TimeProperty,
-                            ChangeElapseTimeCommandParameter.Time_
+                            ElapsedTimeCommandParameter.PropertyName,
+                            ElapsedTimeCommandParameter.PropertyType
                             )
                     }
                 )
