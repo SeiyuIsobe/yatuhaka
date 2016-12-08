@@ -65,14 +65,17 @@ namespace Main
             {
                 try
                 {
-                    var cancellationToken = _cancellationTokens[deviceId];
-
-                    if (cancellationToken != null)
+                    if(0 < _cancellationTokens.Count)
                     {
-                        cancellationToken.Cancel();
-                        _cancellationTokens.Remove(deviceId);
+                        var cancellationToken = _cancellationTokens[deviceId];
 
-                        _logger.LogInfo("********** STOPPED DEVICE : {0} ********** ", deviceId);
+                        if (cancellationToken != null)
+                        {
+                            cancellationToken.Cancel();
+                            _cancellationTokens.Remove(deviceId);
+
+                            _logger.LogInfo("********** STOPPED DEVICE : {0} ********** ", deviceId);
+                        }
                     }
                 }
                 catch { }

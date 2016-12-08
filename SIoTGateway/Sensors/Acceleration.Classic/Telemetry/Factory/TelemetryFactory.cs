@@ -53,7 +53,7 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory
             //device.TelemetryEvents.Add(startupTelemetry);
 
             // センサーデータを送信するテレメトリー
-            var monitorTelemetry = new RemoteMonitorTelemetry(_logger, device.DeviceID);
+            var monitorTelemetry = new RemoteMonitorTelemetry(_logger, device);
             monitorTelemetry.ReceivedTelemetry += (sender, e) =>
             {
                 if (null != ReceivedTelemetry)

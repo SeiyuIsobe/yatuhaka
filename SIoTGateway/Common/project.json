@@ -1,10 +1,10 @@
 ﻿{
   "dependencies": {
     "M2Mqtt": "4.3.0",
-    "Microsoft.Azure.Devices.Client": "1.0.21",
+    "Microsoft.Azure.Devices.Client": "1.0.16",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
-    "Newtonsoft.Json": "9.0.1",
-    "WindowsAzure.Storage": "7.2.1"
+    "Newtonsoft.Json": "6.0.8",
+    "WindowsAzure.Storage": "7.0.0"
   },
   "frameworks": {
     "uap10.0": {}

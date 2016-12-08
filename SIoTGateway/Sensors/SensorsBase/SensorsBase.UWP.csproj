@@ -107,6 +107,18 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SensorsBase.Classic\CommandParameters\IsAvailableCommandParameter.cs">
+      <Link>CommandParameters\IsAvailableCommandParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\SensorsBase.Classic\CommandProcessors\StartCommandProcessor.cs">
+      <Link>CommandProcessors\StartCommandProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\SensorsBase.Classic\CommandProcessors\StopCommandProcessor.cs">
+      <Link>CommandProcessors\StopCommandProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\SensorsBase.Classic\OperationValueBase.cs">
+      <Link>OperationValueBase.cs</Link>
+    </Compile>
     <Compile Include="..\SensorsBase.Classic\SensorsBase.cs">
       <Link>SensorsBase.cs</Link>
     </Compile>

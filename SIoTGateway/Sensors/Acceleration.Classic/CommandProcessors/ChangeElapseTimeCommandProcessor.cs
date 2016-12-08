@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using Newtonsoft.Json;
 using ShimadzuIoT.Sensors.Acceleration.Devices;
 using SIotGatewayCore.CommandProcessors;
 using SIotGatewayCore.Transport;
@@ -26,10 +27,16 @@ namespace ShimadzuIoT.Sensors.Acceleration.CommandProcessors
         {
             if (deserializableCommand.CommandName == COMMAND_NAME)
             {
+                CommandHistory commandHistory = deserializableCommand.CommandHistory;
+
                 try
                 {
                     var device = Device as Device;
-                    
+                    if(null != device)
+                    {
+                        var parameters = commandHistory.Parameters;
+                    }
+
                     return CommandProcessingResult.Success;
                 }
                 catch (Exception)
@@ -52,8 +59,17 @@ namespace ShimadzuIoT.Sensors.Acceleration.CommandProcessors
                 return COMMAND_NAME;
             }
         }
+
+        public static string CommandName
+        {
+            get
+            {
+                return (new ChangeElapseTimeCommandProcessor(null)).MyNameTelemetry;
+            }
+        }
     }
 
+    [Obsolete("使用禁止", true)]
     public class ChangeElapseTimeCommandParameter : ChangeElapseTimeCommandProcessor
     {
         public ChangeElapseTimeCommandParameter()

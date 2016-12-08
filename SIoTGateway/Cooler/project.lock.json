@@ -408,12 +408,12 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/6.0.8": {
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -1988,7 +1988,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -2357,12 +2357,12 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/6.0.8": {
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -3848,7 +3848,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -4214,12 +4214,12 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/6.0.8": {
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -5666,7 +5666,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -6040,12 +6040,12 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/6.0.8": {
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -7534,7 +7534,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -7900,12 +7900,12 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/6.0.8": {
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -9352,7 +9352,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -9726,12 +9726,12 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/6.0.8": {
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -11220,7 +11220,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -11586,12 +11586,12 @@
           "lib/dotnet/Microsoft.Win32.Primitives.dll": {}
         }
       },
-      "Newtonsoft.Json/9.0.1": {
+      "Newtonsoft.Json/6.0.8": {
         "compile": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         },
         "runtime": {
-          "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll": {}
+          "lib/netcore45/Newtonsoft.Json.dll": {}
         }
       },
       "PCLCrypto/1.0.86": {
@@ -13038,7 +13038,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -14018,12 +14018,12 @@
         "ref/xamarinmac20/_._"
       ]
     },
-    "Newtonsoft.Json/9.0.1": {
-      "sha512": "U82mHQSKaIk+lpSVCbWYKNavmNH1i5xrExDEquU1i6I5pV6UMOqRnJRSlKO3cMPfcpp0RgDY+8jUXHdQ4IfXvw==",
+    "Newtonsoft.Json/6.0.8": {
+      "sha512": "7ut47NDedTW19EbL0JpFDYUP62fcuz27hJrehCDNajdCS5NtqL+E39+7Um3OkNc2wl2ym7K8Ln5eNuLus6mVGQ==",
       "type": "package",
-      "path": "Newtonsoft.Json/9.0.1",
+      "path": "Newtonsoft.Json/6.0.8",
       "files": [
-        "Newtonsoft.Json.9.0.1.nupkg.sha512",
+        "Newtonsoft.Json.6.0.8.nupkg.sha512",
         "Newtonsoft.Json.nuspec",
         "lib/net20/Newtonsoft.Json.dll",
         "lib/net20/Newtonsoft.Json.xml",
@@ -14033,12 +14033,12 @@
         "lib/net40/Newtonsoft.Json.xml",
         "lib/net45/Newtonsoft.Json.dll",
         "lib/net45/Newtonsoft.Json.xml",
-        "lib/netstandard1.0/Newtonsoft.Json.dll",
-        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netcore45/Newtonsoft.Json.dll",
+        "lib/netcore45/Newtonsoft.Json.xml",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.dll",
         "lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml",
-        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.dll",
+        "lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.xml",
         "tools/install.ps1"
       ]
     },
@@ -16923,18 +16923,16 @@
         "tools/uninstall_snippets.cmd"
       ]
     },
-    "WindowsAzure.Storage/7.2.1": {
-      "sha512": "PWSqaIFaUvi2DgHeDotoRtv1new1m3jfwsb+T6nZfpVdYYIzyYUOFPBxJ0f8yHUq8C9Na8avNc08YsdgDIoTZg==",
+    "WindowsAzure.Storage/7.0.0": {
+      "sha512": "AKxGH6NpZN0fRc2eRKtlDdkk1JW5uqCMeHCF06Z/L5xkYajM7OWquzsjAkQsi2s5a2O0Y4iE6WZOcT5PLE0IMA==",
       "type": "package",
-      "path": "WindowsAzure.Storage/7.2.1",
+      "path": "WindowsAzure.Storage/7.0.0",
       "files": [
-        "WindowsAzure.Storage.7.2.1.nupkg.sha512",
+        "WindowsAzure.Storage.7.0.0.nupkg.sha512",
         "WindowsAzure.Storage.nuspec",
         "lib/net40/Microsoft.WindowsAzure.Storage.dll",
         "lib/net40/Microsoft.WindowsAzure.Storage.pdb",
         "lib/net40/Microsoft.WindowsAzure.Storage.xml",
-        "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll",
-        "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.pdb",
         "lib/win8/Microsoft.WindowsAzure.Storage.dll",
         "lib/win8/Microsoft.WindowsAzure.Storage.pdb",
         "lib/wp8/Microsoft.WindowsAzure.Storage.dll",

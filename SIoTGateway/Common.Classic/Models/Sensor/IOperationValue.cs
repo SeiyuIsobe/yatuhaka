@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShimadzuIoT.Sensors
+namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Sensor
 {
     public interface IOperationValue
     {

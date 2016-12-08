@@ -216,6 +216,7 @@
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\SecurityKeys.cs" />
     <Compile Include="Models\Sensor\AccelaData.cs" />
+    <Compile Include="Models\Sensor\IOperationValue.cs" />
     <Compile Include="Models\Sensor\PositionData.cs" />
     <Compile Include="Models\SystemProperties.cs" />
     <Compile Include="Models\TableStorageResponse.cs" />

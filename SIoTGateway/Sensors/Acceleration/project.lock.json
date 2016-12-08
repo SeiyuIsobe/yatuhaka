@@ -1988,7 +1988,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -3848,7 +3848,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -5666,7 +5666,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -7534,7 +7534,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -9352,7 +9352,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -11220,7 +11220,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -13038,7 +13038,7 @@
           "lib/dotnet/Validation.dll": {}
         }
       },
-      "WindowsAzure.Storage/7.2.1": {
+      "WindowsAzure.Storage/7.0.0": {
         "dependencies": {
           "Microsoft.Data.OData": "5.6.4",
           "Newtonsoft.Json": "6.0.8"
@@ -16923,18 +16923,16 @@
         "tools/uninstall_snippets.cmd"
       ]
     },
-    "WindowsAzure.Storage/7.2.1": {
-      "sha512": "PWSqaIFaUvi2DgHeDotoRtv1new1m3jfwsb+T6nZfpVdYYIzyYUOFPBxJ0f8yHUq8C9Na8avNc08YsdgDIoTZg==",
+    "WindowsAzure.Storage/7.0.0": {
+      "sha512": "AKxGH6NpZN0fRc2eRKtlDdkk1JW5uqCMeHCF06Z/L5xkYajM7OWquzsjAkQsi2s5a2O0Y4iE6WZOcT5PLE0IMA==",
       "type": "package",
-      "path": "WindowsAzure.Storage/7.2.1",
+      "path": "WindowsAzure.Storage/7.0.0",
       "files": [
-        "WindowsAzure.Storage.7.2.1.nupkg.sha512",
+        "WindowsAzure.Storage.7.0.0.nupkg.sha512",
         "WindowsAzure.Storage.nuspec",
         "lib/net40/Microsoft.WindowsAzure.Storage.dll",
         "lib/net40/Microsoft.WindowsAzure.Storage.pdb",
         "lib/net40/Microsoft.WindowsAzure.Storage.xml",
-        "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.dll",
-        "lib/netstandard1.3/Microsoft.WindowsAzure.Storage.pdb",
         "lib/win8/Microsoft.WindowsAzure.Storage.dll",
         "lib/win8/Microsoft.WindowsAzure.Storage.pdb",
         "lib/wp8/Microsoft.WindowsAzure.Storage.dll",
@@ -16946,8 +16944,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0",
-      "Newtonsoft.Json >= 9.0.1"
+      "Microsoft.NETCore.UniversalWindowsPlatform >= 5.1.0"
     ],
     "UAP,Version=v10.0": []
   }

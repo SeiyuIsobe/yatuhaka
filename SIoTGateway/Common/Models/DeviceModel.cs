@@ -34,6 +34,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models
         public string ObjectName { get; set; }
         public IoTHub IoTHub { get; set; }
 
+        public string OperationValue { get; set; }
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

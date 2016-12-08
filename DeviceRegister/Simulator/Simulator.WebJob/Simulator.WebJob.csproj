@@ -227,6 +227,10 @@
       <Project>{10B765CD-DCE8-4342-9055-96B83403DE6E}</Project>
       <Name>Acceleration.Classic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\SIoTGateway\Sensors\SensorsBase.Classic\SensorsBase.Classic.csproj">
+      <Project>{7AE6AAA2-522C-4203-BD05-12A51B0F0FA8}</Project>
+      <Name>SensorsBase.Classic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\SIoTGateway\SIoTGatewayCore.Classic\SIoTGatewayCore.Classic.csproj">
       <Project>{8dc2ba6a-141d-43df-9ea4-8e6a7470c201}</Project>
       <Name>SIoTGatewayCore.Classic</Name>

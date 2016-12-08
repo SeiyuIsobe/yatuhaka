@@ -107,6 +107,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Acceleration.Classic\CommandParameters\ElapsedTimeCommandParameter.cs">
+      <Link>CommandParameters\ElapsedTimeCommandParameter.cs</Link>
+    </Compile>
     <Compile Include="..\Acceleration.Classic\CommandProcessors\ChangeElapseTimeCommandProcessor.cs">
       <Link>CommandProcessors\ChangeElapseTimeCommandProcessor.cs</Link>
     </Compile>
@@ -115,6 +118,9 @@
     </Compile>
     <Compile Include="..\Acceleration.Classic\Devices\Factory\DeviceFactory.cs">
       <Link>Devices\Factory\DeviceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Acceleration.Classic\OperationValue.cs">
+      <Link>OperationValue.cs</Link>
     </Compile>
     <Compile Include="..\Acceleration.Classic\Telemetry\Data\RemoteMonitorTelemetryData.cs">
       <Link>Telemetry\Data\RemoteMonitorTelemetryData.cs</Link>

@@ -35,8 +35,8 @@ namespace SIotGatewayCore.Devices
 
         Task StartAsync(CancellationToken token);
 
-#if !WINDOWS_UWP
         object OperationValue { get; }
-#endif
+
+        string OperationValueDefault { get; }
     }
 }

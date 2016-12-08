@@ -19,6 +19,7 @@ namespace ShimadzuIoT.Sensors
         protected readonly string _deviceId;
         protected readonly IDevice _device;
         protected Func<object, Task> _sendMessageAsync = null;
+        protected OperationValueBase _operationValue = null;
 
         #region MQTT
         protected MqttClient _mqtt = null;
@@ -33,7 +34,7 @@ namespace ShimadzuIoT.Sensors
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="deviceId"></param>
-        public SensorsBase(ILogger logger, string deviceId, IDevice device)
+        public SensorsBase(ILogger logger, IDevice device)
         {
             _logger = logger;
 
@@ -45,8 +46,10 @@ namespace ShimadzuIoT.Sensors
             else
             {
                 _device = null; // nullのまま
-                _deviceId = deviceId;
+                _deviceId = string.Empty;
             }
+
+            _operationValue = (OperationValueBase)device.OperationValue;
 
             // MQTTサブスクライバの生成
             _mqtt = MqttHelper.Connect("127.0.0.1", Guid.NewGuid().ToString(), null);
@@ -55,25 +58,25 @@ namespace ShimadzuIoT.Sensors
 
         }
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="deviceId"></param>
-        public SensorsBase(ILogger logger, string deviceId)
-            :this(logger, deviceId, null)
-        {
-        }
+        ///// <summary>
+        ///// コンストラクタ
+        ///// </summary>
+        ///// <param name="logger"></param>
+        ///// <param name="deviceId"></param>
+        //public SensorsBase(ILogger logger, string deviceId)
+        //    :this(logger, deviceId, null)
+        //{
+        //}
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="logger"></param>
-        /// <param name="deviceId"></param>
-        public SensorsBase(ILogger logger, IDevice device)
-            :this(logger, null, device)
-        {
-        }
+        ///// <summary>
+        ///// コンストラクタ
+        ///// </summary>
+        ///// <param name="logger"></param>
+        ///// <param name="deviceId"></param>
+        //public SensorsBase(ILogger logger, IDevice device)
+        //    :this(logger, null, device)
+        //{
+        //}
 
         virtual public Task SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync)
         {
@@ -106,5 +109,13 @@ namespace ShimadzuIoT.Sensors
         }
 
         public bool TelemetryActive { get; set; } = true;
+
+        virtual public object OperationValue
+        {
+            get
+            {
+                return _operationValue;
+            }
+        }
     }
 }

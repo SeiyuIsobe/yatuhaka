@@ -3,7 +3,11 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Factory;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
+using Newtonsoft.Json;
+using ShimadzuIoT.Sensors.Acceleration.CommandProcessors;
 using ShimadzuIoT.Sensors.Acceleration.Telemetry;
+using ShimadzuIoT.Sensors.Common.CommandParameters;
+using ShimadzuIoT.Sensors.Common.CommandProcessors;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Logging;
 using SIotGatewayCore.Telemetry.Factory;
@@ -21,32 +25,59 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
     /// </summary>
     public class Device : DeviceBase
     {
-#if !WINDOWS_UWP
         // センサー制御値
-        private OperationValue _operationValue = new OperationValue();
-#endif
+        private OperationValue _operationValueDefault = new OperationValue();
 
         public Device(ILogger logger, ITransportFactory transportFactory,
                ITelemetryFactory telemetryFactory, IConfigurationProvider configurationProvider)
             : base(logger, transportFactory, telemetryFactory, configurationProvider)
         {
+            //_operationValue = JsonConvert.DeserializeObject<OperationValue>(base._operationValueStream);
         }
 
         protected override void InitCommandProcessors()
         {
+            var startCommandProcessor = new StartCommandProcessor(this);
+            var stopCommandProcessor = new StopCommandProcessor(this);
+            var changeElapseTimeCommandProcessor = new ChangeElapseTimeCommandProcessor(this);
+
+            startCommandProcessor.NextCommandProcessor = stopCommandProcessor;
+            stopCommandProcessor.NextCommandProcessor = changeElapseTimeCommandProcessor;
+
+            RootCommandProcessor = startCommandProcessor;
 
         }
 
-        public void OnStartTelemetryCommand()
+        public override void OnStartTelemetryCommand()
         {
             var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
             remoteMonitorTelemetry.TelemetryActive = true;
+
+            // DeviceModelを更新
+            var operationValue = JsonConvert.DeserializeObject<OperationValue>(base.InitialDevice.OperationValue);
+            var param = operationValue.IsAvailableCommandParameter;
+
+            // フラグを更新
+            param.IsAvailable = remoteMonitorTelemetry.TelemetryActive;
+
+            // 更新
+            base.InitialDevice.OperationValue = JsonConvert.SerializeObject(operationValue);
         }
 
-        public void OnStopTelemetryCommnad()
+        public override void OnStopTelemetryCommnad()
         {
             var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
             remoteMonitorTelemetry.TelemetryActive = false;
+
+            // DeviceModelを更新
+            var operationValue = JsonConvert.DeserializeObject<OperationValue>(base.InitialDevice.OperationValue);
+            var param = operationValue.IsAvailableCommandParameter;
+
+            // フラグを更新
+            param.IsAvailable = remoteMonitorTelemetry.TelemetryActive;
+
+            // 更新
+            base.InitialDevice.OperationValue = JsonConvert.SerializeObject(operationValue);
         }
 
         public void OnChangeElapseTime(int time)
@@ -54,15 +85,39 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
 
         }
 
-#if !WINDOWS_UWP
         // センサー制御値
         public override object OperationValue
         {
             get
             {
-                return _operationValue;
+                try
+                {
+                    return JsonConvert.DeserializeObject<OperationValue>(base._operationValueStream);
+                }
+                catch
+                {
+                    return new OperationValue();
+                }
+                
             }
         }
-#endif
+
+        public override string OperationValueDefault
+        {
+            get
+            {
+                return JsonConvert.SerializeObject(new OperationValue());
+            }
+        }
+
+        //public override void SetOperationValue(string valuestream)
+        //{
+        //    var deviceModel = JsonConvert.DeserializeObject<DeviceModel>(valuestream);
+
+        //    if (null != deviceModel && null != ((DeviceModel)deviceModel).OperationValue)
+        //    {
+        //        _operationValue = JsonConvert.DeserializeObject<OperationValue>(((DeviceModel)deviceModel).OperationValue.ToString());
+        //    }
+        //}
     }
 }

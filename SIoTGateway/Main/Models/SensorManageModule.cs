@@ -88,7 +88,9 @@ namespace Main.Models
             var transportFactory = new IotHubTransportFactory(logger, configProvider);
 
             IVirtualDeviceStorage deviceStorage = null;
-            var useConfigforDeviceList = Convert.ToBoolean(configProvider.GetConfigurationSettingValueOrDefault("UseConfigForDeviceList", "False"), CultureInfo.InvariantCulture);
+            
+            //ダミーのデバイスは使わないから不要
+            //var useConfigforDeviceList = Convert.ToBoolean(configProvider.GetConfigurationSettingValueOrDefault("UseConfigForDeviceList", "False"), CultureInfo.InvariantCulture);
 
             // デバイスを登録しているAzure StrageのTableサービスに接続するオブジェクトを生成する
             deviceStorage = new VirtualDeviceTableStorage(configProvider, tableStorageClientFactory);

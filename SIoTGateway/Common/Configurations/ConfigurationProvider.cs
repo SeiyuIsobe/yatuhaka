@@ -37,7 +37,14 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
 
             try
             {
-                this.configuration.Add(configurationSettingName, configValue);
+                if(false == configuration.ContainsKey(configurationSettingName))
+                {
+                    this.configuration.Add(configurationSettingName, configValue);
+                }
+                else
+                {
+                    // exist
+                }
             }
             catch (ArgumentException)
             {
