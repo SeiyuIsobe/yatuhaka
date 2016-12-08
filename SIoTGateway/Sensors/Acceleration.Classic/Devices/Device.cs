@@ -48,7 +48,7 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
 
         }
 
-        public override void OnStartTelemetryCommand()
+        public override async void OnStartTelemetryCommand()
         {
             var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
             remoteMonitorTelemetry.TelemetryActive = true;
@@ -62,9 +62,13 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
 
             // 更新
             base.InitialDevice.OperationValue = JsonConvert.SerializeObject(operationValue);
+
+            // クラウド
+            base.InitialDevice.ObjectType = "DeviceInfo";
+            await((RemoteMonitorTelemetry)base.TelemetryController).SendDeviceModelAsync(base.InitialDevice);
         }
 
-        public override void OnStopTelemetryCommnad()
+        public override async void OnStopTelemetryCommnad()
         {
             var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
             remoteMonitorTelemetry.TelemetryActive = false;
@@ -78,6 +82,10 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
 
             // 更新
             base.InitialDevice.OperationValue = JsonConvert.SerializeObject(operationValue);
+
+            // クラウド
+            base.InitialDevice.ObjectType = "DeviceInfo";
+            await ((RemoteMonitorTelemetry)base.TelemetryController).SendDeviceModelAsync(base.InitialDevice);
         }
 
         public void OnChangeElapseTime(int time)

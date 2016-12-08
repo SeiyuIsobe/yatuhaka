@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models
         public IoTHub IoTHub { get; set; }
 
         public string OperationValue { get; set; }
+        public string KeyOfInitialDeviceConfig { get; set; }
 
         public override string ToString()
         {

@@ -46,6 +46,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
 
             await AzureRetryHelper.OperationWithBasicRetryAsync(async () =>
                                                                 await this._deviceManager.AddDeviceAsync(iotHubDevice));
+            //await this._deviceManager.AddDeviceAsync(iotHubDevice);
 
             return device;
         }

@@ -117,5 +117,10 @@ namespace ShimadzuIoT.Sensors
                 return _operationValue;
             }
         }
+
+        public async Task SendDeviceModelAsync(object devicemodel)
+        {
+            await _sendMessageAsync(devicemodel);
+        }
     }
 }

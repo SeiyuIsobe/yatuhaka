@@ -36,6 +36,8 @@ namespace SIotGatewayCore.Devices
         protected CommandProcessor RootCommandProcessor;
         protected string _operationValueStream = string.Empty;
 
+        private InitialDeviceConfig _initialDeviceConfig = null;
+
         public string DeviceID
         {
             get
@@ -94,6 +96,27 @@ namespace SIotGatewayCore.Devices
 
         protected object _telemetryController;
 
+        public object TelemetryController
+        {
+            get
+            {
+                return _telemetryController;
+            }
+        }
+
+        public InitialDeviceConfig InitialDeviceConfig
+        {
+            get
+            {
+                return _initialDeviceConfig;
+            }
+
+            set
+            {
+                _initialDeviceConfig = value;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -126,6 +149,9 @@ namespace SIotGatewayCore.Devices
             }
 
             InitCommandProcessors();
+
+            // 保持
+            this.InitialDeviceConfig = config;
         }
 
         private DeviceModel _initialDevice = null;
@@ -141,6 +167,7 @@ namespace SIotGatewayCore.Devices
             _operationValueStream = initialDevice.OperationValue; // JSON
 
             InitialDevice = initialDevice; // DeviceModelを保持
+            InitialDevice.KeyOfInitialDeviceConfig = config.Key; // InitialDeviceConfigを保持
         }
 
         /// <summary>

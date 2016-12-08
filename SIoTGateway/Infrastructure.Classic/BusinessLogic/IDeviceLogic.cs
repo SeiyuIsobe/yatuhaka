@@ -27,5 +27,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         Task<List<DeviceModel>> GetAllDeviceAsync();
         Task<string> BootstrapDevice(string id);
         Task<string> BootstrapDefaultDevices(string id);
+
+        Task UpdateVirtualStorage(DeviceModel device);
     }
 }

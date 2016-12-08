@@ -262,6 +262,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 existingDevice.Commands = device.Commands;
             }
 
+            // パラメータ
+            existingDevice.OperationValue = device.OperationValue;
 
             return await _deviceRegistryCrudRepository.UpdateDeviceAsync(existingDevice);
         }
@@ -923,6 +925,25 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
 
             return id;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// 流用元：private async Task<DeviceModel> AddDeviceToRepositoriesAsync(DeviceModel device, SecurityKeys securityKeys)
+        /// </remarks>
+        public async Task UpdateVirtualStorage(DeviceModel device)
+        {
+            await _virtualDeviceStorage.AddOrUpdateDeviceAsync(new InitialDeviceConfig()
+            {
+                DeviceId = device.DeviceProperties.DeviceID,
+                HostName = _configProvider.GetConfigurationSettingValue("iotHub.HostName"),
+                Key = device.KeyOfInitialDeviceConfig,
+                DeviceModelJson = JsonConvert.SerializeObject(device)
+            });
         }
     }
 }

@@ -13,5 +13,10 @@
         public string DeviceId { get; set; }
         public string Key { get; set; }
         public string DeviceModelJson { get; set; }
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
     }
 }

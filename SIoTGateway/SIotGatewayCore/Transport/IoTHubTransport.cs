@@ -70,8 +70,15 @@ namespace SIotGatewayCore.Transport
         /// <returns></returns>
         public async Task SendEventAsync(dynamic eventData)
         {
-            var eventId = Guid.NewGuid();
-            await SendEventAsync(eventId, eventData);
+            // ここでInvalidateOperationの例外が発生する
+            // 原因は不明
+            // この例外が発生しても止まらないように設定すれば無視できる
+            try
+            {
+                var eventId = Guid.NewGuid();
+                await SendEventAsync(eventId, eventData);
+            }
+            catch { }
         }
 
         /// <summary>

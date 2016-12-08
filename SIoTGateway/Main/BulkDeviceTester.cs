@@ -156,8 +156,6 @@ namespace Main
                                     // デバイス
                                     var df = _deviceFactoryResolver.Resolve(deviceConfig.DeviceId);
                                     var device = ((IDeviceFactory)df).CreateDevice(_logger, _transportFactory, (ITelemetryFactory)telemetryFactory, _configProvider, config[0]);
-                                    //device.SetOperationValue(config[0].DeviceModelJson); 不要
-                                    //var devicemodel = await this.DataInitializer.GetAllDevicesAsync(); UWPはDocumentDBにアクセスできなかった
 
                                     // リストに追加
                                     devicesToProcess.Add(device);
@@ -186,6 +184,7 @@ namespace Main
             {
                 //ensure that all devices have been stopped
                 dm.StopAllDevices();
+                System.Diagnostics.Debug.WriteLine($"-> exit!!!");
             }
         }
 
