@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-//using System.Security.Permissions;
+#if !WINDOWS_UWP
+using System.Security.Permissions;
+#endif
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions
 {
+#if !WINDOWS_UWP
     [Serializable]
+#endif
     public class ValidationException : DeviceAdministrationExceptionBase
     {
         public ValidationException(string deviceId) : base(deviceId)
@@ -32,7 +36,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         public IList<string> Errors { get; set; }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public /*override*/ void GetObjectData(SerializationInfo info, StreamingContext context)
+#if !WINDOWS_UWP
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
+#if WINDOWS_UWP
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
         {
             if (info == null)
             {
@@ -40,7 +49,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             }
 
             info.AddValue("Errors", Errors, typeof(IList<string>));
-            //base.GetObjectData(info, context);
+#if !WINDOWS_UWP
+            base.GetObjectData(info, context);
+#endif
         }
     }
 }

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-//using System.Security.Permissions;
+#if !WINDOWS_UWP
+using System.Security.Permissions;
+#endif
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions
 {
+    #if !WINDOWS_UWP
     [Serializable]
+#endif
     public class DeviceRegistrationException : DeviceAdministrationExceptionBase
     {
         public DeviceRegistrationException(string deviceId, Exception innerException) : base(deviceId, innerException)
@@ -14,7 +18,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
 
         // protected constructor for deserialization
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected DeviceRegistrationException(SerializationInfo info, StreamingContext context) /*: base(info, context)*/
+        protected DeviceRegistrationException(SerializationInfo info, StreamingContext context)
+        #if !WINDOWS_UWP
+         : base(info, context)
+#endif
         {
         }
 

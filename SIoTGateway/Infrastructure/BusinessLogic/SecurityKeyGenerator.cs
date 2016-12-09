@@ -1,5 +1,7 @@
 ﻿using System;
-//using System.Security.Cryptography;
+#if !WINDOWS_UWP
+using System.Security.Cryptography;
+#endif
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic

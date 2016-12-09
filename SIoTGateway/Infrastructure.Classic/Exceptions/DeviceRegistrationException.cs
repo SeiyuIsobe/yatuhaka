@@ -16,13 +16,14 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         {
         }
 
-        #if !WINDOWS_UWP
         // protected constructor for deserialization
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        protected DeviceRegistrationException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected DeviceRegistrationException(SerializationInfo info, StreamingContext context)
+        #if !WINDOWS_UWP
+         : base(info, context)
+#endif
         {
         }
-#endif
 
         public override string Message
         {

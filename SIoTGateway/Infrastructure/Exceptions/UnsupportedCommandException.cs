@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-//using System.Security.Permissions;
+#if !WINDOWS_UWP
+using System.Security.Permissions;
+#endif
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions
 {
+    #if !WINDOWS_UWP
     [Serializable]
+#endif
     public class UnsupportedCommandException : DeviceAdministrationExceptionBase
     {
         public UnsupportedCommandException(string deviceId, string commandName) : base(deviceId)
@@ -24,7 +28,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
 
             this.CommandName = info.GetString("CommandName");
         }
-
         public string CommandName { get; set; }
 
         public override string Message
@@ -40,7 +43,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public /*override*/ void GetObjectData(SerializationInfo info, StreamingContext context)
+        #if !WINDOWS_UWP
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
+#if WINDOWS_UWP
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
         {
             if (info == null)
             {
@@ -48,7 +56,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             }
 
             info.AddValue("CommandName", CommandName);
-            //base.GetObjectData(info, context);
+#if !WINDOWS_UWP
+            base.GetObjectData(info, context);
+#endif
         }
     }
 }

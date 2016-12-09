@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions;
+﻿#if WINDOWS_UWP
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions;
+#endif
 using System;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Models
@@ -6,7 +8,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
     /// <summary>
     /// Wraps error details to pass back to the caller of a WebAPI
     /// </summary>
+#if !WINDOWS_UWP
     [Serializable()]
+#endif
     public class Error
     {
         public enum ErrorType

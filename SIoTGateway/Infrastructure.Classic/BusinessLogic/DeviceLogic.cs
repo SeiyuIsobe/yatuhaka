@@ -20,11 +20,11 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Repository;
-using Newtonsoft.Json;
 #if !WINDOWS_UWP
 using D = Dynamitey;
 #endif
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.BusinessLogic
 {
@@ -121,6 +121,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             {
                 try
                 {
+                    // ここだ！
+                    // シミュレータの場合、ストレージのDeviceListに登録する処理が走るのはここを通るから
+                    // Webで登録した場合はここを通らない
                     await _virtualDeviceStorage.AddOrUpdateDeviceAsync(new InitialDeviceConfig()
                     {
                         DeviceId = device.DeviceProperties.DeviceID,
@@ -908,7 +911,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         {
             return await _deviceRegistryListRepository.GetDevicesAllAsync();
         }
-        
+
         public async Task<string> BootstrapDefaultDevices(string id)
         {
             DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);

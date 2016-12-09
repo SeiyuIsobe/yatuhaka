@@ -36,11 +36,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             DeviceId = deviceId;
         }
 
-        #if !WINDOWS_UWP
         // protected constructor for deserialization
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         protected DeviceAdministrationExceptionBase(SerializationInfo info, StreamingContext context)
+#if !WINDOWS_UWP
             : base(info, context)
+#endif
         {
             if (info == null)
             {
@@ -51,7 +52,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+#if !WINDOWS_UWP
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
+#if WINDOWS_UWP
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
         {
             if (info == null)
             {
@@ -59,8 +65,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             }
 
             info.AddValue("DeviceId", DeviceId);
+#if !WINDOWS_UWP
             base.GetObjectData(info, context);
-        }
 #endif
+        }
     }
 }

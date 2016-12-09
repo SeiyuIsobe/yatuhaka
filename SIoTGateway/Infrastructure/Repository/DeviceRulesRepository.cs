@@ -43,9 +43,13 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             _blobName = configurationProvider.GetConfigurationSettingValue("AsaRefDataRulesBlobName");
             _blobStorageClient = blobStorageClientFactory.CreateClient(_storageAccountConnectionString, _deviceRulesBlobStoreContainerName);
 
+#if !WINDOWS_UWP
             // note: InvariantCulture is read-only, so use en-US and hardcode all relevant aspects
-            //CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+#endif
+#if WINDOWS_UWP
             CultureInfo culture = CultureInfo.CurrentCulture;
+#endif
             _formatInfo = culture.DateTimeFormat;
             _formatInfo.ShortDatePattern = @"yyyy-MM-dd";
             _formatInfo.ShortTimePattern = @"HH-mm";
@@ -81,7 +85,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             TableOperation query = TableOperation.Retrieve<DeviceRuleTableEntity>(deviceId, ruleId);
 
             TableResult response = await Task.Run(() =>
-                _azureTableStorageClient.ExecuteAsync(query)
+#if !WINDOWS_UWP
+                _azureTableStorageClient.Execute(query)
+#endif
+#if WINDOWS_UWP
+            _azureTableStorageClient.ExecuteAsync(query)
+#endif
             );
 
             DeviceRule result = BuildRuleFromTableEntity((DeviceRuleTableEntity)response.Result);

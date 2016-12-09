@@ -30,7 +30,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             TableOperation query = TableOperation.Retrieve<UserSettingTableEntity>(_settingsTablePartitionKey, settingKey);
 
             TableResult response = await Task.Run(() =>
+#if !WINDOWS_UWP
+                _azureTableStorageClient.Execute(query)
+#endif
+#if WINDOWS_UWP
                 _azureTableStorageClient.ExecuteAsync(query)
+#endif
             );
 
             UserSetting result = null;

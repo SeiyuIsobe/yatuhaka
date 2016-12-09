@@ -70,7 +70,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             }
             else 
             {
-                //Trace.TraceWarning("ExecuteLogicAppAsync no event endpoint defined for actionId '{0}'", actionId); 
+#if !WINDOWS_UWP
+                Trace.TraceWarning("ExecuteLogicAppAsync no event endpoint defined for actionId '{0}'", actionId); 
+#endif
                 return false;
             }
             

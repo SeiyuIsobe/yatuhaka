@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-//using System.Security.Permissions;
+#if !WINDOWS_UWP
+using System.Security.Permissions;
+#endif
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions
 {
     /// <summary>
     /// Simple base class for device administration based exceptions
     /// </summary>
+#if !WINDOWS_UWP
     [Serializable]
+#endif
     public abstract class DeviceAdministrationExceptionBase : Exception
     {
         // TODO: Localize this, if neccessary.
@@ -35,7 +39,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         // protected constructor for deserialization
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         protected DeviceAdministrationExceptionBase(SerializationInfo info, StreamingContext context)
-            //: base(info, context)
+#if !WINDOWS_UWP
+            : base(info, context)
+#endif
         {
             if (info == null)
             {
@@ -46,7 +52,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+#if !WINDOWS_UWP
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
+#if WINDOWS_UWP
         public void GetObjectData(SerializationInfo info, StreamingContext context)
+#endif
         {
             if (info == null)
             {
@@ -54,7 +65,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             }
 
             info.AddValue("DeviceId", DeviceId);
-            //base.GetObjectData(info, context);
+#if !WINDOWS_UWP
+            base.GetObjectData(info, context);
+#endif
         }
     }
 }

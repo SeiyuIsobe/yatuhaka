@@ -12,13 +12,17 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configuration
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Exceptions;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Factory;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
-//using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Mapper;
+#if !WINDOWS_UWP
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Mapper;
+#endif
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Exceptions;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infrastructure.Repository;
-//using D = Dynamitey;
+#if !WINDOWS_UWP
+using D = Dynamitey;
+#endif
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
@@ -109,7 +113,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             }
             catch (InvalidCastException ex)
             {
-                //Trace.TraceError("The IsSimulatedDevice property was in an invalid format. Exception Error Message: {0}", ex.Message);
+#if !WINDOWS_UWP
+                Trace.TraceError("The IsSimulatedDevice property was in an invalid format. Exception Error Message: {0}", ex.Message);
+#endif
             }
             if (capturedException == null && isSimulatedAsBool)
             {
@@ -127,8 +133,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 }
                 catch (Exception ex)
                 {
+                    #if !WINDOWS_UWP
                     //if we fail adding to table storage for the device simulator just continue
-                    //Trace.TraceError("Failed to add simulated device : {0}", ex.Message);
+                    Trace.TraceError("Failed to add simulated device : {0}", ex.Message);
+#endif
                 }
             }
 
@@ -185,9 +193,11 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 }
                 catch (Exception ex)
                 {
+                    #if !WINDOWS_UWP
                     //if an exception occurs while attempting to remove the
                     //simulated device from table storage do not roll back the changes.
-                    //Trace.TraceError("Failed to remove simulated device : {0}", ex.Message);
+                    Trace.TraceError("Failed to remove simulated device : {0}", ex.Message);
+#endif
                 }
 
                 await _deviceRulesLogic.RemoveAllRulesForDeviceAsync(deviceId);
@@ -371,14 +381,16 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                     {
                         DeviceId = deviceId,
                         HostName = _configProvider.GetConfigurationSettingValue("iotHub.HostName"),
-                        Key = securityKeys.PrimaryKey,
+                        Key = securityKeys == null ? "" : securityKeys.PrimaryKey,
                         DeviceModelJson = JsonConvert.SerializeObject(repositoryDevice)
                     });
                 }
                 catch (Exception ex)
                 {
+                    #if !WINDOWS_UWP
                     //if we fail adding to table storage for the device simulator just continue
-                    //Trace.TraceError("Failed to add enabled device to simulated device storage. Device telemetry is expected not to be sent. : {0}", ex.Message);
+                    Trace.TraceError("Failed to add enabled device to simulated device storage. Device telemetry is expected not to be sent. : {0}", ex.Message);
+#endif
                 }
             }
             else
@@ -389,9 +401,11 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 }
                 catch (Exception ex)
                 {
+                    #if !WINDOWS_UWP
                     //if an exception occurs while attempting to remove the
                     //simulated device from table storage do not roll back the changes.
-                    //Trace.TraceError("Failed to remove disabled device from simulated device store. Device will keep sending telemetry data. : {0}", ex.Message);
+                    Trace.TraceError("Failed to remove disabled device from simulated device store. Device will keep sending telemetry data. : {0}", ex.Message);
+#endif
                 }
             }
 
@@ -779,15 +793,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
             return sampleIds;
         }
 
-        public async Task<string> BootstrapDevice(string id)
-        {
-            DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
-            SecurityKeys generatedSecurityKeys = _securityKeyGenerator.CreateRandomKeys();
-            await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
-
-            return id;
-        }
-
         public DeviceListLocationsModel ExtractLocationsData(List<DeviceModel> devices)
         {
             var result = new DeviceListLocationsModel();
@@ -908,6 +913,15 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         }
 
         public async Task<string> BootstrapDefaultDevices(string id)
+        {
+            DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
+            SecurityKeys generatedSecurityKeys = _securityKeyGenerator.CreateRandomKeys();
+            await this.AddDeviceToRepositoriesAsync(device, generatedSecurityKeys);
+
+            return id;
+        }
+
+        public async Task<string> BootstrapDevice(string id)
         {
             DeviceModel device = DeviceCreatorHelper.BuildDeviceStructure(id, true, null);
             SecurityKeys generatedSecurityKeys = _securityKeyGenerator.CreateRandomKeys();

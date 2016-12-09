@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         DeviceListLocationsModel ExtractLocationsData(List<DeviceModel> devices);
         IList<DeviceTelemetryFieldModel> ExtractTelemetry(DeviceModel device);
 
-        Task<List<DeviceModel>> GetAllDeviceAsync();
         Task<string> BootstrapDevice(string id);
+        Task<List<DeviceModel>> GetAllDeviceAsync();
         Task<string> BootstrapDefaultDevices(string id);
 
         Task UpdateVirtualStorage(DeviceModel device);
