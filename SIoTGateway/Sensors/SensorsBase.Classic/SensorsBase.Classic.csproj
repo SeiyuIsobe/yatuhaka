@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common.Classic\Common.Classic.csproj">
-      <Project>{28ef3db9-b9d2-4ee8-a8f6-afe563583b48}</Project>
+      <Project>{28EF3DB9-B9D2-4EE8-A8F6-AFE563583B48}</Project>
       <Name>Common.Classic</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\SIoTGatewayCore.Classic\SIoTGatewayCore.Classic.csproj">
