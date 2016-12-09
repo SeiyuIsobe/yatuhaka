@@ -92,9 +92,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
 #if WINDOWS_UWP
         void LoadEnvironmentConfig()
         {
-            if (true == File.Exists("Common.UWP\\cloud.settings.xml"))
+            if (true == File.Exists("Common\\cloud.settings.xml"))
             {
-                this.environment = new EnvironmentDescription("Common.UWP\\cloud.settings.xml");
+                this.environment = new EnvironmentDescription("Common\\cloud.settings.xml");
             }
         }
 #endif

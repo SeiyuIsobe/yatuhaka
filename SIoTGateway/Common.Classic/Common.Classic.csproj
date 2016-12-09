@@ -175,6 +175,11 @@
     <Compile Include="Configurations\ConfigurationProvider.cs" />
     <Compile Include="Configurations\EnvironmentDescription.cs" />
     <Compile Include="Configurations\IConfigurationProvider.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="EventArgs\AccelEventArgs.cs" />
+    <Compile Include="EventArgs\GeolocationEventArgs.cs" />
+    <Compile Include="EventArgs\ReceivedMessageArgs.cs" />
+    <Compile Include="EventArgs\SensorEventArgs.cs" />
     <Compile Include="Exceptions\DeviceRequiredPropertyNotFoundException.cs" />
     <Compile Include="Factory\SampleDeviceFactory.cs" />
     <Compile Include="Helpers\AzureRetryHelper.cs" />
@@ -259,8 +264,6 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enums\" />
-    <Folder Include="EventArgs\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

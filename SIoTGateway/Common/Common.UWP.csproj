@@ -104,96 +104,232 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="Deployment\Application.json" />
-    <None Include="Deployment\ConfigurationTemplate.config" />
-    <None Include="Deployment\DeploymentLib.ps1" />
-    <None Include="Deployment\LocalMonitoring.json" />
-    <None Include="Deployment\PackageIoTSample.ps1" />
-    <None Include="Deployment\PrepareIoTSample.ps1" />
-    <None Include="Deployment\RemoteMonitoring.json" />
-    <None Include="Deployment\RemoteMonitoringMapKey.json" />
-    <None Include="Deployment\RemoteMonitoringStaging.json" />
+    <None Include="..\Common.Classic\Deployment\Application.json">
+      <Link>Deployment\Application.json</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\ConfigurationTemplate.config">
+      <Link>Deployment\ConfigurationTemplate.config</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\DeploymentLib.ps1">
+      <Link>Deployment\DeploymentLib.ps1</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\LocalMonitoring.json">
+      <Link>Deployment\LocalMonitoring.json</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\PackageIoTSample.ps1">
+      <Link>Deployment\PackageIoTSample.ps1</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\PrepareIoTSample.ps1">
+      <Link>Deployment\PrepareIoTSample.ps1</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\RemoteMonitoring.json">
+      <Link>Deployment\RemoteMonitoring.json</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\RemoteMonitoringMapKey.json">
+      <Link>Deployment\RemoteMonitoringMapKey.json</Link>
+    </None>
+    <None Include="..\Common.Classic\Deployment\RemoteMonitoringStaging.json">
+      <Link>Deployment\RemoteMonitoringStaging.json</Link>
+    </None>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common.Classic\Configurations\ConfigurationProvider.cs">
+      <Link>Configurations\ConfigurationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Configurations\EnvironmentDescription.cs">
+      <Link>Configurations\EnvironmentDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Configurations\IConfigurationProvider.cs">
+      <Link>Configurations\IConfigurationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Enums\Enums.cs">
+      <Link>Enums\Enums.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\EventArgs\AccelEventArgs.cs">
+      <Link>EventArgs\AccelEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\EventArgs\GeolocationEventArgs.cs">
+      <Link>EventArgs\GeolocationEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\EventArgs\ReceivedMessageArgs.cs">
+      <Link>EventArgs\ReceivedMessageArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\EventArgs\SensorEventArgs.cs">
+      <Link>EventArgs\SensorEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Exceptions\DeviceRequiredPropertyNotFoundException.cs">
+      <Link>Exceptions\DeviceRequiredPropertyNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Factory\SampleDeviceFactory.cs">
+      <Link>Factory\SampleDeviceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\AzureRetryHelper.cs">
+      <Link>Helpers\AzureRetryHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\AzureTableStorageClient.cs">
+      <Link>Helpers\AzureTableStorageClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\AzureTableStorageClientFactory.cs">
+      <Link>Helpers\AzureTableStorageClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\BlobStorageClient.cs">
+      <Link>Helpers\BlobStorageClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\BlobStorageClientFactory.cs">
+      <Link>Helpers\BlobStorageClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\BlobStorageReader.cs">
+      <Link>Helpers\BlobStorageReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\DeviceCreatorHelper.cs">
+      <Link>Helpers\DeviceCreatorHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\DeviceFactoryResolver.cs">
+      <Link>Helpers\DeviceFactoryResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\DocumentDBClient.cs">
+      <Link>Helpers\DocumentDBClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\DynamicValuesHelper.cs">
+      <Link>Helpers\DynamicValuesHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\FunctionalHelper.cs">
+      <Link>Helpers\FunctionalHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\GetDeviceKindHelper.cs">
+      <Link>Helpers\GetDeviceKindHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\IAzureTableStorageClient.cs">
+      <Link>Helpers\IAzureTableStorageClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\IAzureTableStorageClientFactory.cs">
+      <Link>Helpers\IAzureTableStorageClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\IBlobStorageClient.cs">
+      <Link>Helpers\IBlobStorageClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\IBlobStorageClientFactory.cs">
+      <Link>Helpers\IBlobStorageClientFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\ICustomTypeDescriptor.cs">
+      <Link>Helpers\ICustomTypeDescriptor.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\IDocumentDBClient.cs">
+      <Link>Helpers\IDocumentDBClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\IHelper.cs">
+      <Link>Helpers\IHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\MqttHelper.cs">
+      <Link>Helpers\MqttHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\ParsingHelper.cs">
+      <Link>Helpers\ParsingHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\ReflectionHelper.cs">
+      <Link>Helpers\ReflectionHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Helpers\TelemetryFactoryResolver.cs">
+      <Link>Helpers\TelemetryFactoryResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Interfaces\ISensor.cs">
+      <Link>Interfaces\ISensor.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\ApiRegistrationModel.cs">
+      <Link>Models\ApiRegistrationModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\ApiRegistrationTableEntity.cs">
+      <Link>Models\ApiRegistrationTableEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\BlobContents.cs">
+      <Link>Models\BlobContents.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\CommandHistory.cs">
+      <Link>Models\CommandHistory.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\Commands\Command.cs">
+      <Link>Models\Commands\Command.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\DeviceListEntity.cs">
+      <Link>Models\DeviceListEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\DeviceModel.cs">
+      <Link>Models\DeviceModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\DeviceProperties.cs">
+      <Link>Models\DeviceProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\DeviceRuleTableEntity.cs">
+      <Link>Models\DeviceRuleTableEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\InitialDeviceConfig.cs">
+      <Link>Models\InitialDeviceConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\IoTHub.cs">
+      <Link>Models\IoTHub.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\Parameter.cs">
+      <Link>Models\Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\SecurityKeys.cs">
+      <Link>Models\SecurityKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\SensorList.cs">
+      <Link>Models\SensorList.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\SensorModule.cs">
+      <Link>Models\SensorModule.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\Sensor\AccelaData.cs">
+      <Link>Models\Sensor\AccelaData.cs</Link>
+    </Compile>
     <Compile Include="..\Common.Classic\Models\Sensor\IOperationValue.cs">
       <Link>Models\Sensor\IOperationValue.cs</Link>
     </Compile>
+    <Compile Include="..\Common.Classic\Models\Sensor\PositionData.cs">
+      <Link>Models\Sensor\PositionData.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\SystemProperties.cs">
+      <Link>Models\SystemProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\TableStorageResponse.cs">
+      <Link>Models\TableStorageResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Models\Telemetry.cs">
+      <Link>Models\Telemetry.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Repository\IVirtualDeviceStorage.cs">
+      <Link>Repository\IVirtualDeviceStorage.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Repository\VirtualDeviceTableStorage.cs">
+      <Link>Repository\VirtualDeviceTableStorage.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\SampleDataGenerator\IRandomGenerator.cs">
+      <Link>SampleDataGenerator\IRandomGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\SampleDataGenerator\RandomGenerator.cs">
+      <Link>SampleDataGenerator\RandomGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\SampleDataGenerator\SampleDataGenerator.cs">
+      <Link>SampleDataGenerator\SampleDataGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Common.Classic\Schema\SchemaHelper.cs">
+      <Link>Schema\SchemaHelper.cs</Link>
+    </Compile>
     <Compile Include="CloudConfigurationManager.cs" />
-    <Compile Include="Configurations\ConfigurationProvider.cs" />
-    <Compile Include="Configurations\EnvironmentDescription.cs" />
-    <Compile Include="Configurations\IConfigurationProvider.cs" />
-    <Compile Include="Enums\Enums.cs" />
-    <Compile Include="EventArgs\AccelEventArgs.cs" />
-    <Compile Include="EventArgs\GeolocationEventArgs.cs" />
-    <Compile Include="EventArgs\ReceivedMessageArgs.cs" />
-    <Compile Include="EventArgs\SensorEventArgs.cs" />
-    <Compile Include="Exceptions\DeviceRequiredPropertyNotFoundException.cs" />
-    <Compile Include="Factory\SampleDeviceFactory.cs" />
-    <Compile Include="Helpers\AzureRetryHelper.cs" />
-    <Compile Include="Helpers\AzureTableStorageClient.cs" />
-    <Compile Include="Helpers\AzureTableStorageClientFactory.cs" />
-    <Compile Include="Helpers\BlobStorageClient.cs" />
-    <Compile Include="Helpers\BlobStorageClientFactory.cs" />
-    <Compile Include="Helpers\BlobStorageReader.cs" />
-    <Compile Include="Helpers\DeviceCreatorHelper.cs" />
-    <Compile Include="Helpers\DeviceFactoryResolver.cs" />
-    <Compile Include="Helpers\DocumentDBClient.cs" />
-    <Compile Include="Helpers\DynamicValuesHelper.cs" />
-    <Compile Include="Helpers\FunctionalHelper.cs" />
-    <Compile Include="Helpers\GetDeviceKindHelper.cs" />
-    <Compile Include="Helpers\IAzureTableStorageClient.cs" />
-    <Compile Include="Helpers\IAzureTableStorageClientFactory.cs" />
-    <Compile Include="Helpers\IBlobStorageClient.cs" />
-    <Compile Include="Helpers\IBlobStorageClientFactory.cs" />
-    <Compile Include="Helpers\ICustomTypeDescriptor.cs" />
-    <Compile Include="Helpers\IDocumentDBClient.cs" />
-    <Compile Include="Helpers\IHelper.cs" />
-    <Compile Include="Helpers\MqttHelper.cs" />
-    <Compile Include="Helpers\ParsingHelper.cs" />
-    <Compile Include="Helpers\ReflectionHelper.cs" />
-    <Compile Include="Helpers\TelemetryFactoryResolver.cs" />
-    <Compile Include="Interfaces\ISensor.cs" />
-    <Compile Include="Models\ApiRegistrationModel.cs" />
-    <Compile Include="Models\ApiRegistrationTableEntity.cs" />
-    <Compile Include="Models\BlobContents.cs" />
-    <Compile Include="Models\CommandHistory.cs" />
-    <Compile Include="Models\Commands\Command.cs" />
-    <Compile Include="Models\DeviceListEntity.cs" />
-    <Compile Include="Models\DeviceModel.cs" />
-    <Compile Include="Models\DeviceProperties.cs" />
-    <Compile Include="Models\DeviceRuleTableEntity.cs" />
-    <Compile Include="Models\InitialDeviceConfig.cs" />
-    <Compile Include="Models\IoTHub.cs" />
-    <Compile Include="Models\Parameter.cs" />
-    <Compile Include="Models\SecurityKeys.cs" />
-    <Compile Include="Models\SensorList.cs" />
-    <Compile Include="Models\SensorModule.cs" />
-    <Compile Include="Models\Sensor\AccelaData.cs" />
-    <Compile Include="Models\Sensor\PositionData.cs" />
-    <Compile Include="Models\SystemProperties.cs" />
-    <Compile Include="Models\TableStorageResponse.cs" />
-    <Compile Include="Models\Telemetry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IVirtualDeviceStorage.cs" />
-    <Compile Include="Repository\VirtualDeviceTableStorage.cs" />
-    <Compile Include="SampleDataGenerator\IRandomGenerator.cs" />
-    <Compile Include="SampleDataGenerator\RandomGenerator.cs" />
-    <Compile Include="SampleDataGenerator\SampleDataGenerator.cs" />
-    <Compile Include="Schema\SchemaHelper.cs" />
     <Compile Include="SensorModuleWatcher.cs" />
     <EmbeddedResource Include="Properties\Common.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Common.Classic\cloud.settings.xml">
+      <Link>cloud.settings.xml</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="appconfig_clone.xml" />
-    <Content Include="cloud.settings.iseiyu.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="cloud.settings.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
