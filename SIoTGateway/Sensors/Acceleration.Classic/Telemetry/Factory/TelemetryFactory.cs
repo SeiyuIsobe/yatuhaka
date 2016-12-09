@@ -17,8 +17,10 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory
     public class TelemetryFactory : ITelemetryFactory, ITelemetryFactoryHelper
     {
         private readonly ILogger _logger;
-        private readonly string _kindRegx = @"_DK\w*_";
-        private readonly string _kind = "Accel";
+
+        // 注意：DeviceFactoryも同じようにすること
+        private readonly string _kindRegx = @"_ACCE_";
+        private readonly string _kind = "ACCE";
 
         #region 受信イベント
         public event EventHandler ReceivedTelemetry;
@@ -46,12 +48,6 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory
 
         public object PopulateDeviceWithTelemetryEvents(IDevice device, Func<object, Task> sendMessageAsync)
         {
-            // 今回の実験用では最初に登録した情報のままでいく
-            //
-            //// 最初の一発だけ送信するテレメトリー
-            //var startupTelemetry = new StartupTelemetry(_logger, device);
-            //device.TelemetryEvents.Add(startupTelemetry);
-
             // センサーデータを送信するテレメトリー
             var monitorTelemetry = new RemoteMonitorTelemetry(_logger, device);
             monitorTelemetry.ReceivedTelemetry += (sender, e) =>
@@ -66,15 +62,28 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory
             return monitorTelemetry;
         }
 
-        public object CallTelemetryFactory(string deviceId)
+        public object CallTelemetryFactory(string deviceIdOrg)
         {
+            string deviceId = string.Empty;
+
             Regex rgx = new Regex(_kindRegx);
+
+            // 末尾チェック
+            // 末尾に"_"が付いているか
+            if("_" == deviceIdOrg.Substring(deviceIdOrg.Length - 1))
+            {
+                deviceId = deviceIdOrg;
+            }
+            else
+            {
+                deviceId = deviceIdOrg + "_";
+            }
 
             MatchCollection matches = rgx.Matches(deviceId);
             if (matches.Count > 0)
             {
-                // 前後の区切り文字_を消して、DK以降の文字列を取得する
-                string kind = matches[0].Value.Replace("_", "").Substring(2);
+                // 前後の区切り文字_を消す
+                string kind = matches[0].Value.Replace("_", "");
 
                 // 自分を指しているのか判定する
                 if (_kind == kind) return this;

@@ -162,7 +162,7 @@ namespace SensorModuleSimulator
                     {
                         try
                         {
-                            Publish("GW6210833_SM0771254175_SN19760824_DKAccel_958", ((ISensor)s2).Data);
+                            Publish("GW6210833_SM0771254175_SN19760824_ACCE", ((ISensor)s2).Data);
                         }
                         catch { }
                     }
@@ -175,8 +175,8 @@ namespace SensorModuleSimulator
         private async void SendSensorModuleName()
         {
             SensorList list = new SensorList();
-            list.Sensors.Add("GW6210833_SM0771254175_SN19710613_DKCooler_958");
-            list.Sensors.Add("GW6210833_SM0771254175_SN19760824_DKAccel_958");
+            list.Sensors.Add("GW6210833_SM0771254175_SN19710613_TEMP");
+            list.Sensors.Add("GW6210833_SM0771254175_SN19760824_ACCE");
 
             var sensor = new SensorModule() { Name = "SM0771254175" };
             sensor.Sensors = list;

@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Simulator
             _simulatorContainer = builder.Build();
         }
 
-        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_DKAccel_958";
+        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_ACCE";
 
         private async static void RegistDevice()
         {
