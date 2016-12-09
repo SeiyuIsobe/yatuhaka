@@ -71,6 +71,11 @@ namespace Main.ViewModels
             _iotgateway.ActivatedSensor(sensorModuleID);
         }
 
+        internal void SendGatewayTime(DateTime gatewayTime)
+        {
+            _iotgateway.SendGatewayTime(gatewayTime);
+        }
+
         public void GetMyIp(string ip)
         {
             this.SelfIP = ip;

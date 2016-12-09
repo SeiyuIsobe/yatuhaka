@@ -62,6 +62,34 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
 
         }
 
+        public static Task SendGatewayTimeAsync(DateTime time)
+        {
+            try
+            {
+                if (null == _client)
+                {
+                    _client = new MqttClient("127.0.0.1");
+                    _client.Connect(new Guid().ToString());
+                }
+                else
+                {
+                    // no action
+                }
+
+                if (true == _client.IsConnected)
+                {
+                    var enc = Encoding.UTF8.GetBytes($@"{{st:""{time.ToString()}""}}");
+                    _client.Publish("GatewayTime", enc);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                _client = null;
+            }
+
+            return Task.FromResult(0);
+        }
 
     }
 }

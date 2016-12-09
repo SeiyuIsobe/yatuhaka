@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,11 +40,6 @@ namespace Main
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            //StartBroker();
-
-            //断念
-            //GetDeviceModel();
-
             await Task.Run(async () =>
             {
                 SIoTBroker.SIoTBroker broker = new SIoTBroker.SIoTBroker();
@@ -62,21 +58,42 @@ namespace Main
                         GetMyIp();
                     });
 
+                    //// NICTから日本標準時を取得
+                    //GetNICTTime().Wait();
+
+                    //// 時刻をセンシング基盤に通知
+                    //_mainwindowVM.SendGatewayTime(_gatewayTime);
                 }
 
                 while (true) { }
             });
         }
 
-        private void GetDeviceModel()
-        {
-            var url = "https://localhost:44305/api/v1/devices/GW6210833_SM0771254175_SN19760824_DKAccel_958";
-            var req = WebRequest.Create(url);
-            var res = req.GetResponseAsync();
+        //private DateTime _gatewayTime;
 
-            //using (var resStream = res.GetResponseStream())
-            //{
-            //}
+        //private async Task GetNICTTime()
+        //{
+        //    var url = "https://ntp-a1.nict.go.jp/cgi-bin/json";
+        //    var req = WebRequest.Create(url);
+        //    var res = await req.GetResponseAsync();
+
+        //    using (var resStream = res.GetResponseStream())
+        //    {
+        //        using (var sr = new StreamReader(resStream))
+        //        {
+        //            using (var jsontextreader = new JsonTextReader(sr))
+        //            {
+        //                var des = (new JsonSerializer()).Deserialize<NitcTime>(jsontextreader);
+        //                _gatewayTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(des.st))
+        //                    .ToLocalTime();
+        //            }
+        //        }
+
+        //    }
+        //}
+
+        private async void GetDeviceModel()
+        {
         }
 
         private void _sensor_attach_Click(object sender, RoutedEventArgs e)
@@ -179,5 +196,15 @@ namespace Main
                 }
             }
         }
+    }
+
+    public class NitcTime
+    {
+        public string id { get; set; }
+        public decimal it { get; set; }
+        public decimal st { get; set; }
+        public int leap { get; set; }
+        public decimal next { get; set; }
+        public int step { get; set; }
     }
 }

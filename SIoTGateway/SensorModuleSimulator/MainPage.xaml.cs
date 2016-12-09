@@ -2,6 +2,7 @@
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Interfaces;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
+using Newtonsoft.Json;
 using SiRSensors;
 using System;
 using System.Collections.Generic;
@@ -309,6 +310,16 @@ namespace SensorModuleSimulator
                         if (null != Disconnected) Disconnected(null, null);
                     };
 
+                    _client.Subscribe(new string[] { "GatewayTime" }, new byte[] { 0 });
+
+                    _client.MqttMsgPublishReceived += (sender, e) =>
+                    {
+                        var msg = Encoding.UTF8.GetString(e.Message);
+                        var topic = e.Topic;
+
+                        var data = JsonConvert.DeserializeObject<GatewayTime>(msg);
+                    };
+
                     if (null != Connected) Connected(null, null);
                     
                 }
@@ -397,5 +408,10 @@ namespace SensorModuleSimulator
 
             _ip.Text = (_ip.Text + number);
         }
+    }
+
+    public class GatewayTime
+    {
+        public string st { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configuration
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
+using Newtonsoft.Json;
 using SIoTBroker;
 using SIoTGateway.Cooler.Devices.Factory;
 using SIoTGateway.Cooler.Telemetry.Factory;
@@ -14,6 +15,7 @@ using SIotGatewayCore.Transport.Factory;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -38,11 +40,21 @@ namespace Main.Models
 
             // センサー基盤から送られてくるデバイス名の一覧を受信する
             _sensormoduleWatcher = new SensorModuleWatcher();
-            _sensormoduleWatcher.ReceivedSensorModuleName += (sender, e) =>
+
+            // センサー基盤の参加通知受信イベント
+            _sensormoduleWatcher.ReceivedSensorModuleName += async (sender, e) =>
             {
                 SensorModule obj = sender as SensorModule;
                 if(null != obj)
                 {
+                    // NICTから日本標準時を取得
+                    // 注意事項：NICTによれば最低16秒は開けて呼び出すこととある
+                    // http://www.nict.go.jp/JST/http.html
+                    await this.GetNICTTime();
+
+                    // センサー基盤に時刻を通知
+                    SendGatewayTime(_gatewayTime);
+
                     // センサー基盤オブジェクトの生成
                     // センサー基盤のIDを設定する
                     SensorManageModule sensormodule = new SensorManageModule(obj);
@@ -59,7 +71,7 @@ namespace Main.Models
                     var deviceCancellationToken = new CancellationTokenSource();
 
                     // 開始
-                    Task.Run(
+                    await Task.Run(
                         async () =>
                         {
                             await sensormodule.Start(deviceCancellationToken.Token);
@@ -80,6 +92,11 @@ namespace Main.Models
          
         }
 
+        internal async void SendGatewayTime(DateTime gatewayTime)
+        {
+            await MqttHelper.SendGatewayTimeAsync(gatewayTime);
+        }
+
         internal void ActivatedSensor(string sensorModuleID)
         {
             
@@ -93,33 +110,6 @@ namespace Main.Models
 
         private List<SensorManageModule> _sensorModuleList = new List<SensorManageModule>();
         private SIoTBroker.SIoTBroker _broker = new SIoTBroker.SIoTBroker();
-
-        /// <summary>
-        /// IoTゲートウェイサービスを開始する
-        /// </summary>
-        [Obsolete("使用禁止", true)]
-        public async void Start()
-        {
-            // 断念
-            // サンプルを参考にしても同じように動かない
-            //var creator = _gatewayContainer.Resolve<IDataInitializer>();
-            //creator.BootstrapDevice("aaaa23456789");
-
-            await Task.Run(async () =>
-            {
-                var startDeviceTasks = new List<Task>();
-
-                foreach (SensorManageModule smm in _sensorModuleList)
-                {
-                    var deviceCancellationToken = new CancellationTokenSource();
-
-                    _cancellationTokens.Add("aaa", deviceCancellationToken);
-                    startDeviceTasks.Add(smm.Start(deviceCancellationToken.Token));
-                }
-
-                await Task.WhenAll(startDeviceTasks);
-            });
-        }
 
         public void Stop()
         {
@@ -146,6 +136,29 @@ namespace Main.Models
                 if (null == _gatewayContainer) return null;
 
                 return _gatewayContainer.Resolve<IDataInitializer>();
+            }
+        }
+
+        private DateTime _gatewayTime;
+
+        private async Task GetNICTTime()
+        {
+            var url = "https://ntp-a1.nict.go.jp/cgi-bin/json";
+            var req = WebRequest.Create(url);
+            var res = await req.GetResponseAsync();
+
+            using (var resStream = res.GetResponseStream())
+            {
+                using (var sr = new StreamReader(resStream))
+                {
+                    using (var jsontextreader = new JsonTextReader(sr))
+                    {
+                        var des = (new JsonSerializer()).Deserialize<NitcTime>(jsontextreader);
+                        _gatewayTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(des.st))
+                            .ToLocalTime();
+                    }
+                }
+
             }
         }
     }
