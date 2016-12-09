@@ -109,255 +109,267 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLogic\ActionLogic.cs" />
-    <Compile Include="BusinessLogic\ActionMappingLogic.cs" />
-    <Compile Include="BusinessLogic\AlertsLogic.cs" />
-    <Compile Include="BusinessLogic\CommandParameterTypeLogic.cs" />
-    <Compile Include="BusinessLogic\DeviceLogic.cs" />
-    <Compile Include="BusinessLogic\DeviceRulesLogic.cs" />
-    <Compile Include="BusinessLogic\DeviceTelemetryLogic.cs" />
-    <Compile Include="BusinessLogic\DeviceTypeLogic.cs" />
-    <Compile Include="BusinessLogic\IActionLogic.cs" />
-    <Compile Include="BusinessLogic\IActionMappingLogic.cs" />
-    <Compile Include="BusinessLogic\IAlertsLogic.cs" />
-    <Compile Include="BusinessLogic\ICommandParameterTypeLogic.cs" />
-    <Compile Include="BusinessLogic\IDeviceLogic.cs" />
-    <Compile Include="BusinessLogic\IDeviceRulesLogic.cs" />
-    <Compile Include="BusinessLogic\IDeviceTelemetryLogic.cs" />
-    <Compile Include="BusinessLogic\IDeviceTypeLogic.cs" />
-    <Compile Include="BusinessLogic\IKeyLogic.cs" />
-    <Compile Include="BusinessLogic\ISecurityKeyGenerator.cs" />
-    <Compile Include="BusinessLogic\KeyLogic.cs" />
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\ActionLogic.cs">
+      <Link>BusinessLogic\ActionLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\ActionMappingLogic.cs">
+      <Link>BusinessLogic\ActionMappingLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\AlertsLogic.cs">
+      <Link>BusinessLogic\AlertsLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\CommandParameterTypeLogic.cs">
+      <Link>BusinessLogic\CommandParameterTypeLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\DeviceLogic.cs">
+      <Link>BusinessLogic\DeviceLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\DeviceRulesLogic.cs">
+      <Link>BusinessLogic\DeviceRulesLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\DeviceTelemetryLogic.cs">
+      <Link>BusinessLogic\DeviceTelemetryLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\DeviceTypeLogic.cs">
+      <Link>BusinessLogic\DeviceTypeLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IActionLogic.cs">
+      <Link>BusinessLogic\IActionLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IActionMappingLogic.cs">
+      <Link>BusinessLogic\IActionMappingLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IAlertsLogic.cs">
+      <Link>BusinessLogic\IAlertsLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\ICommandParameterTypeLogic.cs">
+      <Link>BusinessLogic\ICommandParameterTypeLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IDeviceLogic.cs">
+      <Link>BusinessLogic\IDeviceLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IDeviceRulesLogic.cs">
+      <Link>BusinessLogic\IDeviceRulesLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IDeviceTelemetryLogic.cs">
+      <Link>BusinessLogic\IDeviceTelemetryLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IDeviceTypeLogic.cs">
+      <Link>BusinessLogic\IDeviceTypeLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\IKeyLogic.cs">
+      <Link>BusinessLogic\IKeyLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\ISecurityKeyGenerator.cs">
+      <Link>BusinessLogic\ISecurityKeyGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\KeyLogic.cs">
+      <Link>BusinessLogic\KeyLogic.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\BusinessLogic\SecurityKeyGenerator.cs">
+      <Link>BusinessLogic\SecurityKeyGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Exceptions\DeviceAdministrationExceptionBase.cs">
+      <Link>Exceptions\DeviceAdministrationExceptionBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Exceptions\DeviceAlreadyRegisteredException.cs">
+      <Link>Exceptions\DeviceAlreadyRegisteredException.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Exceptions\DeviceNotRegisteredException.cs">
+      <Link>Exceptions\DeviceNotRegisteredException.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Exceptions\DeviceRegistrationException.cs">
+      <Link>Exceptions\DeviceRegistrationException.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Exceptions\UnsupportedCommandException.cs">
+      <Link>Exceptions\UnsupportedCommandException.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Exceptions\ValidationException.cs">
+      <Link>Exceptions\ValidationException.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\ActionMapping.cs">
+      <Link>Models\ActionMapping.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\ActionMappingExtended.cs">
+      <Link>Models\ActionMappingExtended.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\ActionModel.cs">
+      <Link>Models\ActionModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\AlertHistoryItemModel.cs">
+      <Link>Models\AlertHistoryItemModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceListLocationsModel.cs">
+      <Link>Models\DeviceListLocationsModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceListQuery.cs">
+      <Link>Models\DeviceListQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceListQueryResult.cs">
+      <Link>Models\DeviceListQueryResult.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceLocationModel.cs">
+      <Link>Models\DeviceLocationModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DevicePropertyMetadata.cs">
+      <Link>Models\DevicePropertyMetadata.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DevicePropertyValueModel.cs">
+      <Link>Models\DevicePropertyValueModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceRule.cs">
+      <Link>Models\DeviceRule.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceRuleBlobEntity.cs">
+      <Link>Models\DeviceRuleBlobEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceRuleDataFields.cs">
+      <Link>Models\DeviceRuleDataFields.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceRuleUpdateRequest.cs">
+      <Link>Models\DeviceRuleUpdateRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceState.cs">
+      <Link>Models\DeviceState.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceTelemetryFieldModel.cs">
+      <Link>Models\DeviceTelemetryFieldModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceTelemetryModel.cs">
+      <Link>Models\DeviceTelemetryModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceTelemetrySummaryModel.cs">
+      <Link>Models\DeviceTelemetrySummaryModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceType.cs">
+      <Link>Models\DeviceType.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\DeviceWithKeys.cs">
+      <Link>Models\DeviceWithKeys.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\Error.cs">
+      <Link>Models\Error.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\FilterInfo.cs">
+      <Link>Models\FilterInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\FilterType.cs">
+      <Link>Models\FilterType.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\PropertyType.cs">
+      <Link>Models\PropertyType.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\QuerySortOrder.cs">
+      <Link>Models\QuerySortOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\ServiceResponse.cs">
+      <Link>Models\ServiceResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\UserSetting.cs">
+      <Link>Models\UserSetting.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Models\UserSettingTableEntity.cs">
+      <Link>Models\UserSettingTableEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\ActionMappingRepository.cs">
+      <Link>Repository\ActionMappingRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\ActionRepository.cs">
+      <Link>Repository\ActionRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\AlertsRepository.cs">
+      <Link>Repository\AlertsRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\ApiRegistrationRepository.cs">
+      <Link>Repository\ApiRegistrationRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\DeviceRegistryRepository.cs">
+      <Link>Repository\DeviceRegistryRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\DeviceRulesRepository.cs">
+      <Link>Repository\DeviceRulesRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\DeviceTelemetryRepository.cs">
+      <Link>Repository\DeviceTelemetryRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\FilterHelper.cs">
+      <Link>Repository\FilterHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IActionMappingRepository.cs">
+      <Link>Repository\IActionMappingRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IActionRepository.cs">
+      <Link>Repository\IActionRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IAlertsRepository.cs">
+      <Link>Repository\IAlertsRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IApiRegistrationRepository.cs">
+      <Link>Repository\IApiRegistrationRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IDeviceRegistryCrudRepository.cs">
+      <Link>Repository\IDeviceRegistryCrudRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IDeviceRegistryListRepository.cs">
+      <Link>Repository\IDeviceRegistryListRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IDeviceRulesRepository.cs">
+      <Link>Repository\IDeviceRulesRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IDeviceTelemetryRepository.cs">
+      <Link>Repository\IDeviceTelemetryRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IDeviceTypeRepository.cs">
+      <Link>Repository\IDeviceTypeRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IIoTHubDeviceManager.cs">
+      <Link>Repository\IIoTHubDeviceManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IIotHubRepository.cs">
+      <Link>Repository\IIotHubRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IoTHubDeviceManager.cs">
+      <Link>Repository\IoTHubDeviceManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IotHubRepository.cs">
+      <Link>Repository\IotHubRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\IUserSettingsRepository.cs">
+      <Link>Repository\IUserSettingsRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\SampleDeviceTypeRepository.cs">
+      <Link>Repository\SampleDeviceTypeRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Infrastructure.Classic\Repository\UserSettingsRepository.cs">
+      <Link>Repository\UserSettingsRepository.cs</Link>
+    </Compile>
     <Compile Include="BusinessLogic\RNGCryptoServiceProvider.cs" />
-    <Compile Include="BusinessLogic\SecurityKeyGenerator.cs" />
     <Compile Include="BusinessLogic\TypeConverter.cs" />
     <Compile Include="BusinessLogic\TypeDescriptor.cs" />
-    <Compile Include="Exceptions\DeviceAdministrationExceptionBase.cs" />
-    <Compile Include="Exceptions\DeviceAlreadyRegisteredException.cs" />
-    <Compile Include="Exceptions\DeviceNotRegisteredException.cs" />
-    <Compile Include="Exceptions\DeviceRegistrationException.cs" />
     <Compile Include="Exceptions\SecurityAction.cs" />
     <Compile Include="Exceptions\SecurityPermissionAttribute.cs" />
     <Compile Include="Exceptions\SerializableAttribute.cs" />
     <Compile Include="Exceptions\SerializationInfo.cs" />
-    <Compile Include="Exceptions\UnsupportedCommandException.cs" />
-    <Compile Include="Exceptions\ValidationException.cs" />
-    <Compile Include="Models\ActionMapping.cs" />
-    <Compile Include="Models\ActionMappingExtended.cs" />
-    <Compile Include="Models\ActionModel.cs" />
-    <Compile Include="Models\AlertHistoryItemModel.cs" />
-    <Compile Include="Models\DeviceListLocationsModel.cs" />
-    <Compile Include="Models\DeviceListQuery.cs" />
-    <Compile Include="Models\DeviceListQueryResult.cs" />
-    <Compile Include="Models\DeviceLocationModel.cs" />
-    <Compile Include="Models\DevicePropertyMetadata.cs" />
-    <Compile Include="Models\DevicePropertyValueModel.cs" />
-    <Compile Include="Models\DeviceRule.cs" />
-    <Compile Include="Models\DeviceRuleBlobEntity.cs" />
-    <Compile Include="Models\DeviceRuleDataFields.cs" />
-    <Compile Include="Models\DeviceRuleUpdateRequest.cs" />
-    <Compile Include="Models\DeviceState.cs" />
-    <Compile Include="Models\DeviceTelemetryFieldModel.cs" />
-    <Compile Include="Models\DeviceTelemetryModel.cs" />
-    <Compile Include="Models\DeviceTelemetrySummaryModel.cs" />
-    <Compile Include="Models\DeviceType.cs" />
-    <Compile Include="Models\DeviceWithKeys.cs" />
-    <Compile Include="Models\Error.cs" />
-    <Compile Include="Models\FilterInfo.cs" />
-    <Compile Include="Models\FilterType.cs" />
-    <Compile Include="Models\PropertyType.cs" />
-    <Compile Include="Models\QuerySortOrder.cs" />
-    <Compile Include="Models\ServiceResponse.cs" />
-    <Compile Include="Models\UserSetting.cs" />
-    <Compile Include="Models\UserSettingTableEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\ActionMappingRepository.cs" />
-    <Compile Include="Repository\ActionRepository.cs" />
-    <Compile Include="Repository\AlertsRepository.cs" />
-    <Compile Include="Repository\ApiRegistrationRepository.cs" />
-    <Compile Include="Repository\DeviceRegistryRepository.cs" />
-    <Compile Include="Repository\DeviceRulesRepository.cs" />
-    <Compile Include="Repository\DeviceTelemetryRepository.cs" />
-    <Compile Include="Repository\FilterHelper.cs" />
-    <Compile Include="Repository\IActionMappingRepository.cs" />
-    <Compile Include="Repository\IActionRepository.cs" />
-    <Compile Include="Repository\IAlertsRepository.cs" />
-    <Compile Include="Repository\IApiRegistrationRepository.cs" />
-    <Compile Include="Repository\IDeviceRegistryCrudRepository.cs" />
-    <Compile Include="Repository\IDeviceRegistryListRepository.cs" />
-    <Compile Include="Repository\IDeviceRulesRepository.cs" />
-    <Compile Include="Repository\IDeviceTelemetryRepository.cs" />
-    <Compile Include="Repository\IDeviceTypeRepository.cs" />
-    <Compile Include="Repository\IIoTHubDeviceManager.cs" />
-    <Compile Include="Repository\IIotHubRepository.cs" />
-    <Compile Include="Repository\IoTHubDeviceManager.cs" />
-    <Compile Include="Repository\IotHubRepository.cs" />
-    <Compile Include="Repository\IUserSettingsRepository.cs" />
-    <Compile Include="Repository\SampleDeviceTypeRepository.cs" />
     <Compile Include="Repository\ServicePointManager.cs" />
-    <Compile Include="Repository\UserSettingsRepository.cs" />
-    <Compile Include="Strings.cs.Designer.cs">
+    <Compile Include="Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.cs.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.es.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.es.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.fr.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.fr.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.hu.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.hu.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.it.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.it.resx</DependentUpon>
+      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Strings.ja.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.ja.resx</DependentUpon>
     </Compile>
-    <Compile Include="Strings.ko.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.ko.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.nl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.nl.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.pl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.pl.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.pt-BR.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.pt-BR.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.pt-PT.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.pt-PT.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.ru.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.ru.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.sv.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.sv.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.tr.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.tr.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.zh-HANS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.zh-HANS.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings.zh-HANT.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.zh-HANT.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.resx</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Properties\Infrastructure.rd.xml" />
-    <EmbeddedResource Include="Strings.cs.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.cs.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.de.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.de.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.es.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.es.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.fr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.fr.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.hu.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.hu.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.it.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.it.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Strings.ja.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.ja.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Strings.ko.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.ko.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.nl.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.nl.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.pl.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.pl.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.pt-BR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.pt-BR.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.pt-PT.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.pt-PT.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.ru.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.ru.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.sv.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.sv.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.tr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.tr.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.zh-HANS.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.zh-HANS.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings.zh-HANT.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.zh-HANT.Designer.cs</LastGenOutput>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

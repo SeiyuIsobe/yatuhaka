@@ -10,9 +10,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
     /// <summary>
     /// Simple base class for device administration based exceptions
     /// </summary>
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     public abstract class DeviceAdministrationExceptionBase : Exception
     {
         // TODO: Localize this, if neccessary.
@@ -52,12 +50,11 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         }
 
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
+        public
 #if !WINDOWS_UWP
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        override 
 #endif
-#if WINDOWS_UWP
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-#endif
+        void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)
             {
