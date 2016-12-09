@@ -2,7 +2,9 @@
 using System.Globalization;
 using System.IO;
 using System.Xml;
-//using System.Xml.Serialization;
+#if !WINDOWS_UWP
+using System.Xml.XPath;
+#endif
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations
 {
@@ -10,7 +12,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
     {
         bool isDisposed = false;
         XmlDocument document = null;
-        //XPathNavigator navigator = null;
+        #if !WINDOWS_UWP
+        XPathNavigator navigator = null;
+#endif
         string fileName = null;
         int updatedValuesCount = 0;
         const string ValueAttributeName = "value";
@@ -29,7 +33,9 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
             {
                 this.document.Load(reader);
             }
-            //this.navigator = this.document.CreateNavigator();
+#if !WINDOWS_UWP
+            this.navigator = this.document.CreateNavigator();
+#endif
         }
 
         public void Dispose()
@@ -48,7 +54,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
                 this.isDisposed = true;
                 if (this.updatedValuesCount > 0)
                 {
-                    //this.document.Save(this.fileName);
+#if !WINDOWS_UWP
+                    this.document.Save(this.fileName);
+                    Console.Out.WriteLine("Successfully updated {0} mapping(s) in {1}", this.updatedValuesCount, Path.GetFileName(this.fileName).Split('.')[0]);
+#endif
                 }
             }
         }
@@ -80,7 +89,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
         XmlNode GetSettingNode(string settingName)
         {
             string xpath = string.Format(CultureInfo.InvariantCulture, SettingXpath, settingName);
-            //return this.document.SelectSingleNode(xpath);
+#if !WINDOWS_UWP
+            return this.document.SelectSingleNode(xpath);
+#endif
+#if WINDOWS_UWP
             var list = this.document.GetElementsByTagName("setting");
             foreach(XmlNode xn in list)
             {
@@ -95,6 +107,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
             }
 
             return null;
+#endif
         }
     }
 }

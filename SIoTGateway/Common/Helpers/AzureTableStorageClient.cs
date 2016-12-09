@@ -21,12 +21,13 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
             _tableName = tableName;
         }
 
-        // for uwp
-        //public TableResult Execute(TableOperation tableOperation)
-        //{
-        //    var table = GetCloudTable();
-        //    return table.Execute(tableOperation);
-        //}
+        #if !WINDOWS_UWP
+        public TableResult Execute(TableOperation tableOperation)
+        {
+            var table = GetCloudTable();
+            return table.Execute(tableOperation);
+        }
+#endif
 
         public async Task<TableResult> ExecuteAsync(TableOperation operation)
         {
@@ -34,17 +35,23 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
             return await table.ExecuteAsync(operation);
         }
 
-        // for uwp
-        //public IEnumerable<T> ExecuteQuery<T>(TableQuery<T> tableQuery) where T : TableEntity, new()
-        //{
-        //    var table = GetCloudTable();
-        //    return table.ExecuteQuery(tableQuery);
-        //}
+        #if !WINDOWS_UWP
+        public IEnumerable<T> ExecuteQuery<T>(TableQuery<T> tableQuery) where T : TableEntity, new()
+        {
+            var table = GetCloudTable();
+            return table.ExecuteQuery(tableQuery);
+        }
+#endif
 
         public async Task<IEnumerable<T>> ExecuteQueryAsync<T>(TableQuery<T> tableQuery) where T : TableEntity, new()
         {
             var table = await GetCloudTableAsync();
+#if !WINDOWS_UWP
+            return table.ExecuteQuery(tableQuery);
+#endif
+#if WINDOWS_UWP
             return await table.ExecuteQuerySegmentedAsync(tableQuery, null);
+#endif
         }
 
         public async Task<TableStorageResponse<TResult>> DoTableInsertOrReplaceAsync<TResult, TInput>(
@@ -92,17 +99,18 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
             return _table;
         }
 
-        // for uwp
-        //private CloudTable GetCloudTable()
-        //{
-        //    if (_table != null)
-        //    {
-        //        return _table;
-        //    }
-        //    _table = _tableClient.GetTableReference(_tableName);
-        //    _table.CreateIfNotExists();
-        //    return _table;
-        //}
+        #if !WINDOWS_UWP
+        private CloudTable GetCloudTable()
+        {
+            if (_table != null)
+            {
+                return _table;
+            }
+            _table = _tableClient.GetTableReference(_tableName);
+            _table.CreateIfNotExists();
+            return _table;
+        }
+#endif
 
         private async Task<TableStorageResponse<TResult>> PerformTableOperation<TResult, TInput>(
             TableOperation operation, TInput incomingEntity, Func<TInput, TResult> tableEntityToModelConverter)
@@ -123,14 +131,20 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
             {
                 var retrieveOperation = TableOperation.Retrieve<TInput>(incomingEntity.PartitionKey,
                     incomingEntity.RowKey);
+#if !WINDOWS_UWP
+                var retrievedEntity = table.Execute(retrieveOperation);
+#endif
+#if WINDOWS_UWP
                 var retrievedEntity = table.ExecuteAsync(retrieveOperation);
+#endif
 
                 if (retrievedEntity != null)
                 {
+                    #if !WINDOWS_UWP
                     // Return the found version of this rule in case it had been modified by someone else since our last read.
-                    // TODO:ビルドエラー回避
-                    //var retrievedModel = tableEntityToModelConverter((TInput) retrievedEntity.Result);
-                    //result.Entity = retrievedModel;
+                    var retrievedModel = tableEntityToModelConverter((TInput) retrievedEntity.Result);
+                    result.Entity = retrievedModel;
+#endif
                 }
                 else
                 {

@@ -14,9 +14,13 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
         Task<TableStorageResponse<TResult>> DoDeleteAsync<TResult, TInput>(TInput incomingEntity,
             Func<TInput, TResult> tableEntityToModelConverter) where TInput : TableEntity;
 
-        //TableResult Execute(TableOperation tableOperation);
+        #if !WINDOWS_UWP
+        TableResult Execute(TableOperation tableOperation);
+#endif
         Task<TableResult> ExecuteAsync(TableOperation operation);
-        //IEnumerable<T> ExecuteQuery<T>(TableQuery<T> tableQuery) where T : TableEntity, new();
+        #if !WINDOWS_UWP
+        IEnumerable<T> ExecuteQuery<T>(TableQuery<T> tableQuery) where T : TableEntity, new();
+#endif
         Task<IEnumerable<T>> ExecuteQueryAsync<T>(TableQuery<T> tableQuery) where T : TableEntity, new();
     }
 }

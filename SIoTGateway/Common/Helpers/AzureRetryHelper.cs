@@ -3,7 +3,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-//using Microsoft.Azure.Devices.Common.Exceptions;
+#if !WINDOWS_UWP
+using Microsoft.Azure.Devices.Common.Exceptions;
+#endif
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
 {
@@ -69,13 +71,14 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
         /// <returns></returns>
         private static bool IsTransient(Exception originalException)
         {
+            #if !WINDOWS_UWP
             // If the exception is a IotHubException its IsTransient property can be inspected
-            // TODO:ビルドエラー回避
-            //IotHubException iotHubException = originalException as IotHubException;
-            //if (iotHubException != null)
-            //{
-            //    return iotHubException.IsTransient;
-            //}
+            IotHubException iotHubException = originalException as IotHubException;
+            if (iotHubException != null)
+            {
+                return iotHubException.IsTransient;
+            }
+#endif
 
             // If the exception is an HTTP request exception then assume it is transient
             HttpRequestException httpException = originalException as HttpRequestException;

@@ -31,7 +31,12 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
                     continue;
                 }
                 var stream = new MemoryStream();
+#if !WINDOWS_UWP
+                blockBlob.DownloadToStream(stream);
+#endif
+#if WINDOWS_UWP
                 blockBlob.DownloadToStreamAsync(stream);
+#endif
                 yield return
                     new BlobContents
                     {

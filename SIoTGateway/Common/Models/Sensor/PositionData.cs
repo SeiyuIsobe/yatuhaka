@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using System;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Sensor
 {
