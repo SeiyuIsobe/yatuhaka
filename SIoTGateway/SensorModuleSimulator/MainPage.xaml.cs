@@ -290,8 +290,8 @@ namespace SensorModuleSimulator
         #endregion
 
         private MqttClient _client = null;
-        //private string _iotEndpoint = "192.168.11.10";
-        private string _iotEndpoint = "172.31.62.176";
+        private string _iotEndpoint = "192.168.11.9";
+        //private string _iotEndpoint = "172.31.62.176";
         private string _clientID = "123456789";
         private string _topic = string.Empty;
 
@@ -299,7 +299,7 @@ namespace SensorModuleSimulator
         {
             try
             {
-                _client = new MqttClient(_iotEndpoint);
+                _client = new MqttClient(IotEndpoint);
                 _client.Connect(_clientID);
                 if (true == _client.IsConnected)
                 {
@@ -337,7 +337,7 @@ namespace SensorModuleSimulator
 
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        this.MessageFromCloud = $"接続失敗：{_iotEndpoint}";
+                        this.MessageFromCloud = $"接続失敗：{IotEndpoint}";
                     });
                 }
                 else
@@ -376,6 +376,19 @@ namespace SensorModuleSimulator
             }
         }
 
+        public string IotEndpoint
+        {
+            get
+            {
+                return _iotEndpoint;
+            }
+
+            set
+            {
+                _iotEndpoint = value;
+            }
+        }
+
         private void _ipclear_Click(object sender, RoutedEventArgs e)
         {
             _ip.Text = string.Empty;
@@ -385,7 +398,7 @@ namespace SensorModuleSimulator
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                _iotEndpoint = _ip.Text;
+                IotEndpoint = _ip.Text;
 
                 Connect();
             });

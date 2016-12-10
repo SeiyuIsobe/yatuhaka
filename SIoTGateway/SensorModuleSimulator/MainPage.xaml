@@ -50,7 +50,7 @@
                     <TextBlock Text="{Binding MessageFromCloud}" Width="600"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="_ip" Width="150" Height="25" Text="172.31.62.176"/>
+                    <TextBox x:Name="_ip" Width="150" Height="25" Text="{Binding IotEndpoint}"/>
                     <Button x:Name="_ipclear" Content="Clear" Click="_ipclear_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     <Button x:Name="_ipaccept" Content="Accept" Click="_ipaccept_Click" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </StackPanel>
