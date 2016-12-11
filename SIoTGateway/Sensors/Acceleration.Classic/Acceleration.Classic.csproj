@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandParameters\ElapsedTimeCommandParameter.cs" />
     <Compile Include="CommandProcessors\ChangeElapseTimeCommandProcessor.cs" />
     <Compile Include="Devices\Device.cs" />
     <Compile Include="Devices\Factory\DeviceFactory.cs" />
@@ -76,6 +75,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CommandParameters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

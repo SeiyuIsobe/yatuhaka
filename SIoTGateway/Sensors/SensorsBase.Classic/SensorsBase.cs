@@ -21,6 +21,8 @@ namespace ShimadzuIoT.Sensors
         protected Func<object, Task> _sendMessageAsync = null;
         protected OperationValueBase _operationValue = null;
 
+        private Timer _timer = null;
+
         #region MQTT
         protected MqttClient _mqtt = null;
         #endregion
@@ -49,34 +51,27 @@ namespace ShimadzuIoT.Sensors
                 _deviceId = string.Empty;
             }
 
+            // センサー制御用パラメータ（共通）
             _operationValue = (OperationValueBase)device.OperationValue;
+            if(null != _operationValue)
+            {
+                // センサーデータを送る・送らないフラグ
+                TelemetryActive = _operationValue.IsAvailableCommandParameter.IsAvailable;
+
+                // 送信の時間間隔
+                ElapsedTime = _operationValue.ElapsedTimeCommandParameter.ElapsedTime;
+
+            }
 
             // MQTTサブスクライバの生成
             _mqtt = MqttHelper.Connect("127.0.0.1", Guid.NewGuid().ToString(), null);
             _mqtt.Subscribe(new string[] { _deviceId }, new byte[] { 0 });
             //_mqtt.MqttMsgPublishReceived += OnMqttMsgPublishReceived;
 
+            // タイマーの生成
+            _timer = new Timer(OnTimer, null, ElapsedTime, ElapsedTime);
+
         }
-
-        ///// <summary>
-        ///// コンストラクタ
-        ///// </summary>
-        ///// <param name="logger"></param>
-        ///// <param name="deviceId"></param>
-        //public SensorsBase(ILogger logger, string deviceId)
-        //    :this(logger, deviceId, null)
-        //{
-        //}
-
-        ///// <summary>
-        ///// コンストラクタ
-        ///// </summary>
-        ///// <param name="logger"></param>
-        ///// <param name="deviceId"></param>
-        //public SensorsBase(ILogger logger, IDevice device)
-        //    :this(logger, null, device)
-        //{
-        //}
 
         virtual public Task SendEventsAsync(CancellationToken token, Func<object, Task> sendMessageAsync)
         {
@@ -90,7 +85,12 @@ namespace ShimadzuIoT.Sensors
             }
         }
 
-        virtual public void OnMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        virtual protected void OnMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        {
+            // ここに実装する場合は共通の処理であること
+        }
+
+        virtual protected void OnTimer(object state)
         {
             // ここに実装する場合は共通の処理であること
         }
@@ -109,6 +109,7 @@ namespace ShimadzuIoT.Sensors
         }
 
         public bool TelemetryActive { get; set; } = true;
+        public int ElapsedTime { get; set; } = 1000;
 
         virtual public object OperationValue
         {
@@ -122,5 +123,7 @@ namespace ShimadzuIoT.Sensors
         {
             await _sendMessageAsync(devicemodel);
         }
+
+
     }
 }

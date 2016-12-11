@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandParameters\ElapsedTimeCommandParameter.cs" />
     <Compile Include="CommandParameters\IsAvailableCommandParameter.cs" />
     <Compile Include="CommandProcessors\StartCommandProcessor.cs" />
     <Compile Include="CommandProcessors\StopCommandProcessor.cs" />

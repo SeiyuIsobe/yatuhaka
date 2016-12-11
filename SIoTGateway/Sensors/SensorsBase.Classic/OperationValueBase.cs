@@ -8,14 +8,19 @@ using System.Threading.Tasks;
 
 namespace ShimadzuIoT.Sensors
 {
+    /// <summary>
+    /// 全てのセンサーが共通に持つ制御用のパラメータ
+    /// </summary>
     public class OperationValueBase : IOperationValue
     {
-        // 加速度値をクラウドに送るかどうかを判断するフラグ
-        public IsAvailableCommandParameter IsAvailableCommandParameter { get; set; }
+        // センサー値をクラウドに送るかどうかを判断するフラグ
+        public IsAvailableCommandParameter IsAvailableCommandParameter { get; set; } = new IsAvailableCommandParameter();
+
+        // センサー値をクラウドに送る際の時間間隔
+        public ElapsedTimeCommandParameter ElapsedTimeCommandParameter { get; set; } = new ElapsedTimeCommandParameter();
 
         public OperationValueBase()
         {
-            this.IsAvailableCommandParameter = new IsAvailableCommandParameter();
         }
     }
 }

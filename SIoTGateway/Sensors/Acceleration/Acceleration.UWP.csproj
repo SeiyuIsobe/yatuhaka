@@ -107,9 +107,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Acceleration.Classic\CommandParameters\ElapsedTimeCommandParameter.cs">
-      <Link>CommandParameters\ElapsedTimeCommandParameter.cs</Link>
-    </Compile>
     <Compile Include="..\Acceleration.Classic\CommandProcessors\ChangeElapseTimeCommandProcessor.cs">
       <Link>CommandProcessors\ChangeElapseTimeCommandProcessor.cs</Link>
     </Compile>
@@ -137,7 +134,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Acceleration.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CommandParameters\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.UWP.csproj">
       <Project>{7dfccb60-f0aa-4178-905b-f9008aa7d1e3}</Project>

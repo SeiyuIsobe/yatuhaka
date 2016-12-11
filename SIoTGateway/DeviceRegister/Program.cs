@@ -2,8 +2,8 @@
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
-using ShimadzuIoT.Sensors.Acceleration.CommandParameters;
 using ShimadzuIoT.Sensors.Acceleration.CommandProcessors;
+using ShimadzuIoT.Sensors.Common.CommandParameters;
 using ShimadzuIoT.Sensors.Common.CommandProcessors;
 using SIotGatewayCore.Devices.Factory;
 using System;
@@ -114,6 +114,9 @@ namespace DeviceRegister
 
                     dm.IsSimulatedDevice = true;
 
+                    // テレメトリー
+                    AssignTelemetry(dm);
+
                     // コマンド
                     AssignCommands(dm);
 
@@ -134,6 +137,13 @@ namespace DeviceRegister
 
                 Console.WriteLine("処理が終わりました");
             }
+        }
+
+        private static void AssignTelemetry(DeviceModel dm)
+        {
+            dm.Telemetry.Add(new Telemetry("X", "X", "double"));
+            dm.Telemetry.Add(new Telemetry("Y", "Y", "double"));
+            dm.Telemetry.Add(new Telemetry("Z", "Z", "double"));
         }
 
         /// <summary>

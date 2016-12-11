@@ -27,30 +27,52 @@ namespace ShimadzuIoT.Sensors.Acceleration.Telemetry
         {
             _mqtt.MqttMsgPublishReceived += OnMqttMsgPublishReceived;
 
+            // 加速度センサー制御用パラメータ
             _operationValue = (OperationValue)(base.OperationValue);
 
-            base.TelemetryActive = _operationValue.IsAvailableCommandParameter.IsAvailable; // 送る・送らないフラグ
         }
 
-        override async public void OnMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        private RemoteMonitorTelemetryData _monitorData = null;
+
+        override async protected void OnMqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             var msg = Encoding.UTF8.GetString(e.Message);
             var topic = e.Topic;
 
             AccelaData data = JsonConvert.DeserializeObject<AccelaData>(msg);
 
-            var monitorData = new RemoteMonitorTelemetryData();
-            monitorData.DeviceId = _deviceId;
-            monitorData.X = data.X;
-            monitorData.Y = data.Y;
-            monitorData.Z = data.Z;
+            _monitorData = new RemoteMonitorTelemetryData();
+            _monitorData.DeviceId = _deviceId;
+            _monitorData.X = data.X;
+            _monitorData.Y = data.Y;
+            _monitorData.Z = data.Z;
 
-            if (null != _sendMessageAsync && true == base.TelemetryActive)
+            // 即送信
+            if(0 == base.ElapsedTime)
             {
-                await _sendMessageAsync(monitorData);
+                if (null != _sendMessageAsync && true == base.TelemetryActive)
+                {
+                    await _sendMessageAsync(_monitorData);
+                }
             }
+            
 
             NotifyReceivedTelemetry(msg);
+        }
+
+        override async protected void OnTimer(object sender)
+        {
+            // 定期的送信
+            if(0 < base.ElapsedTime)
+            {
+                if(null != _monitorData)
+                {
+                    if (null != _sendMessageAsync && true == base.TelemetryActive)
+                    {
+                        await _sendMessageAsync(_monitorData);
+                    }
+                }
+            }
         }
     }
 }
