@@ -373,7 +373,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\azure-iot-sdk-csharp\service\Microsoft.Azure.Devices.Uwp\Microsoft.Azure.Devices.Uwp.csproj">
+    <ProjectReference Include="..\..\sdks\csharp\service\Microsoft.Azure.Devices.Uwp\Microsoft.Azure.Devices.Uwp.csproj">
       <Project>{8c408658-3797-4f57-9f37-de1c086a0685}</Project>
       <Name>Microsoft.Azure.Devices.Uwp</Name>
     </ProjectReference>
