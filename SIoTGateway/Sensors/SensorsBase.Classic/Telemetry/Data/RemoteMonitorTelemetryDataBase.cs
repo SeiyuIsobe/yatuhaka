@@ -16,5 +16,7 @@ namespace ShimadzuIoT.Sensors.Telemetry.Data
         public double X { get; set; }
         public double Y { get; set; }
         public double Z { get; set; }
+        // for 気圧
+        public double Atomos { get; set; }
     }
 }

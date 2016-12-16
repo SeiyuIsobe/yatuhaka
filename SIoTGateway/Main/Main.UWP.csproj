@@ -156,6 +156,10 @@
       <Project>{8c1cf29b-2dca-4023-9abd-8b04c99b4c3e}</Project>
       <Name>SensorsBase.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SerialMqttConverter\SerialMqttConverter.csproj">
+      <Project>{d9e7fd89-4370-41e2-87a7-4e3be0ae1da6}</Project>
+      <Name>SerialMqttConverter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SIoTBrorker\SIoTBroker.UWP.csproj">
       <Project>{f797f431-96a6-4a5a-9063-8dfe08ffe442}</Project>
       <Name>SIoTBroker.UWP</Name>

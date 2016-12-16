@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using System.Threading.Tasks;
 using uPLibrary.Networking.M2Mqtt;
 using Windows.ApplicationModel.Background;
@@ -40,6 +41,67 @@ namespace Main
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // TODO:public async Task StartAsync(CancellationToken token)を参考に
+            // Taskをリストにして、Task.WhenAlで実体化する
+            //
+            // SerialMQTTConverter
+            var deviceCancellationToken = new CancellationTokenSource();
+            await StartAsync(deviceCancellationToken.Token);
+
+        }
+
+        /// <summary>
+        /// Starts the send event loop and runs the receive loop in the background
+        /// to listen for commands that are sent to the device
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public async Task StartAsync(CancellationToken token)
+        {
+            try
+            {
+                var loopTasks = new List<Task>
+                {
+                    StartBrokerAsync(token),
+                    StartSerialMqttConverterAsync(token)
+                };
+
+                // Wait both the send and receive loops
+                await Task.WhenAll(loopTasks.ToArray());
+
+                #region
+                //await Task.Run(async () =>
+                //{
+                //    SIoTBroker.SIoTBroker broker = new SIoTBroker.SIoTBroker();
+                //    broker.Start();
+
+                //    if (null == _mainwindowVM)
+                //    {
+                //        _mainwindowVM = new Main.ViewModels.MainWindowViewModel();
+                //        _mainwindowVM.Dispatcher = Dispatcher;
+
+                //        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                //        {
+                //            this.DataContext = _mainwindowVM;
+                //            _mainwindowVM.Run();
+
+                //            GetMyIp();
+                //        });
+                //    }
+
+                //    while (true) { }
+                //});
+                #endregion
+
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+        private async Task StartBrokerAsync(CancellationToken token)
+        {
             await Task.Run(async () =>
             {
                 SIoTBroker.SIoTBroker broker = new SIoTBroker.SIoTBroker();
@@ -64,6 +126,17 @@ namespace Main
                     //// 時刻をセンシング基盤に通知
                     //_mainwindowVM.SendGatewayTime(_gatewayTime);
                 }
+
+                while (true) { }
+            });
+        }
+
+        private async Task StartSerialMqttConverterAsync(CancellationToken token)
+        {
+            await Task.Run(() =>
+            {
+                SerialMqttConverter.XBeeMqttConverter converter = new SerialMqttConverter.XBeeMqttConverter();
+                converter.Start();
 
                 while (true) { }
             });
