@@ -3,6 +3,10 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Interfaces;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Newtonsoft.Json;
+using ShimadzuIoT.Sensors.Acceleration.Telemetry.Data;
+using SIotGatewayCore.Devices.Factory;
+using SIotGatewayCore.Logging;
+using SIotGatewayCore.Telemetry.Factory;
 using SiRSensors;
 using System;
 using System.Collections.Generic;
@@ -37,6 +41,9 @@ namespace SensorModuleSimulator
         private AccelOnBoard _sensor = null;
         private AccelOverI2C _accelSensor = null;
 
+        private TelemetryFactoryResolver _telemetryFactoryResolver = new TelemetryFactoryResolver();
+        private DeviceFactoryResolver _deviceFactoryResolver = new DeviceFactoryResolver();
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -69,6 +76,14 @@ namespace SensorModuleSimulator
 
                 await RetryConnect();
             };
+
+            #region ここに使うセンサーのファクトリーを登録する
+            // デバイスファクトリーの解決装置
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
+
+            // テレメトリーファクトリーの解決装置
+            _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory.TelemetryFactory(null));
+            #endregion
 
         }
 
@@ -125,30 +140,8 @@ namespace SensorModuleSimulator
 
             _sensor.ValueChanged += async (s2, e2) =>
             {
-                var e3 = e2 as AccelEventArgs;
-                if (null != e3)
-                {
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        this.XAxis = e3.X;
-                        this.YAxis = e3.Y;
-                        this.ZAxis = e3.Z;
-                    });
+                string deviceId = "GW6210833_SM0771254175_SN19760824_ACCE";
 
-                    if (null != _client)
-                    {
-                        Publish("GW6210833_SM0771254175_SN19760824_DKAccel_958", ((ISensor)s2).Data);
-                    }
-                }
-            };
-            _sensor.Init();
-            #endregion
-
-            #region ラズパイ直結の加速度センサー、I2Cで通信する
-            _accelSensor = new AccelOverI2C();
-            _accelSensor.Interval = 1000;
-            _accelSensor.ValueChanged += async (s2, e2) =>
-            {
                 var e3 = e2 as AccelEventArgs;
                 if (null != e3)
                 {
@@ -163,7 +156,65 @@ namespace SensorModuleSimulator
                     {
                         try
                         {
-                            Publish("GW6210833_SM0771254175_SN19760824_ACCE", ((ISensor)s2).Data);
+                            // テレメトリー
+                            var telemetryFactory = _telemetryFactoryResolver.Resolve(deviceId);
+
+                            // デバイス
+                            var df = _deviceFactoryResolver.Resolve(deviceId);
+                            var device = ((IDeviceFactory)df).CreateDevice(null, null, (ITelemetryFactory)telemetryFactory, null, null);
+
+                            var monitorData = new RemoteMonitorTelemetryData();
+                            monitorData.DeviceId = deviceId;
+                            monitorData.X = e3.X;
+                            monitorData.Y = e3.Y;
+                            monitorData.Z = e3.Z;
+
+                            var message = JsonConvert.SerializeObject(monitorData);
+                            Publish(deviceId, message);
+                        }
+                        catch { }
+                    }
+                }
+            };
+            _sensor.Init();
+            #endregion
+
+            #region ラズパイ直結の加速度センサー、I2Cで通信する
+            _accelSensor = new AccelOverI2C();
+            _accelSensor.Interval = 1000;
+            _accelSensor.ValueChanged += async (s2, e2) =>
+            {
+                string deviceId = "GW6210833_SM0771254175_SN19760824_ACCE";
+
+                var e3 = e2 as AccelEventArgs;
+                if (null != e3)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.XAxis = e3.X;
+                        this.YAxis = e3.Y;
+                        this.ZAxis = e3.Z;
+                    });
+
+                    if (null != _client)
+                    {
+                        try
+                        {
+                            // テレメトリー
+                            var telemetryFactory = _telemetryFactoryResolver.Resolve(deviceId);
+
+                            // デバイス
+                            var df = _deviceFactoryResolver.Resolve(deviceId);
+                            var device = ((IDeviceFactory)df).CreateDevice(null, null, (ITelemetryFactory)telemetryFactory, null, null);
+
+                            var monitorData = new RemoteMonitorTelemetryData();
+                            monitorData.DeviceId = deviceId;
+                            monitorData.X = e3.X;
+                            monitorData.Y = e3.Y;
+                            monitorData.Z = e3.Z;
+
+                            var message = JsonConvert.SerializeObject(monitorData);
+                            Publish(deviceId, message);
                         }
                         catch { }
                     }

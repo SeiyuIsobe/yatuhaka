@@ -139,6 +139,10 @@
       <Project>{8c1cf29b-2dca-4023-9abd-8b04c99b4c3e}</Project>
       <Name>SensorsBase.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SIotGatewayCore\SIotGatewayCore.UWP.csproj">
+      <Project>{DE89CF5D-EEF2-4728-8AA5-F485D04A9C7A}</Project>
+      <Name>SIotGatewayCore.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SiRSensors\SiRSensors.UWP.csproj">
       <Project>{0bc00c57-0564-416c-9cfb-fbb8899babe4}</Project>
       <Name>SiRSensors.UWP</Name>

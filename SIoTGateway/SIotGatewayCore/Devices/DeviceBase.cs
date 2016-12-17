@@ -134,6 +134,8 @@ namespace SIotGatewayCore.Devices
 
         public void Init(InitialDeviceConfig config)
         {
+            if (null == config) return;
+
             InitDeviceInfo(config);
 
             Transport = TransportFactory.CreateTransport(this);
@@ -158,16 +160,19 @@ namespace SIotGatewayCore.Devices
 
         protected virtual void InitDeviceInfo(InitialDeviceConfig config)
         {
-            DeviceModel initialDevice = JsonConvert.DeserializeObject<DeviceModel>(config.DeviceModelJson);
-            DeviceProperties = initialDevice.DeviceProperties;
-            Commands = initialDevice.Commands ?? new List<Command>();
-            Telemetry = initialDevice.Telemetry ?? new List<Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Telemetry>();
-            HostName = config.HostName;
-            PrimaryAuthKey = config.Key;
-            _operationValueStream = initialDevice.OperationValue; // JSON
+            if(null != config)
+            {
+                DeviceModel initialDevice = JsonConvert.DeserializeObject<DeviceModel>(config.DeviceModelJson);
+                DeviceProperties = initialDevice.DeviceProperties;
+                Commands = initialDevice.Commands ?? new List<Command>();
+                Telemetry = initialDevice.Telemetry ?? new List<Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Telemetry>();
+                HostName = config.HostName;
+                PrimaryAuthKey = config.Key;
+                _operationValueStream = initialDevice.OperationValue; // JSON
 
-            InitialDevice = initialDevice; // DeviceModelを保持
-            InitialDevice.KeyOfInitialDeviceConfig = config.Key; // InitialDeviceConfigを保持
+                InitialDevice = initialDevice; // DeviceModelを保持
+                InitialDevice.KeyOfInitialDeviceConfig = config.Key; // InitialDeviceConfigを保持
+            }
         }
 
         /// <summary>
