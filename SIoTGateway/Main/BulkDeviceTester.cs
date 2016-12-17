@@ -5,8 +5,6 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using Newtonsoft.Json;
-using SIoTGateway.Cooler.Devices.Factory;
-using SIoTGateway.Cooler.Telemetry.Factory;
 using SIotGatewayCore.Devices;
 using SIotGatewayCore.Devices.Factory;
 using SIotGatewayCore.Logging;
@@ -60,11 +58,9 @@ namespace Main
 
             #region ここに使うセンサーのファクトリーを登録する
             // デバイスファクトリーの解決装置
-            _deviceFactoryResolver.Add(new CoolerDeviceFactory());
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
 
             // テレメトリーファクトリーの解決装置
-            _telemetryFactoryResolver.Add(new CoolerTelemetryFactory(_logger));
             _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory.TelemetryFactory(_logger));
             #endregion
         }

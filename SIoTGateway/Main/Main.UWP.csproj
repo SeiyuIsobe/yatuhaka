@@ -140,10 +140,6 @@
       <Project>{7dfccb60-f0aa-4178-905b-f9008aa7d1e3}</Project>
       <Name>Common.UWP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Cooler\Cooler.UWP.csproj">
-      <Project>{2c561dc8-6d78-4e01-927f-81aa4c8f3134}</Project>
-      <Name>Cooler.UWP</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.UWP.csproj">
       <Project>{8e372b79-7ced-4ef3-9bf2-2e67f9b69c43}</Project>
       <Name>Infrastructure.UWP</Name>

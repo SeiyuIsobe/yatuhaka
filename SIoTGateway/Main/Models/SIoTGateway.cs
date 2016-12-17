@@ -7,8 +7,6 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Repository;
 using Newtonsoft.Json;
 using SIoTBroker;
-using SIoTGateway.Cooler.Devices.Factory;
-using SIoTGateway.Cooler.Telemetry.Factory;
 using SIotGatewayCore.Devices.Factory;
 using SIotGatewayCore.Logging;
 using SIotGatewayCore.Transport.Factory;
