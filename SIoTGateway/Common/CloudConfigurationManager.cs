@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Windows.Data.Xml.Dom;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
 {
@@ -48,10 +50,16 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
 
         public CloudConfigurationManager()
         {
+        }
+
+        public async void InitAsync()
+        {
             _xdoc = new XmlDocument();
-            using (XmlReader reader = XmlReader.Create("Common\\appconfig_clone.xml"))
+            _xdoc = await XMLHelper.LoadXmlFile("Common", "appconfig_clone.xml");
+
+            if(null != Completed)
             {
-                _xdoc.Load(reader);
+                Completed(this, null);
             }
         }
 
@@ -63,10 +71,10 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
             }
 
             string result = string.Empty;
-            XmlNode node = this.GetSettingNode(settingName.Trim());
+            IXmlNode node = this.GetSettingNode(settingName.Trim());
             if (node != null)
             {
-                result = node.Attributes[ValueAttributeName].Value;
+                result = node.Attributes.GetNamedItem(ValueAttributeName).NodeValue.ToString();
             }
             else
             {
@@ -79,16 +87,16 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
             return result;
         }
 
-        private XmlNode GetSettingNode(string settingName)
+        private IXmlNode GetSettingNode(string settingName)
         {
             string xpath = string.Format(CultureInfo.InvariantCulture, SettingXpath, settingName);
             var list = _xdoc.GetElementsByTagName("add");
-            foreach (XmlNode xn in list)
+            foreach (IXmlNode xn in list)
             {
-                var ss = xn.Attributes["key"];
+                var ss = xn.Attributes.GetNamedItem("key");
                 if (null != ss)
                 {
-                    if (ss.Value == settingName)
+                    if (ss.NodeValue.ToString() == settingName)
                     {
                         return xn;
                     }
@@ -97,5 +105,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common
 
             return null;
         }
+
+        public event EventHandler Completed;
     }
 }

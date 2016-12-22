@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Xml;
 #if !WINDOWS_UWP
+using System.Xml;
 using System.Xml.XPath;
+#endif
+#if WINDOWS_UWP
+using Windows.Data.Xml.Dom;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers;
+using System.Threading.Tasks;
+
 #endif
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configurations
@@ -12,7 +18,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
     {
         bool isDisposed = false;
         XmlDocument document = null;
-        #if !WINDOWS_UWP
+#if !WINDOWS_UWP
         XPathNavigator navigator = null;
 #endif
         string fileName = null;
@@ -29,15 +35,24 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
 
             this.fileName = fileName;
             this.document = new XmlDocument();
+#if !WINDOWS_UWP
             using (XmlReader reader = XmlReader.Create(fileName))
             {
                 this.document.Load(reader);
             }
-#if !WINDOWS_UWP
             this.navigator = this.document.CreateNavigator();
+#endif
+#if WINDOWS_UWP
+            //InitAsync();
 #endif
         }
 
+#if WINDOWS_UWP
+        public async Task InitAsync()
+        {
+            this.document = await XMLHelper.LoadXmlFile("Common", "cloud.settings.xml");
+        }
+#endif
         public void Dispose()
         {
             if (!this.isDisposed)
@@ -70,10 +85,21 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
             }
 
             string result = string.Empty;
+#if !WINDOWS_UWP
             XmlNode node = this.GetSettingNode(settingName.Trim());
+#endif
+#if WINDOWS_UWP
+            IXmlNode node = this.GetSettingNode(settingName.Trim());
+#endif
             if (node != null)
             {
+#if !WINDOWS_UWP
                 result = node.Attributes[ValueAttributeName].Value;
+#endif
+#if WINDOWS_UWP
+                result = node.Attributes.GetNamedItem(ValueAttributeName).NodeValue.ToString();
+#endif
+
             }
             else
             {
@@ -86,20 +112,24 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
             return result;
         }
 
+#if !WINDOWS_UWP
         XmlNode GetSettingNode(string settingName)
         {
             string xpath = string.Format(CultureInfo.InvariantCulture, SettingXpath, settingName);
-#if !WINDOWS_UWP
             return this.document.SelectSingleNode(xpath);
+        }
 #endif
 #if WINDOWS_UWP
+        private IXmlNode GetSettingNode(string settingName)
+        {
+            string xpath = string.Format(CultureInfo.InvariantCulture, SettingXpath, settingName);
             var list = this.document.GetElementsByTagName("setting");
-            foreach(XmlNode xn in list)
+            foreach (IXmlNode xn in list)
             {
-                var ss = xn.Attributes["name"];
-                if(null != ss)
+                var ss = xn.Attributes.GetNamedItem("name");
+                if (null != ss)
                 {
-                    if(ss.Value == settingName)
+                    if (ss.NodeValue.ToString() == settingName)
                     {
                         return xn;
                     }
@@ -107,7 +137,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
             }
 
             return null;
-#endif
         }
+#endif
+
     }
 }

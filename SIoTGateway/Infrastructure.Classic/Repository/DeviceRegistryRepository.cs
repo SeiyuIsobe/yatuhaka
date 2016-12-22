@@ -202,6 +202,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         {
             var devices = await _documentClient.QueryAsync();
             return devices.ToList();
+            //
         }
 
         private IQueryable<DeviceModel> SearchDeviceList(IQueryable<DeviceModel> deviceList, string search)

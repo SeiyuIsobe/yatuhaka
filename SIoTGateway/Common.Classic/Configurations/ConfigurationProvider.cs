@@ -19,42 +19,96 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
         }
 
 #if WINDOWS_UWP
+        private CloudConfigurationManager _cloud = null;
+        private string _return_string = string.Empty;
         public string GetConfigurationSettingValueOrDefault(string configurationSettingName, string defaultValue)
         {
             //string configValue = CloudConfigurationManager.GetSetting(configurationSettingName);
 
-            var cloud = new CloudConfigurationManager();
-            string configValue = cloud.GetSetting(configurationSettingName, true);
+            _return_string = string.Empty;
 
-            if (configValue.StartsWith(ConfigToken, StringComparison.OrdinalIgnoreCase))
+            if(null == _cloud)
             {
-                if (environment == null)
+                _cloud = new CloudConfigurationManager();
+
+                _cloud.Completed += (sender, e) =>
                 {
-                    LoadEnvironmentConfig();
+                    string configValue = _cloud.GetSetting(configurationSettingName, true);
+
+                    if (configValue.StartsWith(ConfigToken, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (environment == null)
+                        {
+                            LoadEnviromentConfigAsync().Wait();
+                        }
+
+                        configValue = environment.GetSetting(
+                            configValue.Substring(configValue.IndexOf(ConfigToken, StringComparison.Ordinal) + ConfigToken.Length));
+                    }
+
+                    try
+                    {
+                        if (false == configuration.ContainsKey(configurationSettingName))
+                        {
+                            this.configuration.Add(configurationSettingName, configValue);
+                        }
+                        else
+                        {
+                            // exist
+                        }
+                    }
+                    catch (ArgumentException)
+                    {
+                        // at this point, this key has already been added on a different
+                        // thread, so we're fine to continue
+                    }
+
+                    _return_string = this.configuration[configurationSettingName];
+                };
+                _cloud.InitAsync();
+
+                while (true)
+                {
+                    if (_return_string != string.Empty) break;
+                }
+            }
+            else
+            {
+                string configValue = _cloud.GetSetting(configurationSettingName, true);
+
+                if (configValue.StartsWith(ConfigToken, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (environment == null)
+                    {
+                        LoadEnviromentConfigAsync().Wait();
+                    }
+
+                    configValue = environment.GetSetting(
+                        configValue.Substring(configValue.IndexOf(ConfigToken, StringComparison.Ordinal) + ConfigToken.Length));
                 }
 
-                configValue = environment.GetSetting(
-                    configValue.Substring(configValue.IndexOf(ConfigToken, StringComparison.Ordinal) + ConfigToken.Length));
+                try
+                {
+                    if (false == configuration.ContainsKey(configurationSettingName))
+                    {
+                        this.configuration.Add(configurationSettingName, configValue);
+                    }
+                    else
+                    {
+                        // exist
+                    }
+                }
+                catch (ArgumentException)
+                {
+                    // at this point, this key has already been added on a different
+                    // thread, so we're fine to continue
+                }
+
+                _return_string = this.configuration[configurationSettingName];
             }
 
-            try
-            {
-                if(false == configuration.ContainsKey(configurationSettingName))
-                {
-                    this.configuration.Add(configurationSettingName, configValue);
-                }
-                else
-                {
-                    // exist
-                }
-            }
-            catch (ArgumentException)
-            {
-                // at this point, this key has already been added on a different
-                // thread, so we're fine to continue
-            }
+            return _return_string;
 
-            return this.configuration[configurationSettingName];
         }
 #endif
 #if !WINDOWS_UWP
@@ -90,11 +144,30 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
         }
 #endif
 #if WINDOWS_UWP
-        void LoadEnvironmentConfig()
+        //void LoadEnvironmentConfig()
+        //{
+        //    if (true == File.Exists("Common\\cloud.settings.xml"))
+        //    {
+        //        this.environment = new EnvironmentDescription("Common\\cloud.settings.xml");
+        //        this.environment.InitAsync();
+        //    }
+        //}
+
+        private EnvironmentDescription _env = null;
+
+        private async Task LoadEnviromentConfigAsync()
         {
-            if (true == File.Exists("Common\\cloud.settings.xml"))
+            if (null == _env)
             {
-                this.environment = new EnvironmentDescription("Common\\cloud.settings.xml");
+                if (true == File.Exists("Common\\cloud.settings.xml"))
+                {
+                    this.environment = new EnvironmentDescription("Common\\cloud.settings.xml");
+                    await this.environment.InitAsync();
+                }
+            }
+            else
+            {
+                // no action
             }
         }
 #endif
