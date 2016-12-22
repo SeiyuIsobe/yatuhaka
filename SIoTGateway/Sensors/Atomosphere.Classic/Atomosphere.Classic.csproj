@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ED9FA22C-7F5F-484F-B973-730B99488706}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{EC8BA2F3-B66A-4847-877E-CF171E9BC921}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeviceRegister</RootNamespace>
-    <AssemblyName>DeviceRegister</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>ShimadzuIoT.Atomosphere</RootNamespace>
+    <AssemblyName>Atomosphere.Classic</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,8 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.2.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.2.1\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -47,41 +49,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataInitializer.cs" />
-    <Compile Include="IDataInitializer.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="CommandProcessors\ChangeElapseTimeCommandProcessor.cs" />
+    <Compile Include="Devices\Device.cs" />
+    <Compile Include="Devices\Factory\DeviceFactory.cs" />
+    <Compile Include="OperationValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimulatorModule.cs" />
+    <Compile Include="Telemetry\Data\RemoteMonitorTelemetryData.cs" />
+    <Compile Include="Telemetry\Factory\TelemetryFactory.cs" />
+    <Compile Include="Telemetry\RemoteMonitorTelemetry.cs" />
+    <Compile Include="Telemetry\StartupTelemetry.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common.Classic\Common.Classic.csproj">
+    <ProjectReference Include="..\..\Common.Classic\Common.Classic.csproj">
       <Project>{28ef3db9-b9d2-4ee8-a8f6-afe563583b48}</Project>
       <Name>Common.Classic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Infrastructure.Classic\Infrastructure.Classic.csproj">
-      <Project>{90a6862a-902a-4145-bf6a-a5b5bce5f706}</Project>
-      <Name>Infrastructure.Classic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sensors\Acceleration.Classic\Acceleration.Classic.csproj">
-      <Project>{10b765cd-dce8-4342-9055-96b83403de6e}</Project>
-      <Name>Acceleration.Classic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sensors\Atomosphere.Classic\Atomosphere.Classic.csproj">
-      <Project>{ec8ba2f3-b66a-4847-877e-cf171e9bc921}</Project>
-      <Name>Atomosphere.Classic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sensors\SensorsBase.Classic\SensorsBase.Classic.csproj">
+    <ProjectReference Include="..\SensorsBase.Classic\SensorsBase.Classic.csproj">
       <Project>{7ae6aaa2-522c-4203-bd05-12a51b0f0fa8}</Project>
       <Name>SensorsBase.Classic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SIoTGatewayCore.Classic\SIoTGatewayCore.Classic.csproj">
+    <ProjectReference Include="..\..\SIoTGatewayCore.Classic\SIoTGatewayCore.Classic.csproj">
       <Project>{8dc2ba6a-141d-43df-9ea4-8e6a7470c201}</Project>
       <Name>SIoTGatewayCore.Classic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CommandParameters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

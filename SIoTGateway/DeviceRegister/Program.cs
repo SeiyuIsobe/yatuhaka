@@ -29,6 +29,7 @@ namespace DeviceRegister
             #region ここに使うセンサーのファクトリーを登録する
             // デバイスファクトリーの解決装置
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Atomopshere.Devices.Factory.DeviceFactory());
             #endregion
 
             BuildContainer();
@@ -45,7 +46,7 @@ namespace DeviceRegister
             _simulatorContainer = builder.Build();
         }
 
-        private static string _deviceId_debug = "GW6210833_SM0771254175_SN19760824_ACCE";
+        private static string _deviceId_debug = "GW6210833_SM0771254175_SN20050617_ATOM";
 
         private async static void RegistDevice()
         {
@@ -141,9 +142,15 @@ namespace DeviceRegister
 
         private static void AssignTelemetry(DeviceModel dm)
         {
-            dm.Telemetry.Add(new Telemetry("X", "X", "double"));
-            dm.Telemetry.Add(new Telemetry("Y", "Y", "double"));
-            dm.Telemetry.Add(new Telemetry("Z", "Z", "double"));
+            #region 加速度センサー
+            //dm.Telemetry.Add(new Telemetry("X", "X", "double"));
+            //dm.Telemetry.Add(new Telemetry("Y", "Y", "double"));
+            //dm.Telemetry.Add(new Telemetry("Z", "Z", "double"));
+            #endregion
+
+            #region 大気圧センサー
+            dm.Telemetry.Add(new Telemetry("Atomos", "Atomos", "double"));
+            #endregion
         }
 
         /// <summary>
@@ -193,19 +200,20 @@ namespace DeviceRegister
                     StopCommandProcessor.CommandName
                     ));
 
-            // ChangeElapseTimeCommandProcessor
-            device.Commands.Add(
-                new Command(
-                    ChangeElapseTimeCommandProcessor.CommandName,
-                    new[]
-                    {
-                        new Parameter(
-                            ElapsedTimeCommandParameter.PropertyName,
-                            ElapsedTimeCommandParameter.PropertyType
-                            )
-                    }
-                )
-            );
+            #region 加速度センサー
+            //device.Commands.Add(
+            //    new Command(
+            //        ChangeElapseTimeCommandProcessor.CommandName,
+            //        new[]
+            //        {
+            //            new Parameter(
+            //                ElapsedTimeCommandParameter.PropertyName,
+            //                ElapsedTimeCommandParameter.PropertyType
+            //                )
+            //        }
+            //    )
+            //);
+            #endregion
         }
     }
 }

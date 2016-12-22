@@ -98,5 +98,20 @@ namespace Main.ViewModels
                 NotifyPropertyChanged();
             }
         }
+
+        private string _xBeeStatus = String.Empty;
+        public string XBeeStatus
+        {
+            get
+            {
+                return _xBeeStatus;
+            }
+
+            set
+            {
+                _xBeeStatus = value;
+                NotifyPropertyChanged();
+            }
+        }
     }
 }

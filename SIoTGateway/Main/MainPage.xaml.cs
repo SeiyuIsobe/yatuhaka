@@ -63,7 +63,7 @@ namespace Main
                 var loopTasks = new List<Task>
                 {
                     StartBrokerAsync(token),
-                    StartSerialMqttConverterAsync(token)
+                    //StartSerialMqttConverterAsync(token)
                 };
 
                 // Wait both the send and receive loops
@@ -112,12 +112,14 @@ namespace Main
                     _mainwindowVM = new Main.ViewModels.MainWindowViewModel();
                     _mainwindowVM.Dispatcher = Dispatcher;
 
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                     {
                         this.DataContext = _mainwindowVM;
                         _mainwindowVM.Run();
 
                         GetMyIp();
+
+                        await StartSerialMqttConverterAsync(token);
                     });
 
                     //// NICTから日本標準時を取得
@@ -136,6 +138,13 @@ namespace Main
             await Task.Run(() =>
             {
                 SerialMqttConverter.XBeeMqttConverter converter = new SerialMqttConverter.XBeeMqttConverter();
+                converter.Connected += async (sender, e) =>
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        _mainwindowVM.XBeeStatus = "XBee is connected.";
+                    });
+                };
                 converter.Start();
 
                 while (true) { }

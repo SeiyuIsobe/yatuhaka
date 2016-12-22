@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Helpers
                 if (true == _client.IsConnected)
                 {
                     var enc = Encoding.UTF8.GetBytes($@"{{st:""{time.ToString()}""}}");
-                    _client.Publish("GatewayTime", enc);
+                    _client.Publish("timeSync", enc);
                 }
             }
             catch (Exception e)

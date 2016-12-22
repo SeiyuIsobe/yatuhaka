@@ -12,6 +12,9 @@ using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
 using System.Diagnostics;
 using ShimadzuIoT.Sensors.Telemetry.Data;
+using NETMF.OpenSource.XBee.Util;
+using System.Threading.Tasks;
+using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 
 namespace SerialMqttConverter
 {
@@ -26,7 +29,7 @@ namespace SerialMqttConverter
         private List<DeviceInfo> _deviceInfoList = new List<DeviceInfo>();   // デバイス情報一覧
 
         // 定数
-        private const string BROKER_IP_ADDRESS = "172.31.61.153";   // ブローカーのIPアドレス 
+        private const string BROKER_IP_ADDRESS = "127.0.0.1";   // ブローカーのIPアドレス 
         private const string GATEWAY_ID = "GW1";                    // ゲートウェイ基板ID
         private const string COMMAND_ID_CONDITIONSET = "10";        // データ取得条件設定のコマンドID
         private const string COMMAND_ID_TIMESYNC = "20";            // 現在時刻設定のコマンドID
@@ -39,6 +42,8 @@ namespace SerialMqttConverter
         private const int BAUD_RATE = 9600;                         // ボーレート
         private const int DATA_SIZE_BYTE = 5;                       // データ長のバイト数
 
+        public event EventHandler Connected;
+
         /// <summary>
         /// XBeeとMQTTブローカーへの接続を開始
         /// </summary>
@@ -46,11 +51,11 @@ namespace SerialMqttConverter
         {
             if (null == _xbee || null == _client)
             {
-                // XBeeへ接続
-                connectXBee();
-
                 // MQTTブローカーへ接続
                 connectBroker();
+
+                // XBeeへ接続
+                connectXBee();
             }
         }
 
@@ -81,7 +86,7 @@ namespace SerialMqttConverter
             //
             _deferral = taskInstance.GetDeferral();
 
-            taskInstance.Progress = 555;
+            taskInstance.Progress = 500;
         }
 
         /// <summary>
@@ -89,29 +94,53 @@ namespace SerialMqttConverter
         /// </summary>
         private async void connectXBee()
         {
+
             string serialSelector = SerialDevice.GetDeviceSelector();
             var devices = await DeviceInformation.FindAllAsync(serialSelector);
             if (devices != null && devices.Count > 0)
             {
                 var device = devices[0];
+
+                Debug.WriteLine("deviceName:" + device.Name);
+
                 var serport = await SerialDevice.FromIdAsync(device.Id);
                 if (serport != null)
                 {
+                    serport.IsDataTerminalReadyEnabled = true;
+                    serport.IsRequestToSendEnabled = true;
                     serport.DataBits = 8;
                     serport.StopBits = SerialStopBitCount.One;
                     serport.Parity = SerialParity.None;
                     serport.BaudRate = 9600;
 
-                    _xbee = new XBeeApi(serport);
-                    _xbee.Open();
-
-                    // 受信イベントの登録
-                    _xbee.DataReceived += XBeeDataReceived;
-
-                    if (true == _xbee.IsConnected())
+                    try
                     {
-                        Debug.WriteLine("XBee connected.");
+                        _xbee = new XBeeApi(serport);
+                        _xbee.Open();
+
+                        // 受信イベントの登録
+                        _xbee.DataReceived += XBeeDataReceived;
+
+                        if (true == _xbee.IsConnected())
+                        {
+                            Debug.WriteLine("XBee connected.");
+
+                            if (null != Connected)
+                            {
+                                Connected(this, null);
+                            }
+                        }
                     }
+                    catch
+                    {
+                        Debug.WriteLine("XBee Error -> Close");
+                        _xbee.Close();
+                    }
+                    finally
+                    {
+
+                    }
+
                 }
                 else
                 {
@@ -224,14 +253,14 @@ namespace SerialMqttConverter
             sensorIdList.RemoveAt(0);
 
             // アドレスとデバイスIDの対応をリストに記録
-            List<string> deviceIdList = new List<string>();
+            SensorList deviceIdList = new SensorList();
             int length = sensorIdList.Count;
             for (int i = 0; i < length; i++)
             {
                 string deviceId = GATEWAY_ID + "_" + sensingDeviceId + "_" + sensorIdList[i];
                 DeviceInfo deviceInfo = new DeviceInfo { deviceId = deviceId, address = sender };
                 _deviceInfoList.Add(deviceInfo);
-                deviceIdList.Add(deviceId);
+                deviceIdList.Sensors.Add(deviceId);
             }
 
             // 制御ソフトへの送信用にデータを加工
@@ -240,7 +269,7 @@ namespace SerialMqttConverter
 
             // 制御ソフトへデータ送信
             string msg = JsonConvert.SerializeObject(sensor);
-            _client.Publish(MQTT_TOPIC_DEVICEIDINFO, Encoding.UTF8.GetBytes(msg), 0, true);
+            _client.Publish(MQTT_TOPIC_DEVICEIDINFO, Encoding.UTF8.GetBytes(msg));
         }
 
         /// <summary>
@@ -267,7 +296,7 @@ namespace SerialMqttConverter
         private RemoteMonitorTelemetryDataBase prepareSendSensorData(string id, string timeStamp, string[] dataArray)
         {
             var sensorData = new RemoteMonitorTelemetryDataBase();
-            sensorData.Timestamp = DateTime.Parse(timeStamp);
+            sensorData.Timestamp = DateTime.ParseExact(timeStamp, "yyyyMMddHHmmss", null);
             string sensorType = id.Split('_')[2];
 
             switch (sensorType)

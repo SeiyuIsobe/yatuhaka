@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D9E7FD89-4370-41E2-87A7-4E3BE0AE1DA6}</ProjectGuid>
+    <ProjectGuid>{3EA8E0D7-B2EF-42BA-82DD-9F3B9758CEA1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SerialMqttConverter</RootNamespace>
-    <AssemblyName>SerialMqttConverter</AssemblyName>
+    <RootNamespace>ShimadzuIoT.Sensors.Atomosphere</RootNamespace>
+    <AssemblyName>Atomosphere</AssemblyName>
     <DefaultLanguage>ja-JP</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
@@ -107,33 +107,48 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceInfo.cs" />
-    <Compile Include="SensorData.cs" />
-    <Compile Include="SerialMqttConverter.cs" />
+    <Compile Include="..\Atomosphere.Classic\CommandProcessors\ChangeElapseTimeCommandProcessor.cs">
+      <Link>CommandProcessors\ChangeElapseTimeCommandProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Atomosphere.Classic\Devices\Device.cs">
+      <Link>Devices\Device.cs</Link>
+    </Compile>
+    <Compile Include="..\Atomosphere.Classic\Devices\Factory\DeviceFactory.cs">
+      <Link>Devices\Factory\DeviceFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Atomosphere.Classic\OperationValue.cs">
+      <Link>OperationValue.cs</Link>
+    </Compile>
+    <Compile Include="..\Atomosphere.Classic\Telemetry\Data\RemoteMonitorTelemetryData.cs">
+      <Link>Telemetry\Data\RemoteMonitorTelemetryData.cs</Link>
+    </Compile>
+    <Compile Include="..\Atomosphere.Classic\Telemetry\Factory\TelemetryFactory.cs">
+      <Link>Telemetry\Factory\TelemetryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Atomosphere.Classic\Telemetry\RemoteMonitorTelemetry.cs">
+      <Link>Telemetry\RemoteMonitorTelemetry.cs</Link>
+    </Compile>
+    <Compile Include="..\Atomosphere.Classic\Telemetry\StartupTelemetry.cs">
+      <Link>Telemetry\StartupTelemetry.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\SerialMqttConverter.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.UWP.csproj">
+    <Folder Include="CommandParameters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.UWP.csproj">
       <Project>{7dfccb60-f0aa-4178-905b-f9008aa7d1e3}</Project>
       <Name>Common.UWP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sensors\SensorsBase\SensorsBase.UWP.csproj">
+    <ProjectReference Include="..\SensorsBase\SensorsBase.UWP.csproj">
       <Project>{8c1cf29b-2dca-4023-9abd-8b04c99b4c3e}</Project>
       <Name>SensorsBase.UWP</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="dll\OpenSource.XBee.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="OpenSource.XBee, Version=1.0.0.0, Culture=neutral, processorArchitecture=ARM">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>dll\OpenSource.XBee.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\SIotGatewayCore\SIotGatewayCore.UWP.csproj">
+      <Project>{de89cf5d-eef2-4728-8aa5-f485d04a9c7a}</Project>
+      <Name>SIotGatewayCore.UWP</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
