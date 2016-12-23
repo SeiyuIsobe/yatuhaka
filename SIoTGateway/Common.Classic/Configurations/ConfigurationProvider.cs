@@ -19,12 +19,16 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Configura
         }
 
 #if WINDOWS_UWP
+        private CloudConfigurationManager _cloud = null;
+
         public string GetConfigurationSettingValueOrDefault(string configurationSettingName, string defaultValue)
         {
-            //string configValue = CloudConfigurationManager.GetSetting(configurationSettingName);
-
-            var cloud = new CloudConfigurationManager();
-            string configValue = cloud.GetSetting(configurationSettingName, true);
+            if(null == _cloud)
+            {
+                _cloud = new CloudConfigurationManager();
+            }
+            
+            string configValue = _cloud.GetSetting(configurationSettingName, true);
 
             if (configValue.StartsWith(ConfigToken, StringComparison.OrdinalIgnoreCase))
             {

@@ -97,55 +97,61 @@ namespace SerialMqttConverter
 
             string serialSelector = SerialDevice.GetDeviceSelector();
             var devices = await DeviceInformation.FindAllAsync(serialSelector);
+
             if (devices != null && devices.Count > 0)
             {
-                var device = devices[0];
-
-                Debug.WriteLine("deviceName:" + device.Name);
-
-                var serport = await SerialDevice.FromIdAsync(device.Id);
-                if (serport != null)
+                foreach (var device in devices)
                 {
-                    serport.IsDataTerminalReadyEnabled = true;
-                    serport.IsRequestToSendEnabled = true;
-                    serport.DataBits = 8;
-                    serport.StopBits = SerialStopBitCount.One;
-                    serport.Parity = SerialParity.None;
-                    serport.BaudRate = 9600;
-
-                    try
+                    if (device.Name == "hogera")
                     {
-                        _xbee = new XBeeApi(serport);
-                        _xbee.Open();
+                        Debug.WriteLine("deviceName:" + device.Name);
 
-                        // 受信イベントの登録
-                        _xbee.DataReceived += XBeeDataReceived;
-
-                        if (true == _xbee.IsConnected())
+                        var serport = await SerialDevice.FromIdAsync(device.Id);
+                        if (serport != null)
                         {
-                            Debug.WriteLine("XBee connected.");
+                            serport.IsDataTerminalReadyEnabled = true;
+                            serport.IsRequestToSendEnabled = true;
+                            serport.DataBits = 8;
+                            serport.StopBits = SerialStopBitCount.One;
+                            serport.Parity = SerialParity.None;
+                            serport.BaudRate = 9600;
 
-                            if (null != Connected)
+                            try
                             {
-                                Connected(this, null);
+                                _xbee = new XBeeApi(serport);
+                                _xbee.Open();
+
+                                // 受信イベントの登録
+                                _xbee.DataReceived += XBeeDataReceived;
+
+                                if (true == _xbee.IsConnected())
+                                {
+                                    Debug.WriteLine("XBee connected.");
+
+                                    if (null != Connected)
+                                    {
+                                        Connected(this, null);
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                Debug.WriteLine("XBee Error -> Close");
+                                _xbee.Close();
+                            }
+                            finally
+                            {
+
                             }
                         }
-                    }
-                    catch
-                    {
-                        Debug.WriteLine("XBee Error -> Close");
-                        _xbee.Close();
-                    }
-                    finally
-                    {
 
+                        break;
                     }
-
                 }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine($"-> _xbee is NULL!!!!!");
-                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine($"-> _xbee is NULL!!!!!");
             }
         }
 
@@ -328,21 +334,23 @@ namespace SerialMqttConverter
         /// <param name="msg"></param>
         private void catchTimeSync(string msg)
         {
-            // センシング基板への送信用データへ加工
-            string commandId = COMMAND_ID_TIMESYNC;
-            string data = msg;
-            string dataSize = String.Format("{0:D5}", data.Length);
-            //string dataSize = "00014";
-            byte[] payload = Encoding.UTF8.GetBytes(commandId + dataSize + data);
+            if(null != _xbee)
+            {
+                // センシング基板への送信用データへ加工
+                string commandId = COMMAND_ID_TIMESYNC;
+                string data = msg;
+                string dataSize = String.Format("{0:D5}", data.Length);
+                //string dataSize = "00014";
+                byte[] payload = Encoding.UTF8.GetBytes(commandId + dataSize + data);
 
-            // センシング基板へブロードキャストで送信
-            NETMF.OpenSource.XBee.Api.XBeeAddress64 broadcastAddress
-                = NETMF.OpenSource.XBee.Api.XBeeAddress64.Broadcast;
-            TxRequest tx = new TxRequest(broadcastAddress, payload);
-            _xbee.Send(tx).To(broadcastAddress).NoResponse();
+                // センシング基板へブロードキャストで送信
+                NETMF.OpenSource.XBee.Api.XBeeAddress64 broadcastAddress
+                    = NETMF.OpenSource.XBee.Api.XBeeAddress64.Broadcast;
+                TxRequest tx = new TxRequest(broadcastAddress, payload);
+                _xbee.Send(tx).To(broadcastAddress).NoResponse();
 
-            Debug.WriteLine("send current time to sensing device");
-
+                Debug.WriteLine("send current time to sensing device");
+            }
         }
 
         /// <summary>
