@@ -21,7 +21,8 @@
 
     @if (PermsChecker.HasPermission(Permission.AddDevices))
     {
-        <a class="navigation__link navigation__link--add_device" href="@Url.Action("AddDevice", "Device")">@Strings.AddDevice</a>
+        // デバイス追加は別途行う
+        @*<a class="navigation__link navigation__link--add_device" href="@Url.Action("AddDevice", "Device")">@Strings.AddDevice</a>*@
     }
 </nav>
 
