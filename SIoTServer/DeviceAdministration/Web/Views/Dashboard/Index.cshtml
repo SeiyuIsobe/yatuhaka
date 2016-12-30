@@ -31,7 +31,7 @@
 </script>
 
 <div class="dashboard_content">
-    <div class="dashboard_left_column">
+    <div hidden="hidden"> <!--class="dashboard_left_column" 地図とアラート履歴は不要-->
         <div>
             @{if (!string.IsNullOrWhiteSpace(Model.MapApiQueryKey))
             {

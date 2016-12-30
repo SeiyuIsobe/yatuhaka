@@ -112,14 +112,20 @@
                 <thead>
                     <tr>
                         <th>@Strings.StatusHeader</th>
-                        <th>@Strings.DeviceIdHeader</th>
-                        <th>@Strings.ManufactureHeader</th>
+                        @*---------------実験用標準センサープラットフォーム--------------*@
+                        <th>GW</th>
+                        <th>SM</th>
+                        <th>SN</th>
+                        <th>Kind</th>
+                        <th>@Strings.DeviceIdHeader</th><!----列の位置変更時はDeviceIndex.jsのonTableRowClickedも変更すること-->
+                        @*---------------実験用標準センサープラットフォーム--------------*@
+                        @*<th>@Strings.ManufactureHeader</th>
                         <th>@Strings.ModelNumberHeader</th>
                         <th>@Strings.SerialNumberHeader</th>
                         <th>@Strings.FirmwareHeader</th>
                         <th>@Strings.PlatformHeader</th>
                         <th>@Strings.ProcessorHeader</th>
-                        <th>@Strings.InstalledRamHeader</th>
+                        <th>@Strings.InstalledRamHeader</th>*@
                     </tr>
                 </thead>
 

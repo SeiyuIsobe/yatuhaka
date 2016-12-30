@@ -162,6 +162,7 @@
     <Compile Include="Configurations\EnvironmentDescription.cs" />
     <Compile Include="Configurations\IConfigurationProvider.cs" />
     <Compile Include="Helpers\DeviceCreatorHelper.cs" />
+    <Compile Include="Helpers\DeviceNameHelper.cs" />
     <Compile Include="Helpers\DocumentDBClient.cs" />
     <Compile Include="Exceptions\DeviceRequiredPropertyNotFoundException.cs" />
     <Compile Include="Factory\SampleDeviceFactory.cs" />

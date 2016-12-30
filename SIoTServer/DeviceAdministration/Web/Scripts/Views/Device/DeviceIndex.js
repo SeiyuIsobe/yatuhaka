@@ -209,7 +209,7 @@
         };
 
         var onTableRowClicked = function () {
-            var data = this.cells[1].innerHTML;
+            var data = this.cells[5].innerHTML;
             self.dataTable.$(".selected").removeClass("selected");
             $(this).addClass("selected");
             self.selectedRow = self.dataTable.row(this).index();
@@ -256,14 +256,44 @@
                     },
                     "name": "hubEnabledState"
                 },
+                /*------------------ 実験用標準センサープラットフォーム -----------*/
+                {
+                    "data": "nameGateway",
+                    "mRender": function (data) {
+                        return htmlEncode(data);
+                    },
+                    "name": "nameGateway"
+                },
+                {
+                    "data": "nameSensorModule",
+                    "mRender": function (data) {
+                        return htmlEncode(data);
+                    },
+                    "name": "nameSensorModule"
+                },
+                {
+                    "data": "nameSensor",
+                    "mRender": function (data) {
+                        return htmlEncode(data);
+                    },
+                    "name": "nameSensor"
+                },
+                {
+                    "data": "kindSensor",
+                    "mRender": function (data) {
+                        return htmlEncode(data);
+                    },
+                    "name": "kindSensor"
+                },
                 {
                     "data": "deviceProperties.deviceID",
                     "mRender": function (data) {
                         return htmlEncode(data);
                     },
                     "name": "deviceId"
-                },
-                {
+                }
+                /*------------------ 実験用標準センサープラットフォーム -----------*/
+                /*{
                     "data": "deviceProperties.manufacturer",
                     "mRender": function (data) {
                         return htmlEncode(data);
@@ -311,7 +341,7 @@
                         return htmlEncode(data);
                     },
                     "name": "installedRAM"
-                }
+                }*/
             ],
             "columnDefs": [
                 { className: "table_status", "targets": [0] },

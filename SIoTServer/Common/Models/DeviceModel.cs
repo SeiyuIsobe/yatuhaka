@@ -37,6 +37,38 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models
         public string OperationValue { get; set; }
         public string KeyOfInitialDeviceConfig { get; set; }
 
+        public string NameGateway
+        {
+            get
+            {
+                return Common.Helpers.DeviceNameHelper.GetGatewayName(this.DeviceProperties.DeviceID);
+            }
+        }
+
+        public string NameSensorModule
+        {
+            get
+            {
+                return Common.Helpers.DeviceNameHelper.GetSensorModuleName(this.DeviceProperties.DeviceID);
+            }
+        }
+
+        public string NameSensor
+        {
+            get
+            {
+                return Common.Helpers.DeviceNameHelper.GetSensorName(this.DeviceProperties.DeviceID);
+            }
+        }
+
+        public string KindSensor
+        {
+            get
+            {
+                return Common.Helpers.DeviceNameHelper.GetKindSensor(this.DeviceProperties.DeviceID);
+            }
+        }
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
