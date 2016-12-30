@@ -38,5 +38,11 @@ namespace SIotGatewayCore.Devices
         object OperationValue { get; }
 
         string OperationValueDefault { get; }
+
+        void AssignTelemetry(DeviceModel dm);
+        
+        void AssignCommands(DeviceModel dm);
+        
+        void AssignOperationValue(DeviceModel dm);
     }
 }

@@ -188,6 +188,9 @@
     <Compile Include="..\Common.Classic\Helpers\DeviceFactoryResolver.cs">
       <Link>Helpers\DeviceFactoryResolver.cs</Link>
     </Compile>
+    <Compile Include="..\Common.Classic\Helpers\DeviceNameHelper.cs">
+      <Link>Helpers\DeviceNameHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Common.Classic\Helpers\DocumentDBClient.cs">
       <Link>Helpers\DocumentDBClient.cs</Link>
     </Compile>

@@ -190,6 +190,7 @@
     <Compile Include="Helpers\BlobStorageReader.cs" />
     <Compile Include="Helpers\DeviceCreatorHelper.cs" />
     <Compile Include="Helpers\DeviceFactoryResolver.cs" />
+    <Compile Include="Helpers\DeviceNameHelper.cs" />
     <Compile Include="Helpers\DocumentDBClient.cs" />
     <Compile Include="Helpers\DynamicValuesHelper.cs" />
     <Compile Include="Helpers\FunctionalHelper.cs" />

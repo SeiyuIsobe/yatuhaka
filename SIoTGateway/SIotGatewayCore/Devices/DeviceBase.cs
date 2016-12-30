@@ -441,5 +441,20 @@ namespace SIotGatewayCore.Devices
         public virtual void OnStopTelemetryCommnad()
         {
         }
+
+        public virtual void AssignTelemetry(DeviceModel dm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void AssignCommands(DeviceModel dm)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void AssignOperationValue(DeviceModel dm)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

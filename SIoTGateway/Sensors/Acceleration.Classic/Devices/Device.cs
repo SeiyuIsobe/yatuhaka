@@ -127,5 +127,55 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
         //        _operationValue = JsonConvert.DeserializeObject<OperationValue>(((DeviceModel)deviceModel).OperationValue.ToString());
         //    }
         //}
+
+        /// <summary>
+        /// センサー値から得られるデータを定義する
+        /// </summary>
+        /// <param name="dm"></param>
+        override public void AssignTelemetry(DeviceModel dm)
+        {
+            dm.Telemetry.Add(new Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Telemetry("X", "X", "double"));
+            dm.Telemetry.Add(new Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Telemetry("Y", "Y", "double"));
+            dm.Telemetry.Add(new Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Telemetry("Z", "Z", "double"));
+        }
+
+        /// <summary>
+        /// コマンドを定義する
+        /// </summary>
+        /// <param name="dm"></param>
+        override public void AssignCommands(DeviceModel dm)
+        {
+            dm.Commands.Add(
+               new Command(
+                   StartCommandProcessor.CommandName
+                   ));
+
+            dm.Commands.Add(
+                new Command(
+                    StopCommandProcessor.CommandName
+                    ));
+
+            dm.Commands.Add(
+                new Command(
+                    ChangeElapseTimeCommandProcessor.CommandName,
+                    new[]
+                    {
+                        new Parameter(
+                            ElapsedTimeCommandParameter.PropertyName,
+                            ElapsedTimeCommandParameter.PropertyType
+                            )
+                    }
+                )
+            );
+        }
+
+        /// <summary>
+        /// 初期値を定義する
+        /// </summary>
+        /// <param name="dm"></param>
+        override public void AssignOperationValue(DeviceModel dm)
+        {
+            dm.OperationValue = this.OperationValueDefault;
+        }
     }
 }

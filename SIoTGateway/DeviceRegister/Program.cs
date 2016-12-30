@@ -5,6 +5,7 @@ using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Comman
 using ShimadzuIoT.Sensors.Acceleration.CommandProcessors;
 using ShimadzuIoT.Sensors.Common.CommandParameters;
 using ShimadzuIoT.Sensors.Common.CommandProcessors;
+using SIotGatewayCore.Devices;
 using SIotGatewayCore.Devices.Factory;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,8 @@ namespace DeviceRegister
             _simulatorContainer = builder.Build();
         }
 
-        private static string _deviceId_debug = "GW6210833_SM0771254175_SN20050617_ATOM";
+        private static string _deviceId_debug = "GW6210833_SM0771254175_SN20050617_ACCE";
+        private static IDevice _targetDevice = null;
 
         private async static void RegistDevice()
         {
@@ -54,6 +56,10 @@ namespace DeviceRegister
             {
                 Console.WriteLine($"以下のデバイスをAzureに登録します");
                 Console.WriteLine($"--> {_deviceId_debug}");
+
+                Console.WriteLine($"センサーのオブジェクトを認識します");
+                var df = _deviceFactoryResolver.Resolve(_deviceId_debug);
+                _targetDevice = ((IDeviceFactory)df).CreateDevice(null, null, null, null, null);
 
                 var creator = _simulatorContainer.Resolve<IDataInitializer>();
                 var list = await creator.GetAllDevicesAsync(); // DocumentDBより登録デバイスを取得する
@@ -116,58 +122,25 @@ namespace DeviceRegister
                     dm.IsSimulatedDevice = true;
 
                     // テレメトリー
-                    AssignTelemetry(dm);
+                    _targetDevice.AssignTelemetry(dm);
 
                     // コマンド
-                    AssignCommands(dm);
+                    _targetDevice.AssignCommands(dm);
 
                     // センサー制御値
-                    AssignOperationValue(dm);
+                    _targetDevice.AssignOperationValue(dm);
                 }
                 else
                 {
                     Console.WriteLine("詳細情報を更新します");
 
                     dm.DeviceProperties.HubEnabledState = !(dm.DeviceProperties.HubEnabledState);
-
-                    // センサー制御値（デバッグ用）
-                    AssignOperationValue(dm);
                 }
 
                 await creator.UpdateDeviceAsync(dm);
 
                 Console.WriteLine("処理が終わりました");
             }
-        }
-
-        private static void AssignTelemetry(DeviceModel dm)
-        {
-            #region 加速度センサー
-            //dm.Telemetry.Add(new Telemetry("X", "X", "double"));
-            //dm.Telemetry.Add(new Telemetry("Y", "Y", "double"));
-            //dm.Telemetry.Add(new Telemetry("Z", "Z", "double"));
-            #endregion
-
-            #region 大気圧センサー
-            dm.Telemetry.Add(new Telemetry("Atomos", "Atomos", "double"));
-            #endregion
-        }
-
-        /// <summary>
-        /// デバイス名からデバイスを特定し、デフォルト値をセットする
-        /// </summary>
-        /// <param name="dm"></param>
-        private static void AssignOperationValue(DeviceModel dm)
-        {
-            // デバイス名
-            var deviceId = dm.DeviceProperties.DeviceID;
-
-            // デバイスを特定
-            var df = _deviceFactoryResolver.Resolve(deviceId);
-            var device = ((IDeviceFactory)df).CreateDevice(null, null, null, null, null);
-
-            // デフォルト値をセットする
-            dm.OperationValue = device.OperationValueDefault;
         }
 
         static async Task RunAsync()
@@ -181,39 +154,6 @@ namespace DeviceRegister
                 }
                 catch (TaskCanceledException) { }
             }
-        }
-
-        /// <summary>
-        /// コマンド登録
-        /// </summary>
-        /// <param name="device"></param>
-        private static void AssignCommands(DeviceModel device)
-        {
-
-            device.Commands.Add(
-                new Command(
-                    StartCommandProcessor.CommandName
-                    ));
-
-            device.Commands.Add(
-                new Command(
-                    StopCommandProcessor.CommandName
-                    ));
-
-            #region 加速度センサー
-            //device.Commands.Add(
-            //    new Command(
-            //        ChangeElapseTimeCommandProcessor.CommandName,
-            //        new[]
-            //        {
-            //            new Parameter(
-            //                ElapsedTimeCommandParameter.PropertyName,
-            //                ElapsedTimeCommandParameter.PropertyType
-            //                )
-            //        }
-            //    )
-            //);
-            #endregion
         }
     }
 }
