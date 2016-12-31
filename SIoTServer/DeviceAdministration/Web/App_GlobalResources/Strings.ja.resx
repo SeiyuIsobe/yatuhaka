@@ -478,7 +478,7 @@
     <comment>(Unused)</comment>
   </data>
   <data name="MicrosoftAzureIoTSuite" xml:space="preserve">
-    <value>Microsoft Azure IoT Suite</value>
+    <value>Shimadzu IoT Platform</value>
     <comment>Section heading.</comment>
   </data>
   <data name="SignIn" xml:space="preserve">
@@ -1296,7 +1296,7 @@
     <comment>(Unused)</comment>
   </data>
   <data name="DefaultSolutionName" xml:space="preserve">
-    <value>リモート監視ソリューション</value>
+    <value>実験用標準センサープラットフォーム</value>
     <comment>Section heading.</comment>
   </data>
   <data name="EditDeviceRuleFormatted" xml:space="preserve">
