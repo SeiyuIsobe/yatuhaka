@@ -131,6 +131,15 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Web.
 
                 var queryResult = await _deviceLogic.GetDevices(listQuery);
 
+                #region 最後にテレメトリーを受け取った日時を取得する
+                for(int i = 0; i < queryResult.Results.Count; i++)
+                {
+                    var devicemodel = queryResult.Results[i];
+                    var device = await _deviceLogic.GetDeviceAsyncFromIoTHub(((DeviceModel)queryResult.Results[i]).DeviceProperties.DeviceID);
+                    ((DeviceModel)queryResult.Results[i]).LastActivityTime = device.LastActivityTime;
+                }
+                #endregion
+
                 var dataTablesResponse = new DataTablesResponse<DeviceModel>()
                 {
                     Draw = dataTableRequest.Draw,

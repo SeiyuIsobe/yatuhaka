@@ -209,7 +209,7 @@
         };
 
         var onTableRowClicked = function () {
-            var data = this.cells[5].innerHTML;
+            var data = this.cells[6].innerHTML; // <------------------列を変更したら反映すること
             self.dataTable.$(".selected").removeClass("selected");
             $(this).addClass("selected");
             self.selectedRow = self.dataTable.row(this).index();
@@ -284,6 +284,13 @@
                         return htmlEncode(data);
                     },
                     "name": "kindSensor"
+                },
+                {
+                    "data": "lastActivityTime",
+                    "mRender": function (data) {
+                        return htmlEncode(data);
+                    },
+                    "name": "lastActivityTime"
                 },
                 {
                     "data": "deviceProperties.deviceID",

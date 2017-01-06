@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Commands;
 using Newtonsoft.Json;
+using System;
 
 namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models
 {
@@ -68,6 +69,8 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models
                 return Common.Helpers.DeviceNameHelper.GetKindSensor(this.DeviceProperties.DeviceID);
             }
         }
+
+        public DateTime LastActivityTime { get; set; }
 
         public override string ToString()
         {

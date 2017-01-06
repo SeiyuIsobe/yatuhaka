@@ -23,7 +23,7 @@
                 </p>
             }
 
-            if (Model.CanAddRule)
+            if (false) //Model.CanAddRule) ルール追加は不要
             {
                 <p class="grid_detail_value">
                     @Html.ActionLink(
@@ -88,7 +88,8 @@ else
     </script>
 }
 
-@(Model.HubEnabledState != null ? 
+@*不要*@
+@*@(Model.HubEnabledState != null ? 
     Html.Partial("_DeviceDetailsDeviceProperties", Model) : 
     Html.Partial("_DeviceDetailsNotRegistered", Model))
 
@@ -97,7 +98,7 @@ else
     {
         Html.RenderPartial("_DeviceDetailsKeyLink", Model.GetKeys());
     }
-}
+}*@
 
 @if (Model.HubEnabledState == true)
 {

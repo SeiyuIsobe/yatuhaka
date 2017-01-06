@@ -948,5 +948,14 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
                 DeviceModelJson = JsonConvert.SerializeObject(device)
             });
         }
+
+        #region
+        public async Task<Device> GetDeviceAsyncFromIoTHub(string deviceId)
+        {
+            var device = await _iotHubRepository.GetIotHubDeviceAsync(deviceId);
+
+            return device;
+        }
+        #endregion
     }
 }

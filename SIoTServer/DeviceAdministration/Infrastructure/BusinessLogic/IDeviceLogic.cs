@@ -29,5 +29,6 @@ namespace Microsoft.Azure.Devices.Applications.RemoteMonitoring.DeviceAdmin.Infr
         Task<string> BootstrapDefaultDevices(string id);
 
         Task UpdateVirtualStorage(DeviceModel device);
+        Task<Device> GetDeviceAsyncFromIoTHub(string deviceId);
     }
 }
