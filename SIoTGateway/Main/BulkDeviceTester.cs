@@ -17,7 +17,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+#if WINDOWS_UWP
 using Windows.Web.Http;
+#endif
 
 namespace Main
 {
@@ -56,13 +58,13 @@ namespace Main
 
             _devicePollIntervalSeconds = Convert.ToInt32(pollingIntervalString, CultureInfo.InvariantCulture);
 
-            #region ここに使うセンサーのファクトリーを登録する
+#region ここに使うセンサーのファクトリーを登録する
             // デバイスファクトリーの解決装置
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
 
             // テレメトリーファクトリーの解決装置
             _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory.TelemetryFactory(_logger));
-            #endregion
+#endregion
         }
 
         /// <summary>

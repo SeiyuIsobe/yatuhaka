@@ -27,7 +27,9 @@ namespace Main.ViewModels
         }
         #endregion
 
+#if WINDOWS_UWP
         public Windows.UI.Core.CoreDispatcher Dispatcher { get; set; }
+#endif
 
         public string SelfIP
         {
@@ -43,20 +45,22 @@ namespace Main.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        #endregion
+#endregion
 
         private Models.SIoTGateway _iotgateway = null;
         
         internal void Run()
         {
             _iotgateway = new Models.SIoTGateway();
+#if WINDOWS_UWP
             _iotgateway.ReceivedTelemetry += async (sender, e) =>
             {
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     this.RecivedTelemetryData = sender.ToString();
-                });                
+                });
             };
+#endif
 
             // ゲートウェイサービス開始
             //_iotgateway.Start();

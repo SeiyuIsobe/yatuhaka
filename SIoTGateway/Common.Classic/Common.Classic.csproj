@@ -221,6 +221,8 @@
     <Compile Include="Models\IoTHub.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\SecurityKeys.cs" />
+    <Compile Include="Models\SensorList.cs" />
+    <Compile Include="Models\SensorModule.cs" />
     <Compile Include="Models\Sensor\AccelaData.cs" />
     <Compile Include="Models\Sensor\IOperationValue.cs" />
     <Compile Include="Models\Sensor\PositionData.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="SampleDataGenerator\RandomGenerator.cs" />
     <Compile Include="SampleDataGenerator\SampleDataGenerator.cs" />
     <Compile Include="Schema\SchemaHelper.cs" />
+    <Compile Include="SensorModuleWatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

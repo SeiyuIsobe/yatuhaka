@@ -130,6 +130,7 @@ namespace SIotGatewayCore.Transport
                     //    eventId,
                     //    eventData,
                     //    ex);
+                    System.Diagnostics.Debug.WriteLine($"{ex.Message}");
                 }
             });
         }
