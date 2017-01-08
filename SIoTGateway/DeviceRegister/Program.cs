@@ -33,6 +33,18 @@ namespace DeviceRegister
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Atomopshere.Devices.Factory.DeviceFactory());
             #endregion
 
+            // 引数チェック
+            if(0 == args.Length)
+            {
+                Console.WriteLine("センサー名を指定してください");
+                Console.Write(">");
+                _deviceId_debug = Console.ReadLine();
+            }
+            else
+            {
+                _deviceId_debug = args[0];
+            }
+
             BuildContainer();
 
             RegistDevice();
@@ -47,7 +59,7 @@ namespace DeviceRegister
             _simulatorContainer = builder.Build();
         }
 
-        private static string _deviceId_debug = "GW6210833_SM0771254175_SN20050617_ACCE";
+        private static string _deviceId_debug = string.Empty;
         private static IDevice _targetDevice = null;
 
         private async static void RegistDevice()
@@ -56,8 +68,27 @@ namespace DeviceRegister
             {
                 Console.WriteLine($"以下のデバイスをAzureに登録します");
                 Console.WriteLine($"--> {_deviceId_debug}");
+                Console.WriteLine($"よろしいですか？（Y/N）");
+                Console.Write($">");
+                var k = Console.ReadLine();
+                while (!("Y" == k || "y" == k || "N" == k || "n" == k))
+                {
+                    Console.WriteLine($"よろしいですか？（Y/N）");
+                    Console.Write($">");
+                    k = Console.ReadLine();
+                }
+                if ("Y" == k || "y" == k)
+                {
+                    // no action
+                }
+                else if("N" == k || "n" == k)
+                {
+                    Console.WriteLine("処理が終わりました");
+                    Console.WriteLine($"画面は手動で閉じてください");
 
-                Console.WriteLine($"センサーのオブジェクトを認識します");
+                    return;
+                }
+
                 var df = _deviceFactoryResolver.Resolve(_deviceId_debug);
                 _targetDevice = ((IDeviceFactory)df).CreateDevice(null, null, null, null, null);
 
@@ -85,12 +116,36 @@ namespace DeviceRegister
                 else
                 {
                     Console.WriteLine("既に登録されていました");
+                    Console.WriteLine("登録情報を初期化しますか？（Y/N）");
+                    Console.Write($">");
+                    var kk = Console.ReadLine();
+                    while (!("Y" == kk || "y" == kk || "N" == kk || "n" == kk))
+                    {
+                        Console.WriteLine($"登録情報を初期化しますか？（Y/N）");
+                        Console.Write($">");
+                        kk = Console.ReadLine();
+                    }
+                    if ("Y" == kk || "y" == kk)
+                    {
+                        // no action
+                    }
+                    else if ("N" == kk || "n" == kk)
+                    {
+                        Console.WriteLine("処理が終わりました");
+                        Console.WriteLine($"画面は手動で閉じてください");
+
+                        return;
+                    }
                 }
 
                 //
                 // デバイスの詳細情報登録
                 //
                 await RegistDeviceDetail();
+
+                Console.WriteLine("処理が終わりました");
+                Console.WriteLine($"画面は手動で閉じてください");
+
             }
             catch (Exception e)
             {
@@ -139,7 +194,7 @@ namespace DeviceRegister
 
                 await creator.UpdateDeviceAsync(dm);
 
-                Console.WriteLine("処理が終わりました");
+                
             }
         }
 
