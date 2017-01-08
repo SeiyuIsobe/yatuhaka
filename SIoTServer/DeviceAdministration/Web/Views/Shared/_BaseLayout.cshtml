@@ -73,7 +73,7 @@
                                 <span class="account-avatar"></span>
                                 <span class="account">
                                     <span class="account-name">@PrincipalHelper.GetEmailAddress(User)</span>
-                                    @if (User.IsInRole("Admin"))
+                                    @*@if (User.IsInRole("Admin")) 不要
                                     {
                                         <span class="account-subtitle">@Strings.AdministratorRole</span>
                                     }
@@ -84,7 +84,7 @@
                                     else
                                     {
                                         <span class="account-subtitle">@Strings.ImplicitReadOnlyRole</span>
-                                    }
+                                    }*@
                                 </span>
                             </a>
                             <ul class="dropdown-menu account-menu" role="menu" aria-labelledby="account-menu">

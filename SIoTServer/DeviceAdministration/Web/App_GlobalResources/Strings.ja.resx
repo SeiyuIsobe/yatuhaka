@@ -1296,7 +1296,7 @@
     <comment>(Unused)</comment>
   </data>
   <data name="DefaultSolutionName" xml:space="preserve">
-    <value>実験用標準センサープラットフォーム</value>
+    <value>リモート監視</value>
     <comment>Section heading.</comment>
   </data>
   <data name="EditDeviceRuleFormatted" xml:space="preserve">
