@@ -140,7 +140,7 @@ namespace SensorModuleSimulator
 
             _sensor.ValueChanged += async (s2, e2) =>
             {
-                string deviceId = "GW6210833_SM0771254175_SN19760824_ACCE";
+                string deviceId = "GW1_SM1_SN1_ACCE";
 
                 var e3 = e2 as AccelEventArgs;
                 if (null != e3)
@@ -227,8 +227,7 @@ namespace SensorModuleSimulator
         private async void SendSensorModuleName()
         {
             SensorList list = new SensorList();
-            list.Sensors.Add("GW6210833_SM0771254175_SN19710613_TEMP");
-            list.Sensors.Add("GW6210833_SM0771254175_SN19760824_ACCE");
+            list.Sensors.Add("GW1_SM1_SN1_ACCE");
 
             var sensor = new SensorModule() { Name = "SM0771254175" };
             sensor.Sensors = list;
