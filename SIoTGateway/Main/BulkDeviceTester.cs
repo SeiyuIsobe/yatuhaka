@@ -61,10 +61,12 @@ namespace Main
 #region ここに使うセンサーのファクトリーを登録する
             // デバイスファクトリーの解決装置
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Atomopshere.Devices.Factory.DeviceFactory());
 
             // テレメトリーファクトリーの解決装置
             _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory.TelemetryFactory(_logger));
-#endregion
+            _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Atomopshere.Telemetry.Factory.TelemetryFactory(_logger));
+            #endregion
         }
 
         /// <summary>

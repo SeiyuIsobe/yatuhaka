@@ -12,6 +12,7 @@ using ShimadzuIoT.Sensors.Atomopshere.Telemetry.Data;
 using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Sensor;
 using Newtonsoft.Json;
 using SIotGatewayCore.Devices;
+using ShimadzuIoT.Sensors.Telemetry.Data;
 
 namespace ShimadzuIoT.Sensors.Atomopshere.Telemetry
 {
@@ -39,13 +40,13 @@ namespace ShimadzuIoT.Sensors.Atomopshere.Telemetry
             var msg = Encoding.UTF8.GetString(e.Message);
             var topic = e.Topic;
 
-            AccelaData data = JsonConvert.DeserializeObject<AccelaData>(msg);
+            _monitorData = JsonConvert.DeserializeObject<RemoteMonitorTelemetryData>(msg);
 
-            _monitorData = new RemoteMonitorTelemetryData();
-            _monitorData.DeviceId = _deviceId;
-            _monitorData.X = data.X;
-            _monitorData.Y = data.Y;
-            _monitorData.Z = data.Z;
+            //_monitorData = new RemoteMonitorTelemetryData();
+            //_monitorData.DeviceId = _deviceId;
+            //_monitorData.X = data.X;
+            //_monitorData.Y = data.Y;
+            //_monitorData.Z = data.Z;
 
             // 即送信
             if(0 == base.ElapsedTime)
