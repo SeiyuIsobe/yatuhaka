@@ -148,9 +148,21 @@
       <Project>{248f2f66-1732-4885-b917-01c5c0511336}</Project>
       <Name>Acceleration.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sensors\Atomosphere\Atomosphere.UWP.csproj">
+      <Project>{3ea8e0d7-b2ef-42ba-82dd-9f3b9758cea1}</Project>
+      <Name>Atomosphere.UWP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sensors\Microphone\Microphone.UWP.csproj">
+      <Project>{7afc0947-1aee-4997-a88a-9e2eb0c9c487}</Project>
+      <Name>Microphone.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sensors\SensorsBase\SensorsBase.UWP.csproj">
       <Project>{8c1cf29b-2dca-4023-9abd-8b04c99b4c3e}</Project>
       <Name>SensorsBase.UWP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sensors\Temperature\Temperature.UWP.csproj">
+      <Project>{da865360-f891-470d-ba72-45832a137d05}</Project>
+      <Name>Temperature.UWP</Name>
     </ProjectReference>
     <ProjectReference Include="..\SerialMqttConverter\SerialMqttConverter.csproj">
       <Project>{d9e7fd89-4370-41e2-87a7-4e3be0ae1da6}</Project>

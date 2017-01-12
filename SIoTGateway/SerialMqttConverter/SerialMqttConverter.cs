@@ -302,9 +302,24 @@ namespace SerialMqttConverter
             switch (sensorType)
             {
                 case "ACCE":
-                    sensorData.X = Double.Parse(dataArray[0]);
-                    sensorData.Y = Double.Parse(dataArray[1]);
-                    sensorData.Z = Double.Parse(dataArray[2]);
+                    double[] data = new double[3];
+                    int count = 0;
+
+                    for (int i = 0; i < dataArray.Length; i++) {
+                         if (0 == dataArray[i].Length)
+                        {
+                            data[count] = -Double.Parse(dataArray[i + 1]);
+                            i++;
+                        }
+                        else
+                        {
+                            data[count] = Double.Parse(dataArray[i]);
+                        }
+                        count++;
+                    }
+                    sensorData.X = data[0];
+                    sensorData.Y = data[1];
+                    sensorData.Z = data[2];
                     break;
                 case "ATOM":
                     sensorData.Atomos = Double.Parse(dataArray[0]);
@@ -313,7 +328,11 @@ namespace SerialMqttConverter
                     sensorData.Temperature = Double.Parse(dataArray[0]);
                     break;
                 case "MIKE":
-                    
+                    sensorData.Level1 = Double.Parse(dataArray[0]);
+                    sensorData.Level2 = Double.Parse(dataArray[1]);
+                    sensorData.Level3 = Double.Parse(dataArray[2]);
+                    sensorData.Level4 = Double.Parse(dataArray[3]);
+                    sensorData.Level5 = Double.Parse(dataArray[4]);
                     break;
                 default:
                     break;

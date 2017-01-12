@@ -1,6 +1,8 @@
 ﻿using Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ShimadzuIoT.Sensors.Acceleration.Devices;
+using ShimadzuIoT.Sensors.Common.CommandParameters;
 using SIotGatewayCore.CommandProcessors;
 using SIotGatewayCore.Transport;
 using System;
@@ -35,6 +37,10 @@ namespace ShimadzuIoT.Sensors.Acceleration.CommandProcessors
                     if(null != device)
                     {
                         var parameters = commandHistory.Parameters;
+                        foreach(JProperty param in parameters)
+                        {
+                            device.OnChangeElapseTimeCommand((int)param.Value);
+                        }
                     }
 
                     return CommandProcessingResult.Success;

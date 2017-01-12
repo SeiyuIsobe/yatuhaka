@@ -88,9 +88,24 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
             await ((RemoteMonitorTelemetry)base.TelemetryController).SendDeviceModelAsync(base.InitialDevice);
         }
 
-        public void OnChangeElapseTime(int time)
+        public override async void OnChangeElapseTimeCommand(int time)
         {
+            var remoteMonitorTelemetry = (RemoteMonitorTelemetry)_telemetryController;
+            remoteMonitorTelemetry.ElapsedTime = time;
 
+            // DeviceModelを更新
+            var operationValue = JsonConvert.DeserializeObject<OperationValue>(base.InitialDevice.OperationValue);
+            var param = operationValue.ElapsedTimeCommandParameter;
+
+            // 時間間隔を更新
+            param.ElapsedTime = remoteMonitorTelemetry.ElapsedTime;
+
+            // 更新
+            base.InitialDevice.OperationValue = JsonConvert.SerializeObject(operationValue);
+
+            // クラウド
+            base.InitialDevice.ObjectType = "DeviceInfo";
+            await ((RemoteMonitorTelemetry)base.TelemetryController).SendDeviceModelAsync(base.InitialDevice);
         }
 
         // センサー制御値
@@ -117,16 +132,6 @@ namespace ShimadzuIoT.Sensors.Acceleration.Devices
                 return JsonConvert.SerializeObject(new OperationValue());
             }
         }
-
-        //public override void SetOperationValue(string valuestream)
-        //{
-        //    var deviceModel = JsonConvert.DeserializeObject<DeviceModel>(valuestream);
-
-        //    if (null != deviceModel && null != ((DeviceModel)deviceModel).OperationValue)
-        //    {
-        //        _operationValue = JsonConvert.DeserializeObject<OperationValue>(((DeviceModel)deviceModel).OperationValue.ToString());
-        //    }
-        //}
 
         /// <summary>
         /// センサー値から得られるデータを定義する

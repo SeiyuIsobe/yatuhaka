@@ -40,6 +40,7 @@ namespace SensorModuleSimulator
     {
         private AccelOnBoard _sensor = null;
         private AccelOverI2C _accelSensor = null;
+        private AccelOverI2C _mike = null; // ごまかす
 
         private TelemetryFactoryResolver _telemetryFactoryResolver = new TelemetryFactoryResolver();
         private DeviceFactoryResolver _deviceFactoryResolver = new DeviceFactoryResolver();
@@ -80,9 +81,11 @@ namespace SensorModuleSimulator
             #region ここに使うセンサーのファクトリーを登録する
             // デバイスファクトリーの解決装置
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Microphone.Devices.Factory.DeviceFactory());
 
             // テレメトリーファクトリーの解決装置
             _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Telemetry.Factory.TelemetryFactory(null));
+            _telemetryFactoryResolver.Add(new ShimadzuIoT.Sensors.Microphone.Telemetry.Factory.TelemetryFactory(null));
             #endregion
 
         }
@@ -184,7 +187,7 @@ namespace SensorModuleSimulator
             _accelSensor.Interval = 1000;
             _accelSensor.ValueChanged += async (s2, e2) =>
             {
-                string deviceId = "GW6210833_SM0771254175_SN19760824_ACCE";
+                string deviceId = _sensorboard.Sensors.Sensors[0];
 
                 var e3 = e2 as AccelEventArgs;
                 if (null != e3)
@@ -220,23 +223,82 @@ namespace SensorModuleSimulator
                     }
                 }
             };
-            _accelSensor.Init();
+            //_accelSensor.Init(); //マイクするときは使わない
+            #endregion
+
+            #region マイク
+            // 実際にはついてないのでI2C加速度センサーでごまかす
+            _mike = new AccelOverI2C();
+            _mike.Interval = 1000;
+            _mike.ValueChanged += async (s2, e2) =>
+            {
+                string deviceId = _sensorboard.Sensors.Sensors[1];
+
+                var e3 = e2 as AccelEventArgs;
+                if (null != e3)
+                {
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        this.XAxis = e3.X;
+                        this.YAxis = e3.Y;
+                        this.ZAxis = e3.Z;
+                    });
+
+                    if (null != _client)
+                    {
+                        try
+                        {
+                            // テレメトリー
+                            var telemetryFactory = _telemetryFactoryResolver.Resolve(deviceId);
+
+                            // デバイス
+                            var df = _deviceFactoryResolver.Resolve(deviceId);
+                            var device = ((IDeviceFactory)df).CreateDevice(null, null, (ITelemetryFactory)telemetryFactory, null, null);
+
+                            var monitorData = new RemoteMonitorTelemetryData();
+                            monitorData.DeviceId = deviceId;
+
+                            // マイクの疑似的に再現
+                            // ラベル1
+                            monitorData.Timestamp = DateTime.UtcNow;
+                            monitorData.Label = "1";
+                            monitorData.Level1 = e3.X;
+                            monitorData.Level2 = e3.Y;
+                            monitorData.Level3 = e3.Z;
+                            monitorData.Level4 = e3.X * 0.5;
+                            monitorData.Level5 = e3.Z * 0.33;
+                            Publish(deviceId, JsonConvert.SerializeObject(monitorData));
+                        }
+                        catch { }
+                    }
+                }
+            };
+            _mike.Init();
             #endregion
         }
 
+        private double _pre1 = 0.0;
+        private double _pre2 = 0.0;
+        private double _pre3 = 0.0;
+        private double _pre4 = 0.0;
+        private double _pre5 = 0.0;
+
+        private SensorList _list = null;
+        private SensorModule _sensorboard = null;
         private async void SendSensorModuleName()
         {
-            SensorList list = new SensorList();
-            list.Sensors.Add("GW1_SM1_SN1_ACCE");
+            _list = new SensorList();
+            _list.Sensors.Add("GW1_SM1_SN1_ACCE");
+            _list.Sensors.Add("GW1_SM1_SN4_MIKE");
 
-            var sensor = new SensorModule() { Name = "SM0771254175" };
-            sensor.Sensors = list;
+            _sensorboard = new SensorModule() { Name = "SM0771254175" };
+            _sensorboard.Sensors = _list;
 
-            Publish("IamSensorModule", sensor.ToString());
+            Publish("IamSensorModule", _sensorboard.ToString());
 
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                this.Sensors = list.Sensors;
+                this.Sensors = _list.Sensors;
             });
 
             // 10秒ぐらい待たなければ相手が用意出来てない？？？

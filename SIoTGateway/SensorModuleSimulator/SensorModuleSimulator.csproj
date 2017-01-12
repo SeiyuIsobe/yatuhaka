@@ -135,6 +135,10 @@
       <Project>{248f2f66-1732-4885-b917-01c5c0511336}</Project>
       <Name>Acceleration.UWP</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sensors\Microphone\Microphone.UWP.csproj">
+      <Project>{7afc0947-1aee-4997-a88a-9e2eb0c9c487}</Project>
+      <Name>Microphone.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sensors\SensorsBase\SensorsBase.UWP.csproj">
       <Project>{8c1cf29b-2dca-4023-9abd-8b04c99b4c3e}</Project>
       <Name>SensorsBase.UWP</Name>

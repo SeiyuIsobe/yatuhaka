@@ -442,6 +442,13 @@ namespace SIotGatewayCore.Devices
         {
         }
 
+        /// <summary>
+        /// 共通コマンド
+        /// </summary>
+        public virtual void OnChangeElapseTimeCommand(int time)
+        {
+        }
+
         public virtual void AssignTelemetry(DeviceModel dm)
         {
             throw new NotImplementedException();

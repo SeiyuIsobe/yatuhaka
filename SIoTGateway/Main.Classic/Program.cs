@@ -66,7 +66,6 @@ namespace Main
                     _mainwindowVM.Run();
 
                     GetMyIp();
-
                 }
 
                 while (true) { }
@@ -84,6 +83,7 @@ namespace Main
                 if (ip.ToString().IndexOf("172.") == 0 || ip.ToString().IndexOf("192.") == 0)
                 {
                     _mainwindowVM.GetMyIp(ip.ToString());
+                    Console.WriteLine($"開始：{_mainwindowVM.SelfIP}");
                     return;
                 }
             }

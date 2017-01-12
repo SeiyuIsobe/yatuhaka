@@ -118,14 +118,39 @@ namespace ShimadzuIoT.Sensors.Atomopshere.Devices
             }
         }
 
-        //public override void SetOperationValue(string valuestream)
-        //{
-        //    var deviceModel = JsonConvert.DeserializeObject<DeviceModel>(valuestream);
+        /// <summary>
+        /// センサー値から得られるデータを定義する
+        /// </summary>
+        /// <param name="dm"></param>
+        override public void AssignTelemetry(DeviceModel dm)
+        {
+            dm.Telemetry.Add(new Microsoft.Azure.Devices.Applications.RemoteMonitoring.Common.Models.Telemetry("Atomos", "Atom (hPa)", "double"));
+        }
 
-        //    if (null != deviceModel && null != ((DeviceModel)deviceModel).OperationValue)
-        //    {
-        //        _operationValue = JsonConvert.DeserializeObject<OperationValue>(((DeviceModel)deviceModel).OperationValue.ToString());
-        //    }
-        //}
+        /// <summary>
+        /// コマンドを定義する
+        /// </summary>
+        /// <param name="dm"></param>
+        override public void AssignCommands(DeviceModel dm)
+        {
+            dm.Commands.Add(
+               new Command(
+                   StartCommandProcessor.CommandName
+                   ));
+
+            dm.Commands.Add(
+                new Command(
+                    StopCommandProcessor.CommandName
+                    ));
+        }
+
+        /// <summary>
+        /// 初期値を定義する
+        /// </summary>
+        /// <param name="dm"></param>
+        override public void AssignOperationValue(DeviceModel dm)
+        {
+            dm.OperationValue = this.OperationValueDefault;
+        }
     }
 }

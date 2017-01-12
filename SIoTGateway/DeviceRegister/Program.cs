@@ -31,8 +31,9 @@ namespace DeviceRegister
             // デバイスファクトリーの解決装置
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Acceleration.Devices.Factory.DeviceFactory());
             _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Atomopshere.Devices.Factory.DeviceFactory());
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Temperature.Devices.Factory.DeviceFactory());
+            _deviceFactoryResolver.Add(new ShimadzuIoT.Sensors.Microphone.Devices.Factory.DeviceFactory());
             #endregion
-
             // 引数チェック
             if(0 == args.Length)
             {
@@ -176,6 +177,9 @@ namespace DeviceRegister
 
                     dm.IsSimulatedDevice = true;
 
+                    // バージョン
+                    dm.Version = "1.0";
+
                     // テレメトリー
                     _targetDevice.AssignTelemetry(dm);
 
@@ -189,7 +193,10 @@ namespace DeviceRegister
                 {
                     Console.WriteLine("詳細情報を更新します");
 
-                    dm.DeviceProperties.HubEnabledState = !(dm.DeviceProperties.HubEnabledState);
+                    //dm.DeviceProperties.HubEnabledState = !(dm.DeviceProperties.HubEnabledState);
+
+                    // バージョン
+                    dm.Version = "1.0";
                 }
 
                 await creator.UpdateDeviceAsync(dm);

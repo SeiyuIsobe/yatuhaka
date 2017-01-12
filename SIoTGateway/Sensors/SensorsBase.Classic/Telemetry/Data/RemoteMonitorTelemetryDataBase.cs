@@ -19,6 +19,7 @@ namespace ShimadzuIoT.Sensors.Telemetry.Data
         // for 気圧
         public double Atomos { get; set; }
         // for microphone
+        public string Label { get; set; } = string.Empty;
         public double Level1 { get; set; }
         public double Level2 { get; set; }
         public double Level3 { get; set; }

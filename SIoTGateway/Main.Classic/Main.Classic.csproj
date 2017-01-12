@@ -99,9 +99,21 @@
       <Project>{10b765cd-dce8-4342-9055-96b83403de6e}</Project>
       <Name>Acceleration.Classic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sensors\Atomosphere.Classic\Atomosphere.Classic.csproj">
+      <Project>{ec8ba2f3-b66a-4847-877e-cf171e9bc921}</Project>
+      <Name>Atomosphere.Classic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sensors\Microphone.Classic\Microphone.Classic.csproj">
+      <Project>{6e874f69-f234-4b7a-9666-da53047e929a}</Project>
+      <Name>Microphone.Classic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sensors\SensorsBase.Classic\SensorsBase.Classic.csproj">
       <Project>{7ae6aaa2-522c-4203-bd05-12a51b0f0fa8}</Project>
       <Name>SensorsBase.Classic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sensors\Temperature.Classic\Temperature.Classic.csproj">
+      <Project>{4f3cbe22-21e9-498d-90cb-b891e9379b1c}</Project>
+      <Name>Temperature.Classic</Name>
     </ProjectReference>
     <ProjectReference Include="..\SIoTBroker.Classic\SIoTBroker.Classic.csproj">
       <Project>{c7348de6-0210-4712-be12-9aa722e82795}</Project>
